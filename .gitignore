@@ -1,0 +1,7 @@
+terraform-provider-storyblok*
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.backup
+coverage.out
+dist/

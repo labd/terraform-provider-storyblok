@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  build-local:
+    cmds:
+      - go build -o terraform-provider-storyblok_{{ .VERSION }}
+      - mkdir -p ~/.terraform.d/plugins/registry.terraform.io/labd/storyblok/{{ .VERSION }}/{{ .PLATFORM }}/
+      - mv terraform-provider-storyblok_{{ .VERSION }} ~/.terraform.d/plugins/registry.terraform.io/labd/storyblok/{{ .VERSION }}/{{ .PLATFORM }}/terraform-provider-storyblok_v{{ .VERSION }}
+      - cmd: codesign --deep --force -s - ~/.terraform.d/plugins/registry.terraform.io/labd/storyblok/{{ .VERSION }}/{{ .PLATFORM }}/terraform-provider-storyblok_v{{ .VERSION }}
+        platforms: [darwin]
+    vars:
+      VERSION: 99.0.0
+      PLATFORM:
+        sh: echo "$(go env GOOS)_$(go env GOARCH)"
+
