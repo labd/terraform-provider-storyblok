@@ -23,17 +23,22 @@ type fieldModel struct {
 }
 
 func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
-	schema := make(map[string]sbmgmt.FieldInput, len(m.Schema))
+
+	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
 	for name, item := range m.Schema {
-		schema[name] = sbmgmt.FieldInput{
+		raw[name] = sbmgmt.FieldInput{
 			Type: item.Type.ValueString(),
 			Pos:  item.Position.ValueInt64(),
 		}
 	}
 
+	// Sort the fields by position. Storyblok has a position field but ends up
+	// using the ordering of the json...
+	schema := sortComponentFields(raw)
+
 	return sbmgmt.ComponentInput{
-		Name:   m.Name.ValueString(),
-		Schema: ref(schema),
+		Name:       m.Name.ValueString(),
+		Schema:     schema,
 	}
 }
 
@@ -44,9 +49,11 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 	m.ID = types.StringValue(createIdentifier(spaceID, c.Id))
 	m.ComponentID = types.Int64Value(int64(c.Id))
 	m.CreatedAt = types.StringValue(c.CreatedAt.String())
+	schema := make(map[string]fieldModel, c.Schema.Len())
+	for pair := c.Schema.Oldest(); pair != nil; pair = pair.Next() {
+		name := pair.Key
+		field := pair.Value
 
-	schema := make(map[string]fieldModel, len(*c.Schema))
-	for name, field := range *c.Schema {
 		schema[name] = fieldModel{
 			Type:     types.StringValue(field.Type),
 			Position: types.Int64Value(field.Pos),
