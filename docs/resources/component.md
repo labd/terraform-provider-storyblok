@@ -21,6 +21,11 @@ Manage a component.
 - `schema` (Attributes Map) Schema of this component. (see [below for nested schema](#nestedatt--schema))
 - `space_id` (Number) The ID of the space.
 
+### Optional
+
+- `is_nestable` (Boolean) Component should be insertable in blocks field type fields
+- `is_root` (Boolean) Component should be usable as a Content Type
+
 ### Read-Only
 
 - `component_id` (Number) The ID of the component.
