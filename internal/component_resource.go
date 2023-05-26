@@ -6,12 +6,15 @@ import (
 	"net/http"
 
 	"github.com/davecgh/go-spew/spew"
+	"github.com/elliotchance/pie/v2"
+	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
@@ -64,10 +67,23 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 			"created_at": schema.StringAttribute{
 				Description: "The creation timestamp of the component.",
 				Computed:    true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.UseStateForUnknown(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Description: "The technical name of the component.",
 				Required:    true,
+			},
+			"is_root": schema.BoolAttribute{
+				Description: "Component should be usable as a Content Type",
+				Optional:    true,
+				Computed:    true,
+			},
+			"is_nestable": schema.BoolAttribute{
+				Description: "Component should be insertable in blocks field type fields",
+				Optional:    true,
+				Computed:    true,
 			},
 			"schema": schema.MapNestedAttribute{
 				Description: "Schema of this component.",
@@ -77,6 +93,9 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 						"type": schema.StringAttribute{
 							Description: "The type of the field",
 							Required:    true,
+							Validators: []validator.String{
+								stringvalidator.OneOf(pie.Keys(getComponentTypes())...),
+							},
 						},
 						"position": schema.Int64Attribute{
 							Description: "The position of the field",
