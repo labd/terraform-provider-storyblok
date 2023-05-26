@@ -2,6 +2,7 @@ package internal
 
 import (
 	"context"
+	"net/http"
 	"os"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
@@ -103,9 +104,14 @@ func (p *storyblokProvider) Configure(ctx context.Context, req provider.Configur
 		resp.Diagnostics.AddError("Unable to Create Storyblok API Client", err.Error())
 	}
 
+	httpClient := &http.Client{
+		Transport: debugTransport,
+	}
+
 	// Create a new Storyblok client using the configuration values
 	client, err := sbmgmt.NewClientWithResponses(
 		url,
+		sbmgmt.WithHTTPClient(httpClient),
 		sbmgmt.WithRequestEditorFn(apiKeyProvider.Intercept))
 
 	if err != nil {
@@ -135,5 +141,6 @@ func (p *storyblokProvider) DataSources(_ context.Context) []func() datasource.D
 func (p *storyblokProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewComponentResource,
+		NewComponentGroupResource,
 	}
 }
