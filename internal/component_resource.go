@@ -111,6 +111,142 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "The position of the field",
 							Required:    true,
 						},
+						"add_https": schema.BoolAttribute{
+							Description: "Prepends https: to stop usage of relative protocol",
+							Optional:    true,
+						},
+						"asset_folder_id": schema.Int64Attribute{
+							Description: "Default asset folder numeric id to store uploaded image of that field",
+							Optional:    true,
+						},
+						"can_sync": schema.BoolAttribute{
+							Description: "Advanced usage to sync with field in preview; Default: false",
+							Optional:    true,
+						},
+						"component_whitelist": schema.ListAttribute{
+							Description: "Array of component/content type names: [\"post\",\"page\",\"product\"]",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
+						"datasource_slug": schema.StringAttribute{
+							Description: "Define selectable datasources string; Effects editor only if source=internal",
+							Optional:    true,
+						},
+						"default_value": schema.StringAttribute{
+							Description: "Default value for the field; Can be an escaped JSON object",
+							Optional:    true,
+						},
+						"description": schema.StringAttribute{
+							Description: "Description shown in the editor interface",
+							Optional:    true,
+						},
+						"disable_time": schema.BoolAttribute{
+							Description: "Disables time selection from date picker; Default: false",
+							Optional:    true,
+						},
+						"display_name": schema.StringAttribute{
+							Description: "Display name shown in the editor interface",
+							Optional:    true,
+						},
+						"external_datasource": schema.StringAttribute{
+							Description: "Define external datasource JSON Url; Effects editor only if source=external",
+							Optional:    true,
+						},
+						"field_type": schema.StringAttribute{
+							Description: "Name of the custom field type plugin",
+							Optional:    true,
+						},
+						"filetypes": schema.ListAttribute{
+							Description: "Array of file type names: [\"images\", \"videos\", \"audios\", \"texts\"]",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
+						"folder_slug": schema.StringAttribute{
+							Description: "Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have a multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: \"{0}/categories/\", {0}/{1}/categories/",
+							Optional:    true,
+						},
+						"image_crop": schema.BoolAttribute{
+							Description: "Activate force crop for images: (true/false)",
+							Optional:    true,
+						},
+						"image_height": schema.StringAttribute{
+							Description: "Define height in px or height ratio if keep_image_size is enabled",
+							Optional:    true,
+						},
+						"image_width": schema.StringAttribute{
+							Description: "Define width in px or width ratio if keep_image_size is enabled",
+							Optional:    true,
+						},
+						"keep_image_size": schema.BoolAttribute{
+							Description: "Keep original size: (true/false)",
+							Optional:    true,
+						},
+						"keys": schema.ListAttribute{
+							Description: "Array of field keys to include in this section",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
+						"max_length": schema.Int64Attribute{
+							Description: "Set the max length of the input string",
+							Optional:    true,
+						},
+						"maximum": schema.Int64Attribute{
+							Description: "Maximum amount of added bloks in this blok field",
+							Optional:    true,
+						},
+						"no_translate": schema.BoolAttribute{
+							Description: "Should be excluded in translation export",
+							Optional:    true,
+						},
+						"options": schema.MapAttribute{
+							Description: "Array of datasource entries [{name:\"\", value:\"\"}]; Effects editor only if source=undefined",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
+						"preview_field": schema.BoolAttribute{
+							Description: "Is used as instance preview field below component name in bloks types",
+							Optional:    true,
+						},
+						"regex": schema.StringAttribute{
+							Description: "Client Regex validation for the field",
+							Optional:    true,
+						},
+						"required": schema.BoolAttribute{
+							Description: "Is field required; Default: false",
+							Optional:    true,
+						},
+						"restrict_components": schema.BoolAttribute{
+							Description: "Activate restriction nestable component option; Default: false",
+							Optional:    true,
+						},
+						"restrict_content_types": schema.BoolAttribute{
+							Description: "Activate restriction content type option",
+							Optional:    true,
+						},
+						"rich_markdown": schema.BoolAttribute{
+							Description: "Enable rich markdown view by default (true/false)",
+							Optional:    true,
+						},
+						"rtl": schema.BoolAttribute{
+							Description: "Enable global RTL for this field",
+							Optional:    true,
+						},
+						"source": schema.StringAttribute{
+							Description: "Possible values: undefined: Self; internal_stories: Stories; internal: Datasource; external: API Endpoint in Datasource Entries Array Format",
+							Optional:    true,
+						},
+						"tooltip": schema.BoolAttribute{
+							Description: "Show the description as a tooltip",
+							Optional:    true,
+						},
+						"translatable": schema.BoolAttribute{
+							Description: "Can field be translated; Default: false",
+							Optional:    true,
+						},
+						"use_uuid": schema.BoolAttribute{
+							Description: "Default: true; available in option and source=internal_stories",
+							Optional:    true,
+						},
 					},
 				},
 			},

@@ -5,6 +5,7 @@ import (
 
 	"github.com/elliotchance/pie/v2"
 	"github.com/gofrs/uuid"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
@@ -57,6 +58,31 @@ func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.Ordered
 	return result
 }
 
+func convertToStringSlice(strSlicePtr *[]string) []types.String {
+	if strSlicePtr == nil {
+		return nil
+	}
+
+	strSlice := make([]types.String, len(*strSlicePtr))
+	for i, str := range *strSlicePtr {
+		strSlice[i] = types.StringValue(str)
+	}
+
+	return strSlice
+}
+
+func convertToPointerStringSlice(slice []types.String) *[]string {
+	if slice == nil {
+		return nil
+	}
+
+	result := pie.Map(slice, func(s types.String) string {
+		return s.ValueString()
+	})
+
+	return &result
+}
+
 func asUUID(s types.String) uuid.UUID {
 	if s.IsNull() {
 		return uuid.Nil
@@ -73,4 +99,11 @@ func fromUUID(v *uuid.UUID) types.String {
 		return types.StringPointerValue(nil)
 	}
 	return types.StringValue(v.String())
+}
+
+func must[T any](v T, err error) T {
+	if err != nil {
+		panic(err)
+	}
+	return v
 }
