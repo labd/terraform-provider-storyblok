@@ -15,8 +15,11 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/customvalidators"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -84,6 +87,13 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 				Description: "Component should be insertable in blocks field type fields",
 				Optional:    true,
 				Computed:    true,
+			},
+			"component_group_uuid": schema.StringAttribute{
+				Description: "The UUID of the component group.",
+				Optional:    true,
+				Validators: []validator.String{
+					customvalidators.UUID(),
+				},
 			},
 			"schema": schema.MapNestedAttribute{
 				Description: "Schema of this component.",

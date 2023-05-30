@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/elliotchance/pie/v2"
+	"github.com/gofrs/uuid"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
@@ -46,4 +47,22 @@ func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.Ordered
 	}
 
 	return result
+}
+
+func asUUID(s types.String) uuid.UUID {
+	if s.IsNull() {
+		return uuid.Nil
+	}
+	val, err := uuid.FromString(s.ValueString())
+	if err != nil {
+		panic(err)
+	}
+	return val
+}
+
+func fromUUID(v *uuid.UUID) types.String {
+	if v.IsNil() {
+		return types.StringPointerValue(nil)
+	}
+	return types.StringValue(v.String())
 }

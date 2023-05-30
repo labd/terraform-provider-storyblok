@@ -9,14 +9,15 @@ import (
 
 // componentResourceModel maps the resource schema data.
 type componentResourceModel struct {
-	ID          types.String          `tfsdk:"id"`
-	ComponentID types.Int64           `tfsdk:"component_id"`
-	SpaceID     types.Int64           `tfsdk:"space_id"`
-	CreatedAt   types.String          `tfsdk:"created_at"`
-	Name        types.String          `tfsdk:"name"`
-	IsRoot      types.Bool            `tfsdk:"is_root"`
-	IsNestable  types.Bool            `tfsdk:"is_nestable"`
-	Schema      map[string]fieldModel `tfsdk:"schema"`
+	ID                 types.String          `tfsdk:"id"`
+	ComponentID        types.Int64           `tfsdk:"component_id"`
+	SpaceID            types.Int64           `tfsdk:"space_id"`
+	CreatedAt          types.String          `tfsdk:"created_at"`
+	Name               types.String          `tfsdk:"name"`
+	IsRoot             types.Bool            `tfsdk:"is_root"`
+	IsNestable         types.Bool            `tfsdk:"is_nestable"`
+	ComponentGroupUUID types.String          `tfsdk:"component_group_uuid"`
+	Schema             map[string]fieldModel `tfsdk:"schema"`
 }
 
 type fieldModel struct {
@@ -39,10 +40,11 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
 	schema := sortComponentFields(raw)
 
 	return sbmgmt.ComponentInput{
-		Name:       m.Name.ValueString(),
-		Schema:     schema,
-		IsNestable: m.IsNestable.ValueBoolPointer(),
-		IsRoot:     m.IsRoot.ValueBoolPointer(),
+		Name:               m.Name.ValueString(),
+		Schema:             schema,
+		IsNestable:         m.IsNestable.ValueBoolPointer(),
+		IsRoot:             m.IsRoot.ValueBoolPointer(),
+		ComponentGroupUuid: ref(asUUID(m.ComponentGroupUUID)),
 	}
 }
 
@@ -55,6 +57,7 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 	m.CreatedAt = types.StringValue(c.CreatedAt.String())
 	m.IsRoot = types.BoolPointerValue(c.IsRoot)
 	m.IsNestable = types.BoolPointerValue(c.IsNestable)
+	m.ComponentGroupUUID = fromUUID(c.ComponentGroupUuid)
 
 	schema := make(map[string]fieldModel, c.Schema.Len())
 	for pair := c.Schema.Oldest(); pair != nil; pair = pair.Next() {
