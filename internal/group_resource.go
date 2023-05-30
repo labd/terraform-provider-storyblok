@@ -94,7 +94,7 @@ func (r *componentGroupResource) Configure(_ context.Context, req resource.Confi
 		return
 	}
 
-	r.client = req.ProviderData.(sbmgmt.ClientWithResponsesInterface)
+	r.client = getClient(req.ProviderData)
 }
 
 // Create creates the resource and sets the initial Terraform state.

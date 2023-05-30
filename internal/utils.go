@@ -22,6 +22,14 @@ func parseIdentifier(identifier string) (spaceId int64, componentId int64) {
 	return
 }
 
+func getClient(data any) sbmgmt.ClientWithResponsesInterface {
+	c, ok := data.(sbmgmt.ClientWithResponsesInterface)
+	if !ok {
+		panic("invalid client type")
+	}
+	return c
+}
+
 func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.OrderedMap[string, sbmgmt.FieldInput] {
 	type Pair struct {
 		Key   string
