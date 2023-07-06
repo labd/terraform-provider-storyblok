@@ -329,11 +329,8 @@ func (r *componentResource) Read(ctx context.Context, req resource.ReadRequest, 
 
 	// Get refreshed order value from HashiCups
 	content, err := r.client.GetComponentWithResponse(ctx, spaceId, componentId)
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Error Reading Storyblok Component",
-			"Could not read Storyblok component ID "+state.ID.ValueString()+": "+err.Error(),
-		)
+	if d := checkGetError("component", content, err); d != nil {
+		resp.Diagnostics.Append(d)
 		return
 	}
 

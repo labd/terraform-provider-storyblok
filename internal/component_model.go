@@ -67,7 +67,8 @@ type optionModel struct {
 func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
 
 	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
-	for name, item := range m.Schema {
+	for name := range m.Schema {
+		item := m.Schema[name]
 		raw[name] = sbmgmt.FieldInput{
 			Type: item.Type.ValueString(),
 			Pos:  item.Position.ValueInt64(),
@@ -79,6 +80,7 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
 			DefaultValue:         item.DefaultValue.ValueStringPointer(),
 			Description:          item.Description.ValueStringPointer(),
 			DisplayName:          item.DisplayName.ValueStringPointer(),
+			ComponentWhitelist:   convertToPointerStringSlice(item.ComponentWhitelist),
 			ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
 			FieldType:            item.FieldType.ValueStringPointer(),
 			Filetypes:            convertToPointerStringSlice(item.Filetypes),
