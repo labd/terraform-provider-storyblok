@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 
+	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
@@ -13,6 +14,11 @@ type componentResourceModel struct {
 	ComponentID        types.Int64           `tfsdk:"component_id"`
 	SpaceID            types.Int64           `tfsdk:"space_id"`
 	CreatedAt          types.String          `tfsdk:"created_at"`
+	DisplayName        types.String          `tfsdk:"display_name"`
+	Color              types.String          `tfsdk:"color"`
+	Icon               types.String          `tfsdk:"icon"`
+	Image              types.String          `tfsdk:"image"`
+	Preview            types.String          `tfsdk:"preview"`
 	Name               types.String          `tfsdk:"name"`
 	IsRoot             types.Bool            `tfsdk:"is_root"`
 	IsNestable         types.Bool            `tfsdk:"is_nestable"`
@@ -64,7 +70,7 @@ type optionModel struct {
 	Value types.String `tfsdk:"value,omitempty"`
 }
 
-func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
+func (m *componentResourceModel) toRemoteInput() sbmgmt.CreateComponentJSONRequestBody {
 
 	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
 	for name := range m.Schema {
@@ -111,12 +117,85 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
 	// using the ordering of the json...
 	schema := sortComponentFields(raw)
 
-	return sbmgmt.ComponentInput{
-		Name:               m.Name.ValueString(),
-		Schema:             schema,
-		IsNestable:         m.IsNestable.ValueBoolPointer(),
-		IsRoot:             m.IsRoot.ValueBoolPointer(),
-		ComponentGroupUuid: ref(asUUID(m.ComponentGroupUUID)),
+	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+
+	return sbmgmt.CreateComponentJSONRequestBody{
+		Component: &sbmgmt.ComponentCreateInput{
+			Color:              m.Color.ValueStringPointer(),
+			ComponentGroupUuid: &componentGroupUuid,
+			DisplayName:        m.DisplayName.ValueStringPointer(),
+			Icon:               (*sbmgmt.ComponentCreateInputIcon)(m.Icon.ValueStringPointer()),
+			Image:              m.Image.ValueStringPointer(),
+			IsNestable:         m.IsNestable.ValueBoolPointer(),
+			IsRoot:             m.IsRoot.ValueBoolPointer(),
+			Name:               m.Name.ValueString(),
+			Preview:            m.Preview.ValueStringPointer(),
+			Schema:             schema,
+		},
+	}
+}
+func (m *componentResourceModel) toUpdateInput() sbmgmt.UpdateComponentJSONRequestBody {
+
+	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
+	for name := range m.Schema {
+		item := m.Schema[name]
+		raw[name] = sbmgmt.FieldInput{
+			Type: item.Type.ValueString(),
+			Pos:  item.Position.ValueInt64(),
+
+			AddHttps:             item.AddHttps.ValueBoolPointer(),
+			AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
+			CanSync:              item.CanSync.ValueBoolPointer(),
+			DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
+			DefaultValue:         item.DefaultValue.ValueStringPointer(),
+			Description:          item.Description.ValueStringPointer(),
+			DisplayName:          item.DisplayName.ValueStringPointer(),
+			ComponentWhitelist:   convertToPointerStringSlice(item.ComponentWhitelist),
+			ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
+			FieldType:            item.FieldType.ValueStringPointer(),
+			Filetypes:            convertToPointerStringSlice(item.Filetypes),
+			FolderSlug:           item.FolderSlug.ValueStringPointer(),
+			ImageCrop:            item.ImageCrop.ValueBoolPointer(),
+			ImageHeight:          item.ImageHeight.ValueStringPointer(),
+			ImageWidth:           item.ImageWidth.ValueStringPointer(),
+			KeepImageSize:        item.KeepImageSize.ValueBoolPointer(),
+			Keys:                 convertToPointerStringSlice(item.Keys),
+			Maximum:              item.Maximum.ValueInt64Pointer(),
+			NoTranslate:          item.NoTranslate.ValueBoolPointer(),
+			Options:              deserializeOptionsModel(item.Options),
+			PreviewField:         item.PreviewField.ValueBoolPointer(),
+			Regex:                item.Regex.ValueStringPointer(),
+			Required:             item.Required.ValueBoolPointer(),
+			RestrictComponents:   item.RestrictComponents.ValueBoolPointer(),
+			RestrictContentTypes: item.RestrictContentTypes.ValueBoolPointer(),
+			RichMarkdown:         item.RichMarkdown.ValueBoolPointer(),
+			Rtl:                  item.Rtl.ValueBoolPointer(),
+			Source:               item.Source.ValueStringPointer(),
+			Tooltip:              item.Tooltip.ValueBoolPointer(),
+			Translatable:         item.Translatable.ValueBoolPointer(),
+			UseUuid:              item.UseUuid.ValueBoolPointer(),
+		}
+	}
+
+	// Sort the fields by position. Storyblok has a position field but ends up
+	// using the ordering of the json...
+	schema := sortComponentFields(raw)
+
+	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+
+	return sbmgmt.UpdateComponentJSONRequestBody{
+		Component: &sbmgmt.ComponentCreateInput{
+			Color:              m.Color.ValueStringPointer(),
+			ComponentGroupUuid: &componentGroupUuid,
+			DisplayName:        m.DisplayName.ValueStringPointer(),
+			Icon:               (*sbmgmt.ComponentCreateInputIcon)(m.Icon.ValueStringPointer()),
+			Image:              m.Image.ValueStringPointer(),
+			IsNestable:         m.IsNestable.ValueBoolPointer(),
+			IsRoot:             m.IsRoot.ValueBoolPointer(),
+			Name:               m.Name.ValueString(),
+			Preview:            m.Preview.ValueStringPointer(),
+			Schema:             schema,
+		},
 	}
 }
 

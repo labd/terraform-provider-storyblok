@@ -108,7 +108,7 @@ func (r *componentGroupResource) Create(ctx context.Context, req resource.Create
 	}
 
 	// Generate API request body from plan
-	input := plan.toRemoteInput()
+	input := plan.toCreateInput()
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.CreateComponentGroupWithResponse(ctx, spaceID, input)
@@ -186,7 +186,7 @@ func (r *componentGroupResource) Update(ctx context.Context, req resource.Update
 	}
 
 	// Generate API request body from plan
-	input := plan.toRemoteInput()
+	input := plan.toUpdateInput()
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.UpdateComponentGroupWithResponse(ctx, spaceID, plan.GroupID.ValueInt64(), input)
