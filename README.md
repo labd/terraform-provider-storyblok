@@ -4,7 +4,6 @@
 [![codecov](https://codecov.io/gh/LabD/terraform-provider-storyblok/branch/master/graph/badge.svg)](https://codecov.io/gh/LabD/terraform-provider-storyblok)
 [![Go Report Card](https://goreportcard.com/badge/github.com/labd/terraform-provider-storyblok)](https://goreportcard.com/report/github.com/labd/terraform-provider-storyblok)
 
-
 The Terraform Storyblok provider allows you to configure your
 [storyblok](https://storyblok.com/) space with infrastructure-as-code
 principles.
@@ -18,7 +17,6 @@ able to offer support. Please contact us at opensource@labdigital.nl
 
 [Read our documentation](https://registry.terraform.io/providers/labd/storyblok/latest/docs)
 and check out the [examples](https://registry.terraform.io/providers/labd/storyblok/latest/docs/guides/examples).
-
 
 ## Usage
 
@@ -54,7 +52,6 @@ Clone the repository and run the following command:
 $ task build-local
 ```
 
-
 ## Debugging / Troubleshooting
 
 There are two environment settings for troubleshooting:
@@ -65,13 +62,22 @@ Note this generates a lot of output!
 
 ## Releasing
 
-When pushing a new tag prefixed with `v` a GitHub action will automatically
-use Goreleaser to build and release the build.
+Install "changie"
 
-```sh
-git tag <release> -m "Release <release>" # please use semantic version, so always vX.Y.Z
-git push --follow-tags
 ```
+brew tap miniscruff/changie https://github.com/miniscruff/changie
+brew install changie
+```
+
+Add unreleased change files by running for each change (add/fix/remove/etc.)
+
+```
+changie new
+```
+
+Commit this and a new PR will be created.
+
+Once that's merged and its Github action is complete, a new release will be live.
 
 ## Testing
 
@@ -80,7 +86,6 @@ git push --follow-tags
 ```sh
 $ task test
 ```
-
 
 ## Authors
 
