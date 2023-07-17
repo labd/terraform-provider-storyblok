@@ -364,7 +364,7 @@ func (r *componentResource) Update(ctx context.Context, req resource.UpdateReque
 	}
 
 	// Generate API request body from plan
-	input := plan.toRemoteInput()
+	input := plan.toUpdateInput()
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.UpdateComponentWithResponse(ctx, spaceID, plan.ComponentID.ValueInt64(), input)

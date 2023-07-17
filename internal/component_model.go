@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 
+	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
@@ -13,6 +14,11 @@ type componentResourceModel struct {
 	ComponentID        types.Int64           `tfsdk:"component_id"`
 	SpaceID            types.Int64           `tfsdk:"space_id"`
 	CreatedAt          types.String          `tfsdk:"created_at"`
+	DisplayName        types.String          `tfsdk:"display_name"`
+	Color              types.String          `tfsdk:"color"`
+	Icon               types.String          `tfsdk:"icon"`
+	Image              types.String          `tfsdk:"image"`
+	Preview            types.String          `tfsdk:"preview"`
 	Name               types.String          `tfsdk:"name"`
 	IsRoot             types.Bool            `tfsdk:"is_root"`
 	IsNestable         types.Bool            `tfsdk:"is_nestable"`
@@ -64,59 +70,101 @@ type optionModel struct {
 	Value types.String `tfsdk:"value,omitempty"`
 }
 
-func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentInput {
+func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 
 	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
 	for name := range m.Schema {
 		item := m.Schema[name]
-		raw[name] = sbmgmt.FieldInput{
-			Type: item.Type.ValueString(),
-			Pos:  item.Position.ValueInt64(),
-
-			AddHttps:             item.AddHttps.ValueBoolPointer(),
-			AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
-			CanSync:              item.CanSync.ValueBoolPointer(),
-			DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
-			DefaultValue:         item.DefaultValue.ValueStringPointer(),
-			Description:          item.Description.ValueStringPointer(),
-			DisplayName:          item.DisplayName.ValueStringPointer(),
-			ComponentWhitelist:   convertToPointerStringSlice(item.ComponentWhitelist),
-			ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
-			FieldType:            item.FieldType.ValueStringPointer(),
-			Filetypes:            convertToPointerStringSlice(item.Filetypes),
-			FolderSlug:           item.FolderSlug.ValueStringPointer(),
-			ImageCrop:            item.ImageCrop.ValueBoolPointer(),
-			ImageHeight:          item.ImageHeight.ValueStringPointer(),
-			ImageWidth:           item.ImageWidth.ValueStringPointer(),
-			KeepImageSize:        item.KeepImageSize.ValueBoolPointer(),
-			Keys:                 convertToPointerStringSlice(item.Keys),
-			Maximum:              item.Maximum.ValueInt64Pointer(),
-			NoTranslate:          item.NoTranslate.ValueBoolPointer(),
-			Options:              deserializeOptionsModel(item.Options),
-			PreviewField:         item.PreviewField.ValueBoolPointer(),
-			Regex:                item.Regex.ValueStringPointer(),
-			Required:             item.Required.ValueBoolPointer(),
-			RestrictComponents:   item.RestrictComponents.ValueBoolPointer(),
-			RestrictContentTypes: item.RestrictContentTypes.ValueBoolPointer(),
-			RichMarkdown:         item.RichMarkdown.ValueBoolPointer(),
-			Rtl:                  item.Rtl.ValueBoolPointer(),
-			Source:               item.Source.ValueStringPointer(),
-			Tooltip:              item.Tooltip.ValueBoolPointer(),
-			Translatable:         item.Translatable.ValueBoolPointer(),
-			UseUuid:              item.UseUuid.ValueBoolPointer(),
-		}
+		raw[name] = toFieldInput(item)
 	}
 
 	// Sort the fields by position. Storyblok has a position field but ends up
 	// using the ordering of the json...
 	schema := sortComponentFields(raw)
 
-	return sbmgmt.ComponentInput{
-		Name:               m.Name.ValueString(),
-		Schema:             schema,
-		IsNestable:         m.IsNestable.ValueBoolPointer(),
-		IsRoot:             m.IsRoot.ValueBoolPointer(),
-		ComponentGroupUuid: ref(asUUID(m.ComponentGroupUUID)),
+	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+
+	return sbmgmt.ComponentCreateInput{
+		Component: sbmgmt.ComponentBase{
+			Color:              m.Color.ValueStringPointer(),
+			ComponentGroupUuid: &componentGroupUuid,
+			DisplayName:        m.DisplayName.ValueStringPointer(),
+			Icon:               (*sbmgmt.ComponentBaseIcon)(m.Icon.ValueStringPointer()),
+			Image:              m.Image.ValueStringPointer(),
+			IsNestable:         m.IsNestable.ValueBoolPointer(),
+			IsRoot:             m.IsRoot.ValueBoolPointer(),
+			Name:               m.Name.ValueString(),
+			Preview:            m.Preview.ValueStringPointer(),
+			Schema:             schema,
+		},
+	}
+}
+func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
+
+	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
+	for name := range m.Schema {
+		item := m.Schema[name]
+		raw[name] = toFieldInput(item)
+	}
+
+	// Sort the fields by position. Storyblok has a position field but ends up
+	// using the ordering of the json...
+	schema := sortComponentFields(raw)
+
+	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+
+	return sbmgmt.ComponentUpdateInput{
+		Component: sbmgmt.ComponentBase{
+			Color:              m.Color.ValueStringPointer(),
+			ComponentGroupUuid: &componentGroupUuid,
+			DisplayName:        m.DisplayName.ValueStringPointer(),
+			Icon:               (*sbmgmt.ComponentBaseIcon)(m.Icon.ValueStringPointer()),
+			Image:              m.Image.ValueStringPointer(),
+			IsNestable:         m.IsNestable.ValueBoolPointer(),
+			IsRoot:             m.IsRoot.ValueBoolPointer(),
+			Name:               m.Name.ValueString(),
+			Preview:            m.Preview.ValueStringPointer(),
+			Schema:             schema,
+		},
+	}
+}
+
+func toFieldInput(item fieldModel) sbmgmt.FieldInput {
+	return sbmgmt.FieldInput{
+		Type: item.Type.ValueString(),
+		Pos:  item.Position.ValueInt64(),
+
+		AddHttps:             item.AddHttps.ValueBoolPointer(),
+		AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
+		CanSync:              item.CanSync.ValueBoolPointer(),
+		DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
+		DefaultValue:         item.DefaultValue.ValueStringPointer(),
+		Description:          item.Description.ValueStringPointer(),
+		DisplayName:          item.DisplayName.ValueStringPointer(),
+		ComponentWhitelist:   convertToPointerStringSlice(item.ComponentWhitelist),
+		ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
+		FieldType:            item.FieldType.ValueStringPointer(),
+		Filetypes:            convertToPointerStringSlice(item.Filetypes),
+		FolderSlug:           item.FolderSlug.ValueStringPointer(),
+		ImageCrop:            item.ImageCrop.ValueBoolPointer(),
+		ImageHeight:          item.ImageHeight.ValueStringPointer(),
+		ImageWidth:           item.ImageWidth.ValueStringPointer(),
+		KeepImageSize:        item.KeepImageSize.ValueBoolPointer(),
+		Keys:                 convertToPointerStringSlice(item.Keys),
+		Maximum:              item.Maximum.ValueInt64Pointer(),
+		NoTranslate:          item.NoTranslate.ValueBoolPointer(),
+		Options:              deserializeOptionsModel(item.Options),
+		PreviewField:         item.PreviewField.ValueBoolPointer(),
+		Regex:                item.Regex.ValueStringPointer(),
+		Required:             item.Required.ValueBoolPointer(),
+		RestrictComponents:   item.RestrictComponents.ValueBoolPointer(),
+		RestrictContentTypes: item.RestrictContentTypes.ValueBoolPointer(),
+		RichMarkdown:         item.RichMarkdown.ValueBoolPointer(),
+		Rtl:                  item.Rtl.ValueBoolPointer(),
+		Source:               item.Source.ValueStringPointer(),
+		Tooltip:              item.Tooltip.ValueBoolPointer(),
+		Translatable:         item.Translatable.ValueBoolPointer(),
+		UseUuid:              item.UseUuid.ValueBoolPointer(),
 	}
 }
 
@@ -136,47 +184,51 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 		name := pair.Key
 		field := pair.Value
 
-		schema[name] = fieldModel{
-			Type:     types.StringValue(field.Type),
-			Position: types.Int64Value(field.Pos),
-
-			AddHttps:             types.BoolPointerValue(field.AddHttps),
-			AssetFolderId:        types.Int64PointerValue(field.AssetFolderId),
-			CanSync:              types.BoolPointerValue(field.CanSync),
-			ComponentWhitelist:   convertToStringSlice(field.ComponentWhitelist),
-			DatasourceSlug:       types.StringPointerValue(field.DatasourceSlug),
-			DefaultValue:         types.StringPointerValue(field.DefaultValue),
-			Description:          types.StringPointerValue(field.Description),
-			DisableTime:          types.BoolPointerValue(field.DisableTime),
-			DisplayName:          types.StringPointerValue(field.DisplayName),
-			ExternalDatasource:   types.StringPointerValue(field.ExternalDatasource),
-			FieldType:            types.StringPointerValue(field.FieldType),
-			Filetypes:            convertToStringSlice(field.Filetypes),
-			FolderSlug:           types.StringPointerValue(field.FolderSlug),
-			ImageCrop:            types.BoolPointerValue(field.ImageCrop),
-			ImageHeight:          types.StringPointerValue(field.ImageHeight),
-			ImageWidth:           types.StringPointerValue(field.ImageWidth),
-			KeepImageSize:        types.BoolPointerValue(field.KeepImageSize),
-			Keys:                 convertToStringSlice(field.Keys),
-			MaxLength:            types.Int64PointerValue(field.MaxLength),
-			Maximum:              types.Int64PointerValue(field.Maximum),
-			NoTranslate:          types.BoolPointerValue(field.NoTranslate),
-			Options:              serializeOptionsModel(field.Options),
-			PreviewField:         types.BoolPointerValue(field.PreviewField),
-			Regex:                types.StringPointerValue(field.Regex),
-			Required:             types.BoolPointerValue(field.Required),
-			RestrictComponents:   types.BoolPointerValue(field.RestrictComponents),
-			RestrictContentTypes: types.BoolPointerValue(field.RestrictContentTypes),
-			RichMarkdown:         types.BoolPointerValue(field.RichMarkdown),
-			Rtl:                  types.BoolPointerValue(field.Rtl),
-			Source:               types.StringPointerValue(field.Source),
-			Tooltip:              types.BoolPointerValue(field.Tooltip),
-			Translatable:         types.BoolPointerValue(field.Translatable),
-			UseUuid:              types.BoolPointerValue(field.UseUuid),
-		}
+		schema[name] = toFieldModel(field)
 	}
 	m.Schema = schema
 	return nil
+}
+
+func toFieldModel(field sbmgmt.FieldInput) fieldModel {
+	return fieldModel{
+		Type:     types.StringValue(field.Type),
+		Position: types.Int64Value(field.Pos),
+
+		AddHttps:             types.BoolPointerValue(field.AddHttps),
+		AssetFolderId:        types.Int64PointerValue(field.AssetFolderId),
+		CanSync:              types.BoolPointerValue(field.CanSync),
+		ComponentWhitelist:   convertToStringSlice(field.ComponentWhitelist),
+		DatasourceSlug:       types.StringPointerValue(field.DatasourceSlug),
+		DefaultValue:         types.StringPointerValue(field.DefaultValue),
+		Description:          types.StringPointerValue(field.Description),
+		DisableTime:          types.BoolPointerValue(field.DisableTime),
+		DisplayName:          types.StringPointerValue(field.DisplayName),
+		ExternalDatasource:   types.StringPointerValue(field.ExternalDatasource),
+		FieldType:            types.StringPointerValue(field.FieldType),
+		Filetypes:            convertToStringSlice(field.Filetypes),
+		FolderSlug:           types.StringPointerValue(field.FolderSlug),
+		ImageCrop:            types.BoolPointerValue(field.ImageCrop),
+		ImageHeight:          types.StringPointerValue(field.ImageHeight),
+		ImageWidth:           types.StringPointerValue(field.ImageWidth),
+		KeepImageSize:        types.BoolPointerValue(field.KeepImageSize),
+		Keys:                 convertToStringSlice(field.Keys),
+		MaxLength:            types.Int64PointerValue(field.MaxLength),
+		Maximum:              types.Int64PointerValue(field.Maximum),
+		NoTranslate:          types.BoolPointerValue(field.NoTranslate),
+		Options:              serializeOptionsModel(field.Options),
+		PreviewField:         types.BoolPointerValue(field.PreviewField),
+		Regex:                types.StringPointerValue(field.Regex),
+		Required:             types.BoolPointerValue(field.Required),
+		RestrictComponents:   types.BoolPointerValue(field.RestrictComponents),
+		RestrictContentTypes: types.BoolPointerValue(field.RestrictContentTypes),
+		RichMarkdown:         types.BoolPointerValue(field.RichMarkdown),
+		Rtl:                  types.BoolPointerValue(field.Rtl),
+		Source:               types.StringPointerValue(field.Source),
+		Tooltip:              types.BoolPointerValue(field.Tooltip),
+		Translatable:         types.BoolPointerValue(field.Translatable),
+		UseUuid:              types.BoolPointerValue(field.UseUuid),
+	}
 }
 
 func getComponentTypes() map[string]string {
