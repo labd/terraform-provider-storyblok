@@ -201,6 +201,8 @@ github.com/labd/storyblok-go-sdk v0.0.4-0.20230714141155-f4ce15fceedd h1:xuLeaCe
 github.com/labd/storyblok-go-sdk v0.0.4-0.20230714141155-f4ce15fceedd/go.mod h1:fkI5rPwlQpM3F8CyNuVoLyvCfGW4P97ZHuMb/lHq4AI=
 github.com/labd/storyblok-go-sdk v0.0.4-0.20230717112148-ecefeba28058 h1:T1dFSoFouXgImVraKJHVTnJ1LPikThKK1Wiz3Wamt8M=
 github.com/labd/storyblok-go-sdk v0.0.4-0.20230717112148-ecefeba28058/go.mod h1:fkI5rPwlQpM3F8CyNuVoLyvCfGW4P97ZHuMb/lHq4AI=
+github.com/labd/storyblok-go-sdk v0.0.4-0.20230717142750-1eb4002dc3be h1:ex3wAAEoLH0prGOmjdGjg9CrYzse3x/17+We6nDlCag=
+github.com/labd/storyblok-go-sdk v0.0.4-0.20230717142750-1eb4002dc3be/go.mod h1:fkI5rPwlQpM3F8CyNuVoLyvCfGW4P97ZHuMb/lHq4AI=
 github.com/labstack/echo/v4 v4.10.2 h1:n1jAhnq/elIFTHr1EYpiYtyKgx4RW9ccVgkqByZaN2M=
 github.com/labstack/echo/v4 v4.10.2/go.mod h1:OEyqf2//K1DFdE57vw2DRgWY0M7s65IVQO2FzvI4J5k=
 github.com/labstack/gommon v0.4.0 h1:y7cvthEAEbU0yHOf4axH8ZG2NH8knB9iNSoTO8dyIk8=

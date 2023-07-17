@@ -16,17 +16,17 @@ type assetFolderResourceModel struct {
 	ParentID      types.Int64  `tfsdk:"parent_id"`
 }
 
-func (m *assetFolderResourceModel) toCreateInput() sbmgmt.CreateAssetFolderJSONRequestBody {
-	return sbmgmt.CreateAssetFolderJSONRequestBody{
-		AssetFolder: &sbmgmt.AssetFolderCreateInput{
+func (m *assetFolderResourceModel) toCreateInput() sbmgmt.AssetFolderCreateInput {
+	return sbmgmt.AssetFolderCreateInput{
+		AssetFolder: sbmgmt.AssetFolderBase{
 			Name:     m.Name.ValueString(),
 			ParentId: m.ParentID.ValueInt64Pointer(),
 		},
 	}
 }
-func (m *assetFolderResourceModel) toUpdateInput() sbmgmt.UpdateAssetFolderJSONRequestBody {
+func (m *assetFolderResourceModel) toUpdateInput() sbmgmt.AssetFolderUpdateInput {
 	return sbmgmt.UpdateAssetFolderJSONRequestBody{
-		AssetFolder: &sbmgmt.AssetFolderUpdateInput{
+		AssetFolder: sbmgmt.AssetFolderBase{
 			Name:     m.Name.ValueString(),
 			ParentId: m.ParentID.ValueInt64Pointer(),
 		},

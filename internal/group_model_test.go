@@ -14,7 +14,7 @@ func TestComponentGroupResourceModel_ToRemoteInput(t *testing.T) {
 		Name: types.StringValue("TestGroup"),
 	}
 
-	expectedInput := sbmgmt.ComponentGroupCreateInput{
+	expectedInput := sbmgmt.ComponentGroupBase{
 		Name: "TestGroup",
 	}
 

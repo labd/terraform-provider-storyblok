@@ -16,20 +16,18 @@ type componentGroupResourceModel struct {
 	Name    types.String `tfsdk:"name"`
 }
 
-func (m *componentGroupResourceModel) toCreateInput() sbmgmt.CreateComponentGroupJSONRequestBody {
+func (m *componentGroupResourceModel) toCreateInput() sbmgmt.ComponentGroupCreateInput {
 
-	return sbmgmt.CreateComponentGroupJSONRequestBody{
-		ComponentGroup: &sbmgmt.ComponentGroupCreateInput{
-
+	return sbmgmt.ComponentGroupCreateInput{
+		ComponentGroup: sbmgmt.ComponentGroupBase{
 			Name: m.Name.ValueString(),
 		},
 	}
 }
-func (m *componentGroupResourceModel) toUpdateInput() sbmgmt.UpdateComponentGroupJSONRequestBody {
+func (m *componentGroupResourceModel) toUpdateInput() sbmgmt.ComponentGroupUpdateInput {
 
-	return sbmgmt.UpdateComponentGroupJSONRequestBody{
-		ComponentGroup: &sbmgmt.ComponentGroupUpdateInput{
-
+	return sbmgmt.ComponentGroupUpdateInput{
+		ComponentGroup: sbmgmt.ComponentGroupBase{
 			Name: m.Name.ValueString(),
 		},
 	}
