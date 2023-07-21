@@ -198,10 +198,21 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Should be excluded in translation export",
 							Optional:    true,
 						},
-						"options": schema.MapAttribute{
+						"options": schema.ListNestedAttribute{
 							Description: "Array of datasource entries [{name:\"\", value:\"\"}]; Effects editor only if source=undefined",
 							Optional:    true,
-							ElementType: types.StringType,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"name": schema.StringAttribute{
+										Description: "Name of the datasource entry",
+										Required:    true,
+									},
+									"value": schema.StringAttribute{
+										Description: "Value of the datasource entry",
+										Required:    true,
+									},
+								},
+							},
 						},
 						"preview_field": schema.BoolAttribute{
 							Description: "Is used as instance preview field below component name in bloks types",
