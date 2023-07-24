@@ -95,6 +95,25 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 					customvalidators.UUID(),
 				},
 			},
+			"icon": schema.StringAttribute{
+				Description: "The Icon of the component",
+				Optional:    true,
+				Validators: []validator.String{
+					stringvalidator.OneOf(getComponentIcons()...),
+				},
+			},
+			"image": schema.StringAttribute{
+				Description: "An image url of the component",
+				Optional:    true,
+			},
+			"preview": schema.StringAttribute{
+				Description: "The preview template of the component",
+				Optional:    true,
+			},
+			"color": schema.StringAttribute{
+				Description: "The background color for the icon of the component",
+				Optional:    true,
+			},
 			"schema": schema.MapNestedAttribute{
 				Description: "Schema of this component.",
 				Required:    true,
