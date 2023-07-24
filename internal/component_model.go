@@ -65,8 +65,8 @@ type fieldModel struct {
 }
 
 type optionModel struct {
-	Name  types.String `tfsdk:"name,omitempty"`
-	Value types.String `tfsdk:"value,omitempty"`
+	Name  types.String `tfsdk:"name"`
+	Value types.String `tfsdk:"value"`
 }
 
 func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
