@@ -2,10 +2,10 @@ package internal
 
 import (
 	"context"
-	"net/http"
 	"os"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -104,14 +104,14 @@ func (p *storyblokProvider) Configure(ctx context.Context, req provider.Configur
 		resp.Diagnostics.AddError("Unable to Create Storyblok API Client", err.Error())
 	}
 
-	httpClient := &http.Client{
-		Transport: debugTransport,
-	}
+	retryClient := retryablehttp.NewClient()
+	retryClient.RetryMax = 10
+	retryClient.HTTPClient.Transport = debugTransport
 
 	// Create a new Storyblok client using the configuration values
 	client, err := sbmgmt.NewClientWithResponses(
 		url,
-		sbmgmt.WithHTTPClient(httpClient),
+		sbmgmt.WithHTTPClient(retryClient.StandardClient()),
 		sbmgmt.WithRequestEditorFn(apiKeyProvider.Intercept))
 
 	if err != nil {
