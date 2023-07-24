@@ -3,7 +3,6 @@ package internal
 import (
 	"fmt"
 
-	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
@@ -82,12 +81,12 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 	// using the ordering of the json...
 	schema := sortComponentFields(raw)
 
-	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+	componentGroupUuid := asUUIDPointer(m.ComponentGroupUUID)
 
 	return sbmgmt.ComponentCreateInput{
 		Component: sbmgmt.ComponentBase{
 			Color:              m.Color.ValueStringPointer(),
-			ComponentGroupUuid: &componentGroupUuid,
+			ComponentGroupUuid: componentGroupUuid,
 			DisplayName:        m.DisplayName.ValueStringPointer(),
 			Icon:               (*sbmgmt.ComponentBaseIcon)(m.Icon.ValueStringPointer()),
 			Image:              m.Image.ValueStringPointer(),
@@ -111,12 +110,12 @@ func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
 	// using the ordering of the json...
 	schema := sortComponentFields(raw)
 
-	componentGroupUuid := uuid.Must(uuid.FromString(m.ComponentGroupUUID.ValueString()))
+	componentGroupUuid := asUUIDPointer(m.ComponentGroupUUID)
 
 	return sbmgmt.ComponentUpdateInput{
 		Component: sbmgmt.ComponentBase{
 			Color:              m.Color.ValueStringPointer(),
-			ComponentGroupUuid: &componentGroupUuid,
+			ComponentGroupUuid: componentGroupUuid,
 			DisplayName:        m.DisplayName.ValueStringPointer(),
 			Icon:               (*sbmgmt.ComponentBaseIcon)(m.Icon.ValueStringPointer()),
 			Image:              m.Image.ValueStringPointer(),
@@ -178,6 +177,13 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 	m.IsRoot = types.BoolPointerValue(c.IsRoot)
 	m.IsNestable = types.BoolPointerValue(c.IsNestable)
 	m.ComponentGroupUUID = fromUUID(c.ComponentGroupUuid)
+	m.Color = fromStringPointer(c.Color)
+	m.DisplayName = fromStringPointer(c.DisplayName)
+	m.Image = fromStringPointer(c.Image)
+	m.Preview = fromStringPointer(c.Preview)
+	if c.Icon != nil {
+		m.Icon = types.StringValue(string(*c.Icon))
+	}
 
 	schema := make(map[string]fieldModel, c.Schema.Len())
 	for pair := c.Schema.Oldest(); pair != nil; pair = pair.Next() {

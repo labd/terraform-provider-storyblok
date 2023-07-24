@@ -6,6 +6,7 @@ import (
 	"github.com/elliotchance/pie/v2"
 	"github.com/gofrs/uuid"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
@@ -94,11 +95,28 @@ func asUUID(s types.String) uuid.UUID {
 	return val
 }
 
+func asUUIDPointer(s basetypes.StringValue) *uuid.UUID {
+	var componentGroupUuid *uuid.UUID
+	if !s.IsNull() {
+		value := uuid.Must(uuid.FromString(s.ValueString()))
+
+		componentGroupUuid = &value
+	}
+	return componentGroupUuid
+}
+
 func fromUUID(v *uuid.UUID) types.String {
-	if v.IsNil() {
+	if v == nil || v.IsNil() {
 		return types.StringPointerValue(nil)
 	}
 	return types.StringValue(v.String())
+}
+
+func fromStringPointer(v *string) types.String {
+	if v == nil {
+		return types.StringPointerValue(nil)
+	}
+	return types.StringValue(*v)
 }
 
 func must[T any](v T, err error) T {

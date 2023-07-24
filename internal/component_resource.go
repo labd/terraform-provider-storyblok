@@ -114,6 +114,10 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 				Description: "The background color for the icon of the component",
 				Optional:    true,
 			},
+			"display_name": schema.StringAttribute{
+				Description: "The display name of the component",
+				Optional:    true,
+			},
 			"schema": schema.MapNestedAttribute{
 				Description: "Schema of this component.",
 				Required:    true,
