@@ -17,7 +17,8 @@ type componentResourceModel struct {
 	Color              types.String          `tfsdk:"color"`
 	Icon               types.String          `tfsdk:"icon"`
 	Image              types.String          `tfsdk:"image"`
-	Preview            types.String          `tfsdk:"preview"`
+	PreviewTmpl        types.String          `tfsdk:"preview_tmpl"`
+	PreviewField       types.String          `tfsdk:"preview_field"`
 	Name               types.String          `tfsdk:"name"`
 	IsRoot             types.Bool            `tfsdk:"is_root"`
 	IsNestable         types.Bool            `tfsdk:"is_nestable"`
@@ -48,10 +49,10 @@ type fieldModel struct {
 	KeepImageSize        types.Bool     `tfsdk:"keep_image_size"`
 	Keys                 []types.String `tfsdk:"keys"`
 	MaxLength            types.Int64    `tfsdk:"max_length"`
+	Minimum              types.Int64    `tfsdk:"minimum"`
 	Maximum              types.Int64    `tfsdk:"maximum"`
 	NoTranslate          types.Bool     `tfsdk:"no_translate"`
 	Options              []optionModel  `tfsdk:"options"`
-	PreviewField         types.Bool     `tfsdk:"preview_field"`
 	Regex                types.String   `tfsdk:"regex"`
 	Required             types.Bool     `tfsdk:"required"`
 	RestrictComponents   types.Bool     `tfsdk:"restrict_components"`
@@ -93,7 +94,8 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 			IsNestable:         m.IsNestable.ValueBoolPointer(),
 			IsRoot:             m.IsRoot.ValueBoolPointer(),
 			Name:               m.Name.ValueString(),
-			Preview:            m.Preview.ValueStringPointer(),
+			PreviewTmpl:        m.PreviewTmpl.ValueStringPointer(),
+			PreviewField:       m.PreviewField.ValueStringPointer(),
 			Schema:             schema,
 		},
 	}
@@ -122,7 +124,8 @@ func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
 			IsNestable:         m.IsNestable.ValueBoolPointer(),
 			IsRoot:             m.IsRoot.ValueBoolPointer(),
 			Name:               m.Name.ValueString(),
-			Preview:            m.Preview.ValueStringPointer(),
+			PreviewTmpl:        m.PreviewTmpl.ValueStringPointer(),
+			PreviewField:       m.PreviewField.ValueStringPointer(),
 			Schema:             schema,
 		},
 	}
@@ -150,10 +153,11 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		ImageWidth:           item.ImageWidth.ValueStringPointer(),
 		KeepImageSize:        item.KeepImageSize.ValueBoolPointer(),
 		Keys:                 convertToPointerStringSlice(item.Keys),
+		MaxLength:            item.MaxLength.ValueInt64Pointer(),
 		Maximum:              item.Maximum.ValueInt64Pointer(),
+		Minimum:              item.Minimum.ValueInt64Pointer(),
 		NoTranslate:          item.NoTranslate.ValueBoolPointer(),
 		Options:              deserializeOptionsModel(item.Options),
-		PreviewField:         item.PreviewField.ValueBoolPointer(),
 		Regex:                item.Regex.ValueStringPointer(),
 		Required:             item.Required.ValueBoolPointer(),
 		RestrictComponents:   item.RestrictComponents.ValueBoolPointer(),
@@ -180,7 +184,8 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 	m.Color = fromStringPointer(c.Color)
 	m.DisplayName = fromStringPointer(c.DisplayName)
 	m.Image = fromStringPointer(c.Image)
-	m.Preview = fromStringPointer(c.Preview)
+	m.PreviewField = fromStringPointer(c.PreviewField)
+	m.PreviewTmpl = fromStringPointer(c.PreviewTmpl)
 	if c.Icon != nil {
 		m.Icon = types.StringValue(string(*c.Icon))
 	}
@@ -220,10 +225,10 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		KeepImageSize:        types.BoolPointerValue(field.KeepImageSize),
 		Keys:                 convertToStringSlice(field.Keys),
 		MaxLength:            types.Int64PointerValue(field.MaxLength),
+		Minimum:              types.Int64PointerValue(field.Minimum),
 		Maximum:              types.Int64PointerValue(field.Maximum),
 		NoTranslate:          types.BoolPointerValue(field.NoTranslate),
 		Options:              serializeOptionsModel(field.Options),
-		PreviewField:         types.BoolPointerValue(field.PreviewField),
 		Regex:                types.StringPointerValue(field.Regex),
 		Required:             types.BoolPointerValue(field.Required),
 		RestrictComponents:   types.BoolPointerValue(field.RestrictComponents),

@@ -106,8 +106,12 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 				Description: "An image url of the component",
 				Optional:    true,
 			},
-			"preview": schema.StringAttribute{
+			"preview_tmpl": schema.StringAttribute{
 				Description: "The preview template of the component",
+				Optional:    true,
+			},
+			"preview_field": schema.StringAttribute{
+				Description: "A preview field of the component",
 				Optional:    true,
 			},
 			"color": schema.StringAttribute{
@@ -217,6 +221,10 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Maximum amount of added bloks in this blok field",
 							Optional:    true,
 						},
+						"minimum": schema.Int64Attribute{
+							Description: "Minimum amount of added bloks in this blok field",
+							Optional:    true,
+						},
 						"no_translate": schema.BoolAttribute{
 							Description: "Should be excluded in translation export",
 							Optional:    true,
@@ -236,10 +244,6 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 									},
 								},
 							},
-						},
-						"preview_field": schema.BoolAttribute{
-							Description: "Is used as instance preview field below component name in bloks types",
-							Optional:    true,
 						},
 						"regex": schema.StringAttribute{
 							Description: "Client Regex validation for the field",
