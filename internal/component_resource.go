@@ -142,12 +142,20 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Prepends https: to stop usage of relative protocol",
 							Optional:    true,
 						},
+						"allow_target_blank": schema.BoolAttribute{
+							Description: "Allows to open links in a new tab for Richtext; Default: false",
+							Optional:    true,
+						},
 						"asset_folder_id": schema.Int64Attribute{
 							Description: "Default asset folder numeric id to store uploaded image of that field",
 							Optional:    true,
 						},
 						"can_sync": schema.BoolAttribute{
 							Description: "Advanced usage to sync with field in preview; Default: false",
+							Optional:    true,
+						},
+						"customize_toolbar": schema.BoolAttribute{
+							Description: "Allow to customize the Markdown or Richtext toolbar; Default: false",
 							Optional:    true,
 						},
 						"component_whitelist": schema.ListAttribute{
@@ -280,6 +288,11 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 						"translatable": schema.BoolAttribute{
 							Description: "Can field be translated; Default: false",
 							Optional:    true,
+						},
+						"toolbar": schema.ListAttribute{
+							Description: "Array of toolbar keys to include in the Richtext or Markdown toolbar",
+							Optional:    true,
+							ElementType: types.StringType,
 						},
 						"use_uuid": schema.BoolAttribute{
 							Description: "Default: true; available in option and source=internal_stories",

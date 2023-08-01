@@ -141,8 +141,10 @@ Optional:
 
 - `add_https` (Boolean) Prepends https: to stop usage of relative protocol
 - `asset_folder_id` (Number) Default asset folder numeric id to store uploaded image of that field
+- `allow_target_blank` (Boolean) Allows to open links in a new tab for Richtext; Default: false
 - `can_sync` (Boolean) Advanced usage to sync with field in preview; Default: false
 - `component_whitelist` (List of String) Array of component/content type names: ["post","page","product"]
+- `customize_toolbar` (Boolean) Allow to customize the Markdown or Richtext toolbar; Default: false
 - `datasource_slug` (String) Define selectable datasources string; Effects editor only if source=internal
 - `default_value` (String) Default value for the field; Can be an escaped JSON object
 - `description` (String) Description shown in the editor interface
@@ -169,6 +171,7 @@ Optional:
 - `rich_markdown` (Boolean) Enable rich markdown view by default (true/false)
 - `rtl` (Boolean) Enable global RTL for this field
 - `source` (String) Possible values: undefined: Self; internal_stories: Stories; internal: Datasource; external: API Endpoint in Datasource Entries Array Format
+- `toolbar` (List of String) Array of toolbar keys to include in the Richtext or Markdown toolbar
 - `tooltip` (Boolean) Show the description as a tooltip
 - `translatable` (Boolean) Can field be translated; Default: false
 - `use_uuid` (Boolean) Default: true; available in option and source=internal_stories

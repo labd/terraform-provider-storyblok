@@ -31,9 +31,11 @@ type fieldModel struct {
 	Position types.Int64  `tfsdk:"position"`
 
 	AddHttps             types.Bool     `tfsdk:"add_https"`
+	AllowTargetBlank     types.Bool     `tfsdk:"allow_target_blank"`
 	AssetFolderId        types.Int64    `tfsdk:"asset_folder_id"`
 	CanSync              types.Bool     `tfsdk:"can_sync"`
 	ComponentWhitelist   []types.String `tfsdk:"component_whitelist"`
+	CustomizeToolbar     types.Bool     `tfsdk:"customize_toolbar"`
 	DatasourceSlug       types.String   `tfsdk:"datasource_slug"`
 	DefaultValue         types.String   `tfsdk:"default_value"`
 	Description          types.String   `tfsdk:"description"`
@@ -61,6 +63,7 @@ type fieldModel struct {
 	Rtl                  types.Bool     `tfsdk:"rtl"`
 	Source               types.String   `tfsdk:"source"`
 	Translatable         types.Bool     `tfsdk:"translatable"`
+	Toolbar              []types.String `tfsdk:"toolbar"`
 	Tooltip              types.Bool     `tfsdk:"tooltip"`
 	UseUuid              types.Bool     `tfsdk:"use_uuid"`
 }
@@ -137,6 +140,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		Pos:  item.Position.ValueInt64(),
 
 		AddHttps:             item.AddHttps.ValueBoolPointer(),
+		AllowTargetBlank:     item.AllowTargetBlank.ValueBoolPointer(),
 		AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
 		CanSync:              item.CanSync.ValueBoolPointer(),
 		DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
@@ -165,6 +169,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		RichMarkdown:         item.RichMarkdown.ValueBoolPointer(),
 		Rtl:                  item.Rtl.ValueBoolPointer(),
 		Source:               item.Source.ValueStringPointer(),
+		Toolbar:              convertToPointerStringSlice(item.Toolbar),
 		Tooltip:              item.Tooltip.ValueBoolPointer(),
 		Translatable:         item.Translatable.ValueBoolPointer(),
 		UseUuid:              item.UseUuid.ValueBoolPointer(),
@@ -207,9 +212,11 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		Position: types.Int64Value(field.Pos),
 
 		AddHttps:             types.BoolPointerValue(field.AddHttps),
+		AllowTargetBlank:     types.BoolPointerValue(field.AllowTargetBlank),
 		AssetFolderId:        types.Int64PointerValue(field.AssetFolderId),
 		CanSync:              types.BoolPointerValue(field.CanSync),
 		ComponentWhitelist:   convertToStringSlice(field.ComponentWhitelist),
+		CustomizeToolbar:     types.BoolPointerValue(field.CustomizeToolbar),
 		DatasourceSlug:       types.StringPointerValue(field.DatasourceSlug),
 		DefaultValue:         types.StringPointerValue(field.DefaultValue),
 		Description:          types.StringPointerValue(field.Description),
@@ -236,6 +243,7 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		RichMarkdown:         types.BoolPointerValue(field.RichMarkdown),
 		Rtl:                  types.BoolPointerValue(field.Rtl),
 		Source:               types.StringPointerValue(field.Source),
+		Toolbar:              convertToStringSlice(field.Toolbar),
 		Tooltip:              types.BoolPointerValue(field.Tooltip),
 		Translatable:         types.BoolPointerValue(field.Translatable),
 		UseUuid:              types.BoolPointerValue(field.UseUuid),
@@ -248,6 +256,7 @@ func getComponentTypes() map[string]string {
 		"text":       "Text: a text field",
 		"textarea":   "Textarea: a text area",
 		"markdown":   "Markdown: write markdown with a text area and additional formatting options",
+		"richtext":   "Richtext: write richtext with a text area and additional formatting options",
 		"number":     "Number: a number field",
 		"datetime":   "Date/Time: a date- and time picker",
 		"boolean":    "Boolean: a checkbox - true/false",
