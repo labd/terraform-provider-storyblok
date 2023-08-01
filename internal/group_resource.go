@@ -59,20 +59,6 @@ func (r *componentGroupResource) Schema(_ context.Context, _ resource.SchemaRequ
 				Description: "The ID of the space.",
 				Required:    true,
 			},
-			"created_at": schema.StringAttribute{
-				Description: "The creation timestamp of the component group.",
-				Computed:    true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
-			"updated_at": schema.StringAttribute{
-				Description: "The creation timestamp of the component group.",
-				Computed:    true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.UseStateForUnknown(),
-				},
-			},
 			"uuid": schema.StringAttribute{
 				Description: "The UUID of the component group.",
 				Computed:    true,
