@@ -146,6 +146,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
 		DefaultValue:         item.DefaultValue.ValueStringPointer(),
 		Description:          item.Description.ValueStringPointer(),
+		DisableTime:          item.DisableTime.ValueBoolPointer(),
 		DisplayName:          item.DisplayName.ValueStringPointer(),
 		ComponentWhitelist:   convertToPointerStringSlice(item.ComponentWhitelist),
 		ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
