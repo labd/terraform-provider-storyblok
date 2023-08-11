@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: get app token
         id: get-app-token
-        uses: labdigital-main/action-gh-app-token@main
+        uses: labd/action-gh-app-token@main
         with:
           app-id: ${{ secrets.RD_APP_ID }}
           private-key: ${{ secrets.RD_APP_PRIVATE_KEY }}
