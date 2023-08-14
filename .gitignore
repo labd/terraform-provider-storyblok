@@ -6,3 +6,4 @@ terraform-provider-storyblok*
 coverage.out
 dist/
 local-test
+/.idea

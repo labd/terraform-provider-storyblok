@@ -142,5 +142,6 @@ func (p *storyblokProvider) Resources(_ context.Context) []func() resource.Resou
 	return []func() resource.Resource{
 		NewComponentResource,
 		NewComponentGroupResource,
+		NewSpaceRoleResource,
 	}
 }
