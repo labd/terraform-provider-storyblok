@@ -55,10 +55,8 @@ resource "storyblok_component" "component2" {
 
 ### Read-Only
 
-- `created_at` (String) The creation timestamp of the component group.
 - `group_id` (Number) The ID of the component group.
 - `id` (String) The terraform ID of the component.
-- `updated_at` (String) The creation timestamp of the component group.
 - `uuid` (String) The UUID of the component group.
 
 

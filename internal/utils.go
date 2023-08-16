@@ -84,6 +84,18 @@ func convertToPointerStringSlice(slice []types.String) *[]string {
 	return &result
 }
 
+func convertToPointerIntSlice(slice []types.Int64) *[]int {
+	if slice == nil {
+		return nil
+	}
+
+	result := pie.Map(slice, func(s types.Int64) int {
+		return int(s.ValueInt64())
+	})
+
+	return &result
+}
+
 func asUUID(s types.String) uuid.UUID {
 	if s.IsNull() {
 		return uuid.Nil

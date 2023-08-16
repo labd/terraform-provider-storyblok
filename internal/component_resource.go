@@ -29,7 +29,7 @@ var (
 	_ resource.ResourceWithImportState = &componentResource{}
 )
 
-// NewcomponentResource is a helper function to simplify the provider implementation.
+// NewComponentResource is a helper function to simplify the provider implementation.
 func NewComponentResource() resource.Resource {
 	return &componentResource{}
 }
