@@ -2,7 +2,7 @@ module github.com/labd/terraform-provider-storyblok
 
 go 1.20
 
-//replace github.com/labd/storyblok-go-sdk => ../storyblok-go-sdk
+// replace github.com/labd/storyblok-go-sdk => ../storyblok-go-sdk
 
 require (
 	github.com/davecgh/go-spew v1.1.1
@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/terraform-plugin-docs v0.14.1
 	github.com/hashicorp/terraform-plugin-framework v1.2.0
 	github.com/hashicorp/terraform-plugin-log v0.8.0
-	github.com/labd/storyblok-go-sdk v0.1.0
+	github.com/labd/storyblok-go-sdk v0.1.1-0.20230816111045-86764c2485b3
 	github.com/wk8/go-ordered-map/v2 v2.1.8
 )
 
@@ -97,7 +97,6 @@ require (
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
-	github.com/kr/pretty v0.3.1 // indirect
 	github.com/labstack/echo/v4 v4.11.1 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect

@@ -196,6 +196,10 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 							ElementType: types.StringType,
 						},
+						"force_link_scope": schema.BoolAttribute{
+							Description: "Force link scope to be internal_stories; Default: false",
+							Optional:    true,
+						},
 						"folder_slug": schema.StringAttribute{
 							Description: "Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have a multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: \"{0}/categories/\", {0}/{1}/categories/",
 							Optional:    true,
@@ -220,6 +224,10 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Array of field keys to include in this section",
 							Optional:    true,
 							ElementType: types.StringType,
+						},
+						"link_scope": schema.StringAttribute{
+							Description: "A path to a folder to restrict the link scope",
+							Optional:    true,
 						},
 						"max_length": schema.Int64Attribute{
 							Description: "Set the max length of the input string",
