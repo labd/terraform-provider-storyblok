@@ -45,11 +45,13 @@ type fieldModel struct {
 	FieldType            types.String   `tfsdk:"field_type"`
 	Filetypes            []types.String `tfsdk:"filetypes"`
 	FolderSlug           types.String   `tfsdk:"folder_slug"`
+	ForceLinkScope       types.Bool     `tfsdk:"force_link_scope"`
 	ImageCrop            types.Bool     `tfsdk:"image_crop"`
 	ImageHeight          types.String   `tfsdk:"image_height"`
 	ImageWidth           types.String   `tfsdk:"image_width"`
 	KeepImageSize        types.Bool     `tfsdk:"keep_image_size"`
 	Keys                 []types.String `tfsdk:"keys"`
+	LinkScope            types.String   `tfsdk:"link_scope"`
 	MaxLength            types.Int64    `tfsdk:"max_length"`
 	Minimum              types.Int64    `tfsdk:"minimum"`
 	Maximum              types.Int64    `tfsdk:"maximum"`
@@ -154,11 +156,13 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		FieldType:            item.FieldType.ValueStringPointer(),
 		Filetypes:            convertToPointerStringSlice(item.Filetypes),
 		FolderSlug:           item.FolderSlug.ValueStringPointer(),
+		ForceLinkScope:       item.ForceLinkScope.ValueBoolPointer(),
 		ImageCrop:            item.ImageCrop.ValueBoolPointer(),
 		ImageHeight:          item.ImageHeight.ValueStringPointer(),
 		ImageWidth:           item.ImageWidth.ValueStringPointer(),
 		KeepImageSize:        item.KeepImageSize.ValueBoolPointer(),
 		Keys:                 convertToPointerStringSlice(item.Keys),
+		LinkScope:            item.LinkScope.ValueStringPointer(),
 		Maximum:              item.Maximum.ValueInt64Pointer(),
 		MaxLength:            item.MaxLength.ValueInt64Pointer(),
 		Minimum:              item.Minimum.ValueInt64Pointer(),
@@ -228,11 +232,13 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		FieldType:            types.StringPointerValue(field.FieldType),
 		Filetypes:            convertToStringSlice(field.Filetypes),
 		FolderSlug:           types.StringPointerValue(field.FolderSlug),
+		ForceLinkScope:       types.BoolPointerValue(field.ForceLinkScope),
 		ImageCrop:            types.BoolPointerValue(field.ImageCrop),
 		ImageHeight:          types.StringPointerValue(field.ImageHeight),
 		ImageWidth:           types.StringPointerValue(field.ImageWidth),
 		KeepImageSize:        types.BoolPointerValue(field.KeepImageSize),
 		Keys:                 convertToStringSlice(field.Keys),
+		LinkScope:            types.StringPointerValue(field.LinkScope),
 		Maximum:              types.Int64PointerValue(field.Maximum),
 		MaxLength:            types.Int64PointerValue(field.MaxLength),
 		Minimum:              types.Int64PointerValue(field.Minimum),
