@@ -2,10 +2,14 @@ package internal
 
 import (
 	"context"
+	"github.com/hashicorp/go-retryablehttp"
+	"gopkg.in/dnaeon/go-vcr.v3/cassette"
+	"gopkg.in/dnaeon/go-vcr.v3/recorder"
+	"log"
+	"net/http"
 	"os"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
-	"github.com/hashicorp/go-retryablehttp"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -20,13 +24,67 @@ var (
 	_ provider.Provider = &storyblokProvider{}
 )
 
+type OptionFunc func(p *storyblokProvider)
+
+func WithRetryableClient(retries int) OptionFunc {
+	retryClient := retryablehttp.NewClient()
+	retryClient.RetryMax = retries
+
+	return func(p *storyblokProvider) {
+		p.httpClient = retryClient.StandardClient()
+	}
+}
+
+func WithDebugClient() OptionFunc {
+	return func(p *storyblokProvider) {
+		p.httpClient.Transport = debugTransport
+	}
+}
+
+func WithRecorderClient(file string, mode recorder.Mode) (OptionFunc, func() error) {
+	r, err := recorder.NewWithOptions(&recorder.Options{
+		CassetteName:       file,
+		Mode:               mode,
+		SkipRequestLatency: true,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//Strip all fields we are not interested in
+	hook := func(i *cassette.Interaction) error {
+		i.Response.Headers = cleanHeaders(i.Response.Headers, "Content-Type")
+		i.Request.Headers = cleanHeaders(i.Request.Headers)
+		return nil
+	}
+	r.AddHook(hook, recorder.AfterCaptureHook)
+
+	stop := func() error {
+		return r.Stop()
+	}
+
+	return func(p *storyblokProvider) {
+		p.httpClient = r.GetDefaultClient()
+	}, stop
+}
+
 // New is a helper function to simplify provider server and testing implementation.
-func New() provider.Provider {
-	return &storyblokProvider{}
+func New(opts ...OptionFunc) provider.Provider {
+	var p = &storyblokProvider{
+		httpClient: http.DefaultClient,
+	}
+
+	for _, opt := range opts {
+		opt(p)
+	}
+
+	return p
 }
 
 // storyblokProvider is the provider implementation.
-type storyblokProvider struct{}
+type storyblokProvider struct {
+	httpClient *http.Client
+}
 
 // storyblokProviderModel maps provider schema data to a Go type.
 type storyblokProviderModel struct {
@@ -46,11 +104,11 @@ func (p *storyblokProvider) Schema(_ context.Context, _ provider.SchemaRequest, 
 		Attributes: map[string]schema.Attribute{
 			"url": schema.StringAttribute{
 				Description: "Management API base URL",
-				Required:    true,
+				Optional:    true,
 			},
 			"token": schema.StringAttribute{
 				Description: "Personal access token",
-				Required:    true,
+				Optional:    true,
 				Sensitive:   true,
 			},
 		},
@@ -104,14 +162,10 @@ func (p *storyblokProvider) Configure(ctx context.Context, req provider.Configur
 		resp.Diagnostics.AddError("Unable to Create Storyblok API Client", err.Error())
 	}
 
-	retryClient := retryablehttp.NewClient()
-	retryClient.RetryMax = 10
-	retryClient.HTTPClient.Transport = debugTransport
-
 	// Create a new Storyblok client using the configuration values
 	client, err := sbmgmt.NewClientWithResponses(
 		url,
-		sbmgmt.WithHTTPClient(retryClient.StandardClient()),
+		sbmgmt.WithHTTPClient(p.httpClient),
 		sbmgmt.WithRequestEditorFn(apiKeyProvider.Intercept))
 
 	if err != nil {
@@ -143,5 +197,6 @@ func (p *storyblokProvider) Resources(_ context.Context) []func() resource.Resou
 		NewComponentResource,
 		NewComponentGroupResource,
 		NewSpaceRoleResource,
+		NewAssetFolderResource,
 	}
 }

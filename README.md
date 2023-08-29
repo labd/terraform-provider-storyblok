@@ -20,7 +20,8 @@ and check out the [examples](https://registry.terraform.io/providers/labd/storyb
 
 ## Usage
 
-The provider is distributed via the Terraform registry. To use it you need to configure the [`required_provider`](https://www.terraform.io/language/providers/requirements#requiring-providers) block. For example:
+The provider is distributed via the Terraform registry. To use it you need to configure
+the [`required_provider`](https://www.terraform.io/language/providers/requirements#requiring-providers) block. For example:
 
 ```hcl
 terraform {
@@ -81,11 +82,24 @@ Once that's merged and its Github action is complete, a new release will be live
 
 ## Testing
 
-### Running the unit tests
+### Running unit tests
 
 ```sh
 $ task test
 ```
+
+### Running acceptance tests
+
+```sh
+$ task testacc
+```
+
+Note that acceptance tests by default run based on pre-recorded results. The test stubs can be found in [internal/assets]
+(./internal/assets). A good habit is to create a separate stub file per test case, as otherwise there might be conflicts
+when multiple tests are run in parallel.
+
+When adding or updating tests locally you can set `RECORD=true` to re-record results. This will clear all previous results
+and create a new snapshot of the API interaction.
 
 ## Authors
 

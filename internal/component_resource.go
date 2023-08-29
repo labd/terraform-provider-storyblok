@@ -47,11 +47,15 @@ func (r *componentResource) Metadata(_ context.Context, req resource.MetadataReq
 // Schema defines the schema for the data source.
 func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage a component.",
+		Description: "A component is a standalone entity that is meaningful in its own right. While components (or " +
+			"blocks) can be nested in each other, semantically they remain equal. Each component is a small piece " +
+			"of your data structure which can be filled with content or nested by your content editor. One component can " +
+			"consist of as many field types as required.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Description: "The terraform ID of the component.",
-				Computed:    true,
+				Description: "The terraform ID of the space role. This is a composite ID, " +
+					"and should not be used as reference",
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},

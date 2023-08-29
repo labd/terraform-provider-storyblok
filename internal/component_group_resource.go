@@ -39,11 +39,13 @@ func (r *componentGroupResource) Metadata(_ context.Context, req resource.Metada
 // Schema defines the schema for the data source.
 func (r *componentGroupResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage a component.",
+		Description: "A component group can be used to group components together. Each component can have only one " +
+			"component group.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Description: "The terraform ID of the component.",
-				Computed:    true,
+				Description: "The terraform ID of the space role. This is a composite ID, " +
+					"and should not be used as reference",
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},

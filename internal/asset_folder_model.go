@@ -38,6 +38,7 @@ func (m *assetFolderResourceModel) fromRemote(spaceID int64, f *sbmgmt.AssetFold
 		return fmt.Errorf("asset folder is nil")
 	}
 	m.ID = types.StringValue(createIdentifier(spaceID, f.Id))
+	m.AssetFolderID = types.Int64Value(f.Id)
 	m.SpaceID = types.Int64Value(spaceID)
 	m.Name = types.StringValue(f.Name)
 	if f.ParentId != nil {

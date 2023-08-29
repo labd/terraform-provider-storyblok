@@ -39,11 +39,13 @@ func (r *spaceRoleResource) Metadata(_ context.Context, req resource.MetadataReq
 // Schema defines the schema for the data source.
 func (r *spaceRoleResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage a space role.",
+		Description: "Space roles are custom permission sets that can be attached to collaborators to define their roles " +
+			"and permissions in a specific space.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Description: "The terraform ID of the space role",
-				Computed:    true,
+				Description: "The terraform ID of the space role. This is a composite ID, " +
+					"and should not be used as reference",
+				Computed: true,
 			},
 			"role_id": schema.Int64Attribute{
 				Description: "The ID of the role.",

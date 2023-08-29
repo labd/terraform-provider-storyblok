@@ -2,7 +2,6 @@ package internal
 
 import (
 	"fmt"
-
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
