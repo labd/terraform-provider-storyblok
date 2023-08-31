@@ -3,12 +3,12 @@
 page_title: "storyblok_component_group Resource - storyblok"
 subcategory: ""
 description: |-
-  Manage a component.
+  A component group can be used to group components together. Each component can have only one component group.
 ---
 
 # storyblok_component_group (Resource)
 
-Manage a component.
+A component group can be used to group components together. Each component can have only one component group.
 
 ## Example Usage
 
@@ -56,7 +56,5 @@ resource "storyblok_component" "component2" {
 ### Read-Only
 
 - `group_id` (Number) The ID of the component group.
-- `id` (String) The terraform ID of the component.
+- `id` (String) The terraform ID of the space role. This is a composite ID, and should not be used as reference
 - `uuid` (String) The UUID of the component group.
-
-

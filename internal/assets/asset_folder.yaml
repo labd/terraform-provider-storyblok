@@ -1,0 +1,216 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 45
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"asset_folder":{"name":"asset-folder-name"}}'
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 139
+        uncompressed: false
+        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 145.384494ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 139
+        uncompressed: false
+        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 58.71125ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 139
+        uncompressed: false
+        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 53.687495ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 49
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"asset_folder":{"name":"new-asset-folder-name"}}'
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers: {}
+        status: 204 No Content
+        code: 204
+        duration: 61.682219ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 143
+        uncompressed: false
+        body: '{"asset_folder":{"id":304158,"name":"new-asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 55.908121ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 143
+        uncompressed: false
+        body: '{"asset_folder":{"id":304158,"name":"new-asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 53.375039ms
+    - id: 6
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers: {}
+        status: 204 No Content
+        code: 204
+        duration: 98.791678ms

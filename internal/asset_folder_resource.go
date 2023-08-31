@@ -3,6 +3,7 @@ package internal
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"net/http"
 
 	"github.com/davecgh/go-spew/spew"
@@ -22,7 +23,7 @@ var (
 	_ resource.ResourceWithImportState = &assetFolderResource{}
 )
 
-// NewassetFolderResource is a helper function to simplify the provider implementation.
+// NewAssetFolderResource is a helper function to simplify the provider implementation.
 func NewAssetFolderResource() resource.Resource {
 	return &assetFolderResource{}
 }
@@ -40,17 +41,26 @@ func (r *assetFolderResource) Metadata(_ context.Context, req resource.MetadataR
 // Schema defines the schema for the data source.
 func (r *assetFolderResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Manage a assetFolder.",
+		Description: "Asset folder allow you to group your assets. Besides the overall root folder you can define nested " +
+			"folder structures.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Description: "The terraform ID of the assetFolder.",
-				Computed:    true,
+				Description: "The terraform ID of the space role. This is a composite ID, " +
+					"and should not be used as reference",
+				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
+			"asset_folder_id": schema.Int64Attribute{
+				Description: "The ID of the asset folder.",
+				Computed:    true,
+				PlanModifiers: []planmodifier.Int64{
+					int64planmodifier.UseStateForUnknown(),
+				},
+			},
 			"name": schema.StringAttribute{
-				Description: "The technical name of the assetFolder.",
+				Description: "The technical name of the asset folder.",
 				Required:    true,
 			},
 			"space_id": schema.Int64Attribute{
@@ -138,7 +148,6 @@ func (r *assetFolderResource) Read(ctx context.Context, req resource.ReadRequest
 
 	spaceId, id := parseIdentifier(state.ID.ValueString())
 
-	// Get refreshed order value from HashiCups
 	content, err := r.client.GetAssetFolderWithResponse(ctx, spaceId, id)
 	if d := checkGetError("assetFolder", content, err); d != nil {
 		resp.Diagnostics.Append(d)
@@ -186,7 +195,7 @@ func (r *assetFolderResource) Update(ctx context.Context, req resource.UpdateReq
 		)
 		return
 	}
-	if content.StatusCode() != http.StatusOK {
+	if content.StatusCode() != http.StatusNoContent {
 		resp.Diagnostics.AddError(
 			"Error updating assetFolder",
 			fmt.Sprintf(
@@ -196,14 +205,19 @@ func (r *assetFolderResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	assetFolder := content.JSON200.AssetFolder
-	tflog.Debug(ctx, spew.Sdump(assetFolder))
+	afResp, err := r.client.GetAssetFolderWithResponse(ctx, spaceID, plan.AssetFolderID.ValueInt64())
+	if d := checkGetError("assetFolder", afResp, err); d != nil {
+		resp.Diagnostics.Append(d)
+		return
+	}
+
+	assetFolder := afResp.JSON200.AssetFolder
 
 	// Map response body to schema and populate Computed attribute values
 	if err := plan.fromRemote(spaceID, assetFolder); err != nil {
 		resp.Diagnostics.AddError(
-			"Error creating assetFolder",
-			"Could not create assetFolder, unexpected error: "+err.Error(),
+			"Error updating assetFolder",
+			"Could not update assetFolder, unexpected error: "+err.Error(),
 		)
 		return
 	}
@@ -225,7 +239,7 @@ func (r *assetFolderResource) Delete(ctx context.Context, req resource.DeleteReq
 		return
 	}
 
-	spaceId, assetFolderId := parseIdentifier(state.ID.String())
+	spaceId, assetFolderId := parseIdentifier(state.ID.ValueString())
 	content, err := r.client.DeleteAssetFolderWithResponse(ctx, spaceId, assetFolderId)
 	if err != nil {
 		resp.Diagnostics.AddError(
@@ -234,7 +248,7 @@ func (r *assetFolderResource) Delete(ctx context.Context, req resource.DeleteReq
 		)
 		return
 	}
-	if content.StatusCode() != http.StatusOK {
+	if content.StatusCode() != http.StatusNoContent {
 		resp.Diagnostics.AddError(
 			"Error deleting assetFolder",
 			fmt.Sprintf(

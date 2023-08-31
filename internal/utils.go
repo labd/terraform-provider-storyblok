@@ -1,7 +1,10 @@
 package internal
 
 import (
+	"bytes"
 	"fmt"
+	"net/http"
+	"text/template"
 
 	"github.com/elliotchance/pie/v2"
 	"github.com/gofrs/uuid"
@@ -11,16 +14,12 @@ import (
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
 
-func ref[T any](s T) *T {
-	return &s
-}
-
 func createIdentifier(spaceId int64, id int64) string {
 	return fmt.Sprintf("%d/%d", spaceId, id)
 }
 
 func parseIdentifier(identifier string) (spaceId int64, id int64) {
-	fmt.Sscanf(identifier, "%d/%d", &spaceId, &id)
+	_, _ = fmt.Sscanf(identifier, "%d/%d", &spaceId, &id)
 	return
 }
 
@@ -96,17 +95,6 @@ func convertToPointerIntSlice(slice []types.Int64) *[]int {
 	return &result
 }
 
-func asUUID(s types.String) uuid.UUID {
-	if s.IsNull() {
-		return uuid.Nil
-	}
-	val, err := uuid.FromString(s.ValueString())
-	if err != nil {
-		panic(err)
-	}
-	return val
-}
-
 func asUUIDPointer(s basetypes.StringValue) *uuid.UUID {
 	var componentGroupUuid *uuid.UUID
 	if !s.IsNull() {
@@ -136,4 +124,32 @@ func must[T any](v T, err error) T {
 		panic(err)
 	}
 	return v
+}
+
+func HCLTemplate(data string, params map[string]any) string {
+	var out bytes.Buffer
+	tmpl := template.Must(template.New("hcl").Parse(data))
+	err := tmpl.Execute(&out, params)
+	if err != nil {
+		panic(err)
+	}
+	return out.String()
+}
+
+func cleanHeaders(headers http.Header, keep ...string) http.Header {
+	for key := range headers {
+		if !contains(keep, key) {
+			headers.Del(key)
+		}
+	}
+	return headers
+}
+
+func contains(keep []string, key string) bool {
+	for _, k := range keep {
+		if k == key {
+			return true
+		}
+	}
+	return false
 }

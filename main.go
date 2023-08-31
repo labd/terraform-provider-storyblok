@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"flag"
+	"github.com/hashicorp/terraform-plugin-framework/provider"
+	"github.com/labd/terraform-provider-storyblok/internal"
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-
-	"github.com/labd/terraform-provider-storyblok/internal"
 )
 
 // Provider documentation generation.
@@ -24,7 +24,18 @@ func main() {
 		Debug:   debug,
 	}
 
-	err := providerserver.Serve(context.Background(), internal.New, opts)
+	err := providerserver.Serve(context.Background(), func() provider.Provider {
+		var options []internal.OptionFunc
+		{
+			internal.WithRetryableClient(10)
+		}
+
+		if debug {
+			options = append(options, internal.WithDebugClient())
+		}
+
+		return internal.New(options...)
+	}, opts)
 
 	if err != nil {
 		log.Fatal(err.Error())

@@ -3,12 +3,12 @@
 page_title: "storyblok_component Resource - storyblok"
 subcategory: ""
 description: |-
-  Manage a component.
+  A component is a standalone entity that is meaningful in its own right. While components (or blocks) can be nested in each other, semantically they remain equal. Each component is a small piece of your data structure which can be filled with content or nested by your content editor. One component can consist of as many field types as required.
 ---
 
 # storyblok_component (Resource)
 
-Manage a component.
+A component is a standalone entity that is meaningful in its own right. While components (or blocks) can be nested in each other, semantically they remain equal. Each component is a small piece of your data structure which can be filled with content or nested by your content editor. One component can consist of as many field types as required.
 
 ## Example Usage
 
@@ -125,7 +125,7 @@ resource "storyblok_component" "advanced_component" {
 
 - `component_id` (Number) The ID of the component.
 - `created_at` (String) The creation timestamp of the component.
-- `id` (String) The terraform ID of the component.
+- `id` (String) The terraform ID of the space role. This is a composite ID, and should not be used as reference
 
 <a id="nestedatt--schema"></a>
 ### Nested Schema for `schema`
@@ -152,11 +152,13 @@ Optional:
 - `field_type` (String) Name of the custom field type plugin
 - `filetypes` (List of String) Array of file type names: ["images", "videos", "audios", "texts"]
 - `folder_slug` (String) Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have a multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: "{0}/categories/", {0}/{1}/categories/
+- `force_link_scope` (Boolean) Force link scope to be internal_stories; Default: false
 - `image_crop` (Boolean) Activate force crop for images: (true/false)
 - `image_height` (String) Define height in px or height ratio if keep_image_size is enabled
 - `image_width` (String) Define width in px or width ratio if keep_image_size is enabled
 - `keep_image_size` (Boolean) Keep original size: (true/false)
 - `keys` (List of String) Array of field keys to include in this section
+- `link_scope` (String) A path to a folder to restrict the link scope
 - `max_length` (Number) Set the max length of the input string
 - `maximum` (Number) Maximum amount of added bloks in this blok field
 - `minimum` (Number) Minimum amount of added bloks in this blok field
@@ -181,5 +183,3 @@ Required:
 
 - `name` (String) Name of the datasource entry
 - `value` (String) Value of the datasource entry
-
-

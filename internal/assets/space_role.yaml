@@ -1,0 +1,189 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 211
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"space_role":{"allowed_languages":["default"],"allowed_paths":["1"],"ext_id":"FizBuz","field_permissions":["component_name.field_name"],"permissions":["access_tasks"],"role":"tester","subtitle":"A test group"}}'
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 359
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 164.322798ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/62325
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 359
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 64.142974ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/62325
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 359
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 56.283498ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 215
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"space_role":{"allowed_languages":["default"],"allowed_paths":["1"],"ext_id":"FizBuz","field_permissions":["component_name.field_name"],"permissions":["access_tasks"],"role":"new-tester","subtitle":"A test group"}}'
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/62325
+        method: PUT
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 363
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"new-tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 209.388625ms
+    - id: 4
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/62325
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 363
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"new-tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 58.870415ms
+    - id: 5
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/62325
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 363
+        uncompressed: false
+        body: '{"space_role":{"id":62325,"resolved_allowed_paths":[],"allowed_paths":["1"],"field_permissions":["component_name.field_name"],"readonly_field_permissions":[],"permissions":["access_tasks"],"role":"new-tester","subtitle":"A test group","datasource_ids":[],"component_ids":[],"branch_ids":[],"allowed_languages":["default"],"asset_folder_ids":[],"ext_id":"FizBuz"}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 95.255057ms
