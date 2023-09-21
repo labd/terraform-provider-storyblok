@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 )
@@ -277,6 +278,7 @@ func getComponentTypes() map[string]string {
 		"custom":     "Plugin: Extend the editor yourself with a color picker or similar - Check out: Creating a Storyblok field type plugin",
 		"image":      "Image (old): a upload field for a single image with cropping possibilities",
 		"file":       "File (old): a upload field for a single file",
+		"table":      "Table: a table field",
 	}
 }
 
