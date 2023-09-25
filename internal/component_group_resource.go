@@ -139,7 +139,7 @@ func (r *componentGroupResource) Read(ctx context.Context, req resource.ReadRequ
 
 	// Get refreshed order value from HashiCups
 	content, err := r.client.GetComponentGroupWithResponse(ctx, spaceId, groupId)
-	if d := checkGetError("component_group", content, err); d != nil {
+	if d := checkGetError("component_group", groupId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}

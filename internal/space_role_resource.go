@@ -184,7 +184,7 @@ func (r *spaceRoleResource) Read(ctx context.Context, req resource.ReadRequest, 
 	spaceId, groupId := parseIdentifier(state.ID.ValueString())
 
 	content, err := r.client.GetSpaceRoleWithResponse(ctx, spaceId, groupId)
-	if d := checkGetError("space_role", content, err); d != nil {
+	if d := checkGetError("space_role", groupId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}

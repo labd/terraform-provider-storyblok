@@ -25,9 +25,9 @@ func main() {
 	}
 
 	err := providerserver.Serve(context.Background(), func() provider.Provider {
-		var options []internal.OptionFunc
-		{
-			internal.WithRetryableClient(10)
+		var options = []internal.OptionFunc{
+			//We allow 10 retries of a failed request
+			internal.WithRetryableClient(10),
 		}
 
 		if debug {
