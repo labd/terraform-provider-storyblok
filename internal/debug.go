@@ -7,15 +7,17 @@ import (
 	"os"
 )
 
-type LogTransport struct {
+func NewDebugTransport(innerTransport http.RoundTripper) http.RoundTripper {
+	return &DebugTransport{
+		transport: innerTransport,
+	}
+}
+
+type DebugTransport struct {
 	transport http.RoundTripper
 }
 
-var debugTransport = &LogTransport{
-	transport: http.DefaultTransport,
-}
-
-func (c *LogTransport) RoundTrip(request *http.Request) (*http.Response, error) {
+func (c *DebugTransport) RoundTrip(request *http.Request) (*http.Response, error) {
 	if os.Getenv("SB_DEBUG") != "" {
 		logRequest(request)
 	}

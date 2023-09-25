@@ -37,7 +37,7 @@ func WithRetryableClient(retries int) OptionFunc {
 
 func WithDebugClient() OptionFunc {
 	return func(p *storyblokProvider) {
-		p.httpClient.Transport = debugTransport
+		p.httpClient.Transport = NewDebugTransport(p.httpClient.Transport)
 	}
 }
 
@@ -70,8 +70,10 @@ func WithRecorderClient(file string, mode recorder.Mode) (OptionFunc, func() err
 
 // New is a helper function to simplify provider server and testing implementation.
 func New(opts ...OptionFunc) provider.Provider {
+	tp := http.DefaultTransport
+
 	var p = &storyblokProvider{
-		httpClient: http.DefaultClient,
+		httpClient: &http.Client{Transport: tp},
 	}
 
 	for _, opt := range opts {

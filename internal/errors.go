@@ -31,19 +31,19 @@ func checkCreateError(name string, response ApiResponse, err error) *diag.ErrorD
 	return nil
 }
 
-func checkGetError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
+func checkGetError(name string, id int64, response ApiResponse, err error) *diag.ErrorDiagnostic {
 	if err != nil {
 		d := diag.NewErrorDiagnostic(
-			fmt.Sprintf("Error retrieving %s", name),
-			fmt.Sprintf("Could not retrieve %s, unexpected error: %s", name, err.Error()))
+			fmt.Sprintf("Error retrieving %s with id %d", name, id),
+			fmt.Sprintf("Could not retrieve %s with id %d, unexpected error: %s", name, id, err.Error()))
 		return &d
 	}
 
 	if response.StatusCode() != http.StatusOK {
 		d := diag.NewErrorDiagnostic(
-			fmt.Sprintf("Error retrieving %s", name),
-			fmt.Sprintf("Could not retrieve %s, status code: %d (%s)",
-				name, response.StatusCode(), readResponseBody(response)))
+			fmt.Sprintf("Error retrieving %s with id %d", name, id),
+			fmt.Sprintf("Could not retrieve %s with id %d, status code: %d (%s)",
+				name, id, response.StatusCode(), readResponseBody(response)))
 		return &d
 	}
 

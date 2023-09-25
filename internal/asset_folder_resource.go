@@ -149,7 +149,7 @@ func (r *assetFolderResource) Read(ctx context.Context, req resource.ReadRequest
 	spaceId, id := parseIdentifier(state.ID.ValueString())
 
 	content, err := r.client.GetAssetFolderWithResponse(ctx, spaceId, id)
-	if d := checkGetError("assetFolder", content, err); d != nil {
+	if d := checkGetError("assetFolder", id, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -206,7 +206,7 @@ func (r *assetFolderResource) Update(ctx context.Context, req resource.UpdateReq
 	}
 
 	afResp, err := r.client.GetAssetFolderWithResponse(ctx, spaceID, plan.AssetFolderID.ValueInt64())
-	if d := checkGetError("assetFolder", afResp, err); d != nil {
+	if d := checkGetError("assetFolder", plan.AssetFolderID.ValueInt64(), afResp, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}

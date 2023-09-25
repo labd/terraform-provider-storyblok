@@ -392,7 +392,7 @@ func (r *componentResource) Read(ctx context.Context, req resource.ReadRequest, 
 
 	// Get refreshed order value from HashiCups
 	content, err := r.client.GetComponentWithResponse(ctx, spaceId, componentId)
-	if d := checkGetError("component", content, err); d != nil {
+	if d := checkGetError("component", componentId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
