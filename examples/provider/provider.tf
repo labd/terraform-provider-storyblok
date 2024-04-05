@@ -2,7 +2,7 @@ terraform {
   required_providers {
     storyblok = {
       source  = "labd/storyblok"
-      version = "0.0.1"
+      version = "1.0.2"
     }
   }
 }
