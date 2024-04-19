@@ -66,6 +66,7 @@ func testComponentConfig(identifier string, spaceId int) string {
 			  position = 3
 			}
 		  }
+	      preview_tmpl = "<div></div>"
 		}
 	`, map[string]any{
 		"identifier": identifier,
