@@ -6,13 +6,13 @@ interactions:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 180
+        content_length: 229
         transfer_encoding: []
         trailer: {}
         host: mapi.storyblok.com
         remote_addr: ""
         request_uri: ""
-        body: '{"component":{"is_nestable":false,"is_root":false,"name":"test-banner","schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}}}}'
+        body: '{"component":{"is_nestable":false,"is_root":false,"name":"test-banner","preview_tmpl":"\u003cdiv\u003e\u003c/div\u003e","schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}}}}'
         form: {}
         headers: {}
         url: https://mapi.storyblok.com/v1/spaces/233252/components/
@@ -23,15 +23,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 460
+        content_length: 569
         uncompressed: false
-        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:36.723Z","id":4493215,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:23.688Z","id":5678041,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":"\u003cdiv\u003e\u003c/div\u003e","is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 124.191708ms
+        duration: 148.817321ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -46,7 +46,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/components/4493215
+        url: https://mapi.storyblok.com/v1/spaces/233252/components/5678041
         method: GET
       response:
         proto: HTTP/2.0
@@ -54,15 +54,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 460
+        content_length: 569
         uncompressed: false
-        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:36.723Z","id":4493215,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:23.688Z","id":5678041,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":"\u003cdiv\u003e\u003c/div\u003e","is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 53.005124ms
+        duration: 48.717671ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -77,7 +77,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/components/4493215
+        url: https://mapi.storyblok.com/v1/spaces/233252/components/5678041
         method: GET
       response:
         proto: HTTP/2.0
@@ -85,30 +85,30 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 460
+        content_length: 569
         uncompressed: false
-        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:36.723Z","id":4493215,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:23.688Z","id":5678041,"schema":{"title":{"pos":1,"type":"text"},"intro":{"pos":2,"type":"text"},"image":{"pos":3,"type":"image"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":"\u003cdiv\u003e\u003c/div\u003e","is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 58.951484ms
+        duration: 49.537143ms
     - id: 3
       request:
         proto: HTTP/1.1
         proto_major: 1
         proto_minor: 1
-        content_length: 151
+        content_length: 171
         transfer_encoding: []
         trailer: {}
         host: mapi.storyblok.com
         remote_addr: ""
         request_uri: ""
-        body: '{"component":{"is_nestable":false,"is_root":false,"name":"new-test-banner","schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}}}}'
+        body: '{"component":{"is_nestable":false,"is_root":false,"name":"new-test-banner","preview_tmpl":null,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}}}}'
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/components/4493215
+        url: https://mapi.storyblok.com/v1/spaces/233252/components/5678041
         method: PUT
       response:
         proto: HTTP/2.0
@@ -116,15 +116,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 435
+        content_length: 515
         uncompressed: false
-        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:37.307Z","id":4493215,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:24.442Z","id":5678041,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 82.907847ms
+        duration: 84.046017ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -139,7 +139,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/components/4493215
+        url: https://mapi.storyblok.com/v1/spaces/233252/components/5678041
         method: GET
       response:
         proto: HTTP/2.0
@@ -147,15 +147,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 435
+        content_length: 515
         uncompressed: false
-        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:37.307Z","id":4493215,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:24.442Z","id":5678041,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 54.202081ms
+        duration: 80.854674ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -170,7 +170,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/components/4493215
+        url: https://mapi.storyblok.com/v1/spaces/233252/components/5678041
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -178,12 +178,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 435
+        content_length: 515
         uncompressed: false
-        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2023-08-29T14:15:36.723Z","updated_at":"2023-08-29T14:15:37.307Z","id":4493215,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null}}'
+        body: '{"component":{"name":"new-test-banner","display_name":null,"created_at":"2024-04-19T07:48:23.688Z","updated_at":"2024-04-19T07:48:24.442Z","id":5678041,"schema":{"intro":{"pos":1,"type":"text"},"title":{"pos":2,"type":"text"}},"image":null,"preview_field":null,"is_root":false,"preview_tmpl":null,"is_nestable":false,"all_presets":[],"preset_id":null,"real_name":"new-test-banner","component_group_uuid":null,"color":null,"icon":null,"internal_tags_list":[],"internal_tag_ids":[],"content_type_asset_preview":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 82.652449ms
+        duration: 89.156546ms
