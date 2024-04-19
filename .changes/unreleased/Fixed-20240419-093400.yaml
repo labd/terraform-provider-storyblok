@@ -1,0 +1,3 @@
+kind: Fixed
+body: Updated sdk to allow preview_tmpl to be nullable
+time: 2024-04-19T09:34:00.533488278+02:00

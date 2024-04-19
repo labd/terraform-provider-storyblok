@@ -5,6 +5,6 @@ terraform-provider-storyblok*
 *.backup
 coverage.out
 dist/
-local-test
+/local
 /.idea
 /.env
