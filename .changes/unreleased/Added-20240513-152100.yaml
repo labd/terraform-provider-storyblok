@@ -1,0 +1,3 @@
+kind: Added
+body: Add `storyblok_webhook` resource to register webhooks
+time: 2024-05-13T15:21:00.622942+02:00
