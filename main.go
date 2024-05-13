@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/hashicorp/terraform-plugin-framework/provider"
-	"github.com/labd/terraform-provider-storyblok/internal"
 	"log"
 
+	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+
+	"github.com/labd/terraform-provider-storyblok/internal"
 )
 
 // Provider documentation generation.
@@ -28,10 +29,7 @@ func main() {
 		var options = []internal.OptionFunc{
 			//We allow 10 retries of a failed request
 			internal.WithRetryableClient(10),
-		}
-
-		if debug {
-			options = append(options, internal.WithDebugClient())
+			internal.WithDebugClient(),
 		}
 
 		return internal.New(options...)
