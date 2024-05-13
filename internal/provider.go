@@ -2,14 +2,12 @@ package internal
 
 import (
 	"context"
-	"github.com/hashicorp/go-retryablehttp"
-	"gopkg.in/dnaeon/go-vcr.v3/cassette"
-	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
+	"github.com/hashicorp/go-retryablehttp"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
@@ -17,6 +15,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+	"gopkg.in/dnaeon/go-vcr.v3/cassette"
+	"gopkg.in/dnaeon/go-vcr.v3/recorder"
+
+	"github.com/labd/terraform-provider-storyblok/internal/webhook"
 )
 
 // Ensure the implementation satisfies the expected interfaces
@@ -200,5 +202,6 @@ func (p *storyblokProvider) Resources(_ context.Context) []func() resource.Resou
 		NewComponentGroupResource,
 		NewSpaceRoleResource,
 		NewAssetFolderResource,
+		webhook.NewWebhookResource,
 	}
 }
