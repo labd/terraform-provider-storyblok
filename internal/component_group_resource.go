@@ -12,6 +12,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -82,7 +84,7 @@ func (r *componentGroupResource) Configure(_ context.Context, req resource.Confi
 		return
 	}
 
-	r.client = getClient(req.ProviderData)
+	r.client = utils.GetClient(req.ProviderData)
 }
 
 // Create creates the resource and sets the initial Terraform state.
@@ -100,7 +102,7 @@ func (r *componentGroupResource) Create(ctx context.Context, req resource.Create
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.CreateComponentGroupWithResponse(ctx, spaceID, input)
-	if d := checkCreateError("component_group", content, err); d != nil {
+	if d := utils.CheckCreateError("component_group", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -135,11 +137,11 @@ func (r *componentGroupResource) Read(ctx context.Context, req resource.ReadRequ
 		return
 	}
 
-	spaceId, groupId := parseIdentifier(state.ID.ValueString())
+	spaceId, groupId := utils.ParseIdentifier(state.ID.ValueString())
 
 	// Get refreshed order value from HashiCups
 	content, err := r.client.GetComponentGroupWithResponse(ctx, spaceId, groupId)
-	if d := checkGetError("component_group", groupId, content, err); d != nil {
+	if d := utils.CheckGetError("component_group", groupId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -178,7 +180,7 @@ func (r *componentGroupResource) Update(ctx context.Context, req resource.Update
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.UpdateComponentGroupWithResponse(ctx, spaceID, plan.GroupID.ValueInt64(), input)
-	if d := checkUpdateError("component_group", content, err); d != nil {
+	if d := utils.CheckUpdateError("component_group", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -212,9 +214,9 @@ func (r *componentGroupResource) Delete(ctx context.Context, req resource.Delete
 		return
 	}
 
-	spaceId, groupId := parseIdentifier(state.ID.ValueString())
+	spaceId, groupId := utils.ParseIdentifier(state.ID.ValueString())
 	content, err := r.client.DeleteComponentGroupWithResponse(ctx, spaceId, groupId)
-	if d := checkDeleteError("component_group", content, err); d != nil {
+	if d := utils.CheckDeleteError("component_group", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}

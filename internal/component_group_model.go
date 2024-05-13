@@ -5,6 +5,8 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // componentGroupResourceModel maps the resource schema data.
@@ -37,7 +39,7 @@ func (m *componentGroupResourceModel) fromRemote(spaceID int64, c *sbmgmt.Compon
 	if c == nil {
 		return fmt.Errorf("component-group is nil")
 	}
-	m.ID = types.StringValue(createIdentifier(spaceID, c.Id))
+	m.ID = types.StringValue(utils.CreateIdentifier(spaceID, c.Id))
 	m.GroupID = types.Int64Value(c.Id)
 	m.Name = types.StringValue(c.Name)
 	m.UUID = types.StringValue(c.Uuid.String())

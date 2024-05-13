@@ -1,4 +1,4 @@
-package internal
+package utils
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type ApiResponse interface {
 	StatusCode() int
 }
 
-func checkCreateError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
+func CheckCreateError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
 	if err != nil {
 		d := diag.NewErrorDiagnostic(
 			fmt.Sprintf("Error creating %s", name),
@@ -31,7 +31,7 @@ func checkCreateError(name string, response ApiResponse, err error) *diag.ErrorD
 	return nil
 }
 
-func checkGetError(name string, id int64, response ApiResponse, err error) *diag.ErrorDiagnostic {
+func CheckGetError(name string, id int64, response ApiResponse, err error) *diag.ErrorDiagnostic {
 	if err != nil {
 		d := diag.NewErrorDiagnostic(
 			fmt.Sprintf("Error retrieving %s with id %d", name, id),
@@ -50,7 +50,7 @@ func checkGetError(name string, id int64, response ApiResponse, err error) *diag
 	return nil
 }
 
-func checkUpdateError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
+func CheckUpdateError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
 	if err != nil {
 		d := diag.NewErrorDiagnostic(
 			fmt.Sprintf("Error updating %s", name),
@@ -69,7 +69,7 @@ func checkUpdateError(name string, response ApiResponse, err error) *diag.ErrorD
 	return nil
 }
 
-func checkDeleteError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
+func CheckDeleteError(name string, response ApiResponse, err error) *diag.ErrorDiagnostic {
 	if err != nil {
 		d := diag.NewErrorDiagnostic(
 			fmt.Sprintf("Error deleting %s", name),

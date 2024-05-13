@@ -2,8 +2,11 @@ package internal
 
 import (
 	"fmt"
+
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // spaceRoleResourceModel maps the resource schema data.
@@ -68,7 +71,7 @@ func (m *spaceRoleResourceModel) fromRemote(spaceId int64, c *sbmgmt.SpaceRole) 
 	if c == nil {
 		return fmt.Errorf("space role is nil")
 	}
-	m.ID = types.StringValue(createIdentifier(spaceId, int64(c.Id)))
+	m.ID = types.StringValue(utils.CreateIdentifier(spaceId, int64(c.Id)))
 	m.RoleID = types.Int64Value(int64(c.Id))
 	return nil
 }

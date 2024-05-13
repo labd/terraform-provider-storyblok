@@ -20,6 +20,7 @@ import (
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 
 	"github.com/labd/terraform-provider-storyblok/internal/customvalidators"
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -323,7 +324,7 @@ func (r *componentResource) Configure(_ context.Context, req resource.ConfigureR
 		return
 	}
 
-	r.client = getClient(req.ProviderData)
+	r.client = utils.GetClient(req.ProviderData)
 }
 
 // Create creates the resource and sets the initial Terraform state.
@@ -388,11 +389,11 @@ func (r *componentResource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
-	spaceId, componentId := parseIdentifier(state.ID.ValueString())
+	spaceId, componentId := utils.ParseIdentifier(state.ID.ValueString())
 
 	// Get refreshed order value from HashiCups
 	content, err := r.client.GetComponentWithResponse(ctx, spaceId, componentId)
-	if d := checkGetError("component", componentId, content, err); d != nil {
+	if d := utils.CheckGetError("component", componentId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -477,7 +478,7 @@ func (r *componentResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	spaceId, componentId := parseIdentifier(state.ID.ValueString())
+	spaceId, componentId := utils.ParseIdentifier(state.ID.ValueString())
 	content, err := r.client.DeleteComponentWithResponse(ctx, spaceId, componentId)
 	if err != nil {
 		resp.Diagnostics.AddError(

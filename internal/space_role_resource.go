@@ -2,16 +2,18 @@ package internal
 
 import (
 	"context"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/types"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -128,7 +130,7 @@ func (r *spaceRoleResource) Configure(_ context.Context, req resource.ConfigureR
 		return
 	}
 
-	r.client = getClient(req.ProviderData)
+	r.client = utils.GetClient(req.ProviderData)
 }
 
 // Create creates the resource and sets the initial Terraform state.
@@ -146,7 +148,7 @@ func (r *spaceRoleResource) Create(ctx context.Context, req resource.CreateReque
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.CreateSpaceRoleWithResponse(ctx, spaceID, input)
-	if d := checkCreateError("space_role", content, err); d != nil {
+	if d := utils.CheckCreateError("space_role", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -181,10 +183,10 @@ func (r *spaceRoleResource) Read(ctx context.Context, req resource.ReadRequest, 
 		return
 	}
 
-	spaceId, groupId := parseIdentifier(state.ID.ValueString())
+	spaceId, groupId := utils.ParseIdentifier(state.ID.ValueString())
 
 	content, err := r.client.GetSpaceRoleWithResponse(ctx, spaceId, groupId)
-	if d := checkGetError("space_role", groupId, content, err); d != nil {
+	if d := utils.CheckGetError("space_role", groupId, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -223,7 +225,7 @@ func (r *spaceRoleResource) Update(ctx context.Context, req resource.UpdateReque
 	spaceID := plan.SpaceID.ValueInt64()
 
 	content, err := r.client.UpdateSpaceRoleWithResponse(ctx, spaceID, plan.RoleID.ValueInt64(), input)
-	if d := checkUpdateError("space_role", content, err); d != nil {
+	if d := utils.CheckUpdateError("space_role", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -257,9 +259,9 @@ func (r *spaceRoleResource) Delete(ctx context.Context, req resource.DeleteReque
 		return
 	}
 
-	spaceId, spaceRoleId := parseIdentifier(state.ID.ValueString())
+	spaceId, spaceRoleId := utils.ParseIdentifier(state.ID.ValueString())
 	content, err := r.client.DeleteSpaceRoleWithResponse(ctx, spaceId, spaceRoleId)
-	if d := checkDeleteError("space_role", content, err); d != nil {
+	if d := utils.CheckDeleteError("space_role", content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}

@@ -2,7 +2,6 @@ package internal
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"text/template"
 
@@ -13,23 +12,6 @@ import (
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
-
-func createIdentifier(spaceId int64, id int64) string {
-	return fmt.Sprintf("%d/%d", spaceId, id)
-}
-
-func parseIdentifier(identifier string) (spaceId int64, id int64) {
-	_, _ = fmt.Sscanf(identifier, "%d/%d", &spaceId, &id)
-	return
-}
-
-func getClient(data any) sbmgmt.ClientWithResponsesInterface {
-	c, ok := data.(sbmgmt.ClientWithResponsesInterface)
-	if !ok {
-		panic("invalid client type")
-	}
-	return c
-}
 
 func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.OrderedMap[string, sbmgmt.FieldInput] {
 	type Pair struct {

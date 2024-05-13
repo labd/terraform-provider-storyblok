@@ -3,17 +3,19 @@ package internal
 import (
 	"context"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"net/http"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -81,7 +83,7 @@ func (r *assetFolderResource) Configure(_ context.Context, req resource.Configur
 		return
 	}
 
-	r.client = getClient(req.ProviderData)
+	r.client = utils.GetClient(req.ProviderData)
 }
 
 // Create creates the resource and sets the initial Terraform state.
@@ -146,10 +148,10 @@ func (r *assetFolderResource) Read(ctx context.Context, req resource.ReadRequest
 		return
 	}
 
-	spaceId, id := parseIdentifier(state.ID.ValueString())
+	spaceId, id := utils.ParseIdentifier(state.ID.ValueString())
 
 	content, err := r.client.GetAssetFolderWithResponse(ctx, spaceId, id)
-	if d := checkGetError("assetFolder", id, content, err); d != nil {
+	if d := utils.CheckGetError("assetFolder", id, content, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -206,7 +208,7 @@ func (r *assetFolderResource) Update(ctx context.Context, req resource.UpdateReq
 	}
 
 	afResp, err := r.client.GetAssetFolderWithResponse(ctx, spaceID, plan.AssetFolderID.ValueInt64())
-	if d := checkGetError("assetFolder", plan.AssetFolderID.ValueInt64(), afResp, err); d != nil {
+	if d := utils.CheckGetError("assetFolder", plan.AssetFolderID.ValueInt64(), afResp, err); d != nil {
 		resp.Diagnostics.Append(d)
 		return
 	}
@@ -239,7 +241,7 @@ func (r *assetFolderResource) Delete(ctx context.Context, req resource.DeleteReq
 		return
 	}
 
-	spaceId, assetFolderId := parseIdentifier(state.ID.ValueString())
+	spaceId, assetFolderId := utils.ParseIdentifier(state.ID.ValueString())
 	content, err := r.client.DeleteAssetFolderWithResponse(ctx, spaceId, assetFolderId)
 	if err != nil {
 		resp.Diagnostics.AddError(

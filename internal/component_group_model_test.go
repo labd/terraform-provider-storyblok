@@ -7,6 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 func TestComponentGroupResourceModel_ToRemoteInput(t *testing.T) {
@@ -42,7 +44,7 @@ func TestComponentGroupResourceModel_FromRemote(t *testing.T) {
 	assert.NoError(t, err, "Error occurred during conversion")
 
 	expectedModel := &componentGroupResourceModel{
-		ID:      types.StringValue(createIdentifier(spaceID, groupID)),
+		ID:      types.StringValue(utils.CreateIdentifier(spaceID, groupID)),
 		GroupID: types.Int64Value(groupID),
 		UUID:    types.StringValue("ebd1af2e-875f-47e5-8886-4d3baea94d99"),
 		Name:    types.StringValue(name),
