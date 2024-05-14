@@ -1,6 +1,6 @@
 module github.com/labd/terraform-provider-storyblok
 
-go 1.20
+go 1.22
 
 // replace github.com/labd/storyblok-go-sdk => ../storyblok-go-sdk
 
