@@ -70,7 +70,7 @@ require (
 require (
 	github.com/hashicorp/go-retryablehttp v0.7.6
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.33.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	gopkg.in/dnaeon/go-vcr.v3 v3.2.0
 )
 
