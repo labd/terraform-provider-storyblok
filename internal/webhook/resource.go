@@ -86,6 +86,15 @@ func (r *webhookResource) Schema(_ context.Context, _ resource.SchemaRequest, re
 				Required:    true,
 				ElementType: types.StringType,
 			},
+			"secret": schema.StringAttribute{
+				Description: "The secret to sign the webhook payload with.",
+				Optional:    true,
+				Sensitive:   true,
+			},
+			"description": schema.StringAttribute{
+				Description: "The description of the webhook.",
+				Optional:    true,
+			},
 		},
 	}
 }
