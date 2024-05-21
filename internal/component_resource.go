@@ -246,6 +246,14 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Minimum amount of added bloks in this blok field",
 							Optional:    true,
 						},
+						"max_options": schema.Int64Attribute{
+							Description: "Maximum amount of options for this options field",
+							Optional:    true,
+						},
+						"min_options": schema.Int64Attribute{
+							Description: "Minimum amount of options for this options field",
+							Optional:    true,
+						},
 						"no_translate": schema.BoolAttribute{
 							Description: "Should be excluded in translation export",
 							Optional:    true,

@@ -54,9 +54,11 @@ type fieldModel struct {
 	KeepImageSize        types.Bool     `tfsdk:"keep_image_size"`
 	Keys                 []types.String `tfsdk:"keys"`
 	LinkScope            types.String   `tfsdk:"link_scope"`
-	MaxLength            types.Int64    `tfsdk:"max_length"`
-	Minimum              types.Int64    `tfsdk:"minimum"`
 	Maximum              types.Int64    `tfsdk:"maximum"`
+	MaxLength            types.Int64    `tfsdk:"max_length"`
+	MaxOptions           types.Int64    `tfsdk:"max_options"`
+	Minimum              types.Int64    `tfsdk:"minimum"`
+	MinOptions           types.Int64    `tfsdk:"min_options"`
 	NoTranslate          types.Bool     `tfsdk:"no_translate"`
 	Options              []optionModel  `tfsdk:"options"`
 	Regex                types.String   `tfsdk:"regex"`
@@ -66,9 +68,9 @@ type fieldModel struct {
 	RichMarkdown         types.Bool     `tfsdk:"rich_markdown"`
 	Rtl                  types.Bool     `tfsdk:"rtl"`
 	Source               types.String   `tfsdk:"source"`
-	Translatable         types.Bool     `tfsdk:"translatable"`
 	Toolbar              []types.String `tfsdk:"toolbar"`
 	Tooltip              types.Bool     `tfsdk:"tooltip"`
+	Translatable         types.Bool     `tfsdk:"translatable"`
 	UseUuid              types.Bool     `tfsdk:"use_uuid"`
 }
 
@@ -167,7 +169,9 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		LinkScope:            item.LinkScope.ValueStringPointer(),
 		Maximum:              item.Maximum.ValueInt64Pointer(),
 		MaxLength:            item.MaxLength.ValueInt64Pointer(),
+		MaxOptions:           item.MaxOptions.ValueInt64Pointer(),
 		Minimum:              item.Minimum.ValueInt64Pointer(),
+		MinOptions:           item.MinOptions.ValueInt64Pointer(),
 		NoTranslate:          item.NoTranslate.ValueBoolPointer(),
 		Options:              deserializeOptionsModel(item.Options),
 		Regex:                item.Regex.ValueStringPointer(),
@@ -243,7 +247,9 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		LinkScope:            types.StringPointerValue(field.LinkScope),
 		Maximum:              types.Int64PointerValue(field.Maximum),
 		MaxLength:            types.Int64PointerValue(field.MaxLength),
+		MaxOptions:           types.Int64PointerValue(field.MaxOptions),
 		Minimum:              types.Int64PointerValue(field.Minimum),
+		MinOptions:           types.Int64PointerValue(field.MinOptions),
 		NoTranslate:          types.BoolPointerValue(field.NoTranslate),
 		Options:              serializeOptionsModel(field.Options),
 		Regex:                types.StringPointerValue(field.Regex),
