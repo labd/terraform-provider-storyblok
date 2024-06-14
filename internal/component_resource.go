@@ -201,6 +201,11 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 							ElementType: types.StringType,
 						},
+						"filter_content_type": schema.ListAttribute{
+							Description: "An array of content types that can be selected in a option or options field where source is internal_stories: [\"post\", \"faq_item\"]",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
 						"force_link_scope": schema.BoolAttribute{
 							Description: "Force link scope to be internal_stories; Default: false",
 							Optional:    true,
