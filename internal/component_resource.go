@@ -164,7 +164,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 						},
 						"component_whitelist": schema.ListAttribute{
-							Description: "Array of component/content type names: [\"post\",\"page\",\"product\"]",
+							Description: "Array of component/content type names: [\"post\",\"page\",\"product\"]. Only for type: bloks, multilink, and richtext (for nestable bloks inside that)",
 							Optional:    true,
 							ElementType: types.StringType,
 						},

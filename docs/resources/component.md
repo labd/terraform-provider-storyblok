@@ -141,7 +141,7 @@ Optional:
 - `allow_target_blank` (Boolean) Allows to open links in a new tab for Richtext; Default: false
 - `asset_folder_id` (Number) Default asset folder numeric id to store uploaded image of that field
 - `can_sync` (Boolean) Advanced usage to sync with field in preview; Default: false
-- `component_whitelist` (List of String) Array of component/content type names: ["post","page","product"]
+- `component_whitelist` (List of String) Array of component/content type names: ["post","page","product"]. Only for type: bloks, multilink, and richtext (for nestable bloks inside that)
 - `customize_toolbar` (Boolean) Allow to customize the Markdown or Richtext toolbar; Default: false
 - `datasource_slug` (String) Define selectable datasources string; Effects editor only if source=internal
 - `default_value` (String) Default value for the field; Can be an escaped JSON object
