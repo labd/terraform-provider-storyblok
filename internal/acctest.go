@@ -1,11 +1,12 @@
 package internal
 
 import (
+	"os"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
-	"os"
-	"testing"
 )
 
 var (

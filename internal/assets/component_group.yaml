@@ -23,15 +23,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
+        content_length: 145
         uncompressed: false
-        body: '{"component_group":{"name":"test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 316.757963ms
+        duration: 147.508ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -46,7 +46,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/197390
+        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/357445
         method: GET
       response:
         proto: HTTP/2.0
@@ -54,15 +54,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
+        content_length: 145
         uncompressed: false
-        body: '{"component_group":{"name":"test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 92.387616ms
+        duration: 59.843792ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -77,7 +77,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/197390
+        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/357445
         method: GET
       response:
         proto: HTTP/2.0
@@ -85,15 +85,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 109
+        content_length: 145
         uncompressed: false
-        body: '{"component_group":{"name":"test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 53.431163ms
+        duration: 40.950458ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -108,7 +108,7 @@ interactions:
         body: '{"component_group":{"name":"new-test-component-group"}}'
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/197390
+        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/357445
         method: PUT
       response:
         proto: HTTP/2.0
@@ -116,15 +116,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 113
+        content_length: 149
         uncompressed: false
-        body: '{"component_group":{"name":"new-test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"new-test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 94.815882ms
+        duration: 53.853041ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -139,7 +139,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/197390
+        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/357445
         method: GET
       response:
         proto: HTTP/2.0
@@ -147,15 +147,15 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 113
+        content_length: 149
         uncompressed: false
-        body: '{"component_group":{"name":"new-test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"new-test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 55.321853ms
+        duration: 90.631875ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -170,7 +170,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/197390
+        url: https://mapi.storyblok.com/v1/spaces/233252/component_groups/357445
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -178,12 +178,12 @@ interactions:
         proto_minor: 0
         transfer_encoding: []
         trailer: {}
-        content_length: 113
+        content_length: 149
         uncompressed: false
-        body: '{"component_group":{"name":"new-test-component-group","id":197390,"uuid":"a3ef226f-4bd4-4778-8cc3-b1807d980b67"}}'
+        body: '{"component_group":{"name":"new-test-component-group","id":357445,"uuid":"39b2bedd-508c-445c-abd0-2424bbb3ee16","parent_id":null,"parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 1.216751814s
+        duration: 1.759588959s

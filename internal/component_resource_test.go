@@ -39,6 +39,9 @@ func TestComponentResourceBasic(t *testing.T) {
 					resource.TestCheckResourceAttr(rn, "schema.intro.type", "text"),
 					resource.TestCheckResourceAttr(rn, "schema.title.position", "2"),
 					resource.TestCheckResourceAttr(rn, "schema.title.type", "text"),
+					resource.TestCheckResourceAttr(rn, "schema.buttons.filter_content_type.0", "button"),
+					resource.TestCheckResourceAttr(rn, "schema.buttons.type", "options"),
+					resource.TestCheckResourceAttr(rn, "schema.buttons.position", "3"),
 				),
 			},
 		},
@@ -89,7 +92,15 @@ func testComponentConfigUpdate(identifier string, spaceId int) string {
 			  type     = "text"
 			  position = 1
 			}
+
+			buttons = {
+				type = "options"
+				source = "internal_stories"
+				position = 3
+				filter_content_type = ["button"]
+			}
 		  }
+			preview_tmpl = "<div></div>"
 		}
 	`, map[string]any{
 		"identifier": identifier,
