@@ -46,6 +46,7 @@ type fieldModel struct {
 	ExternalDatasource   types.String   `tfsdk:"external_datasource"`
 	FieldType            types.String   `tfsdk:"field_type"`
 	Filetypes            []types.String `tfsdk:"filetypes"`
+	FilterContentType    []types.String `tfsdk:"filter_content_type"`
 	FolderSlug           types.String   `tfsdk:"folder_slug"`
 	ForceLinkScope       types.Bool     `tfsdk:"force_link_scope"`
 	ImageCrop            types.Bool     `tfsdk:"image_crop"`
@@ -159,6 +160,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		ExternalDatasource:   item.ExternalDatasource.ValueStringPointer(),
 		FieldType:            item.FieldType.ValueStringPointer(),
 		Filetypes:            utils.ConvertToPointerStringSlice(item.Filetypes),
+		FilterContentType:    utils.ConvertToPointerStringSlice(item.FilterContentType),
 		FolderSlug:           item.FolderSlug.ValueStringPointer(),
 		ForceLinkScope:       item.ForceLinkScope.ValueBoolPointer(),
 		ImageCrop:            item.ImageCrop.ValueBoolPointer(),
@@ -237,6 +239,7 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		ExternalDatasource:   types.StringPointerValue(field.ExternalDatasource),
 		FieldType:            types.StringPointerValue(field.FieldType),
 		Filetypes:            utils.ConvertToStringSlice(field.Filetypes),
+		FilterContentType:    utils.ConvertToStringSlice(field.FilterContentType),
 		FolderSlug:           types.StringPointerValue(field.FolderSlug),
 		ForceLinkScope:       types.BoolPointerValue(field.ForceLinkScope),
 		ImageCrop:            types.BoolPointerValue(field.ImageCrop),

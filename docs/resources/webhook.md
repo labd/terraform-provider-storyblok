@@ -22,6 +22,11 @@ Asset folder allow you to group your assets. Besides the overall root folder you
 - `name` (String) The technical name of the asset folder.
 - `space_id` (Number) The ID of the space.
 
+### Optional
+
+- `description` (String) The description of the webhook.
+- `secret` (String, Sensitive) The secret to sign the webhook payload with.
+
 ### Read-Only
 
 - `activated` (Boolean) Whether the webhook is activated.

@@ -25,13 +25,13 @@ interactions:
         trailer: {}
         content_length: 139
         uncompressed: false
-        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        body: '{"asset_folder":{"id":576397,"name":"asset-folder-name","parent_id":null,"uuid":"fa69a52f-3dd1-420b-8e2c-1b30bdef162c","parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 145.384494ms
+        duration: 103.60975ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -46,7 +46,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: GET
       response:
         proto: HTTP/2.0
@@ -56,13 +56,13 @@ interactions:
         trailer: {}
         content_length: 139
         uncompressed: false
-        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        body: '{"asset_folder":{"id":576397,"name":"asset-folder-name","parent_id":null,"uuid":"fa69a52f-3dd1-420b-8e2c-1b30bdef162c","parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 58.71125ms
+        duration: 39.288459ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -77,7 +77,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: GET
       response:
         proto: HTTP/2.0
@@ -87,13 +87,13 @@ interactions:
         trailer: {}
         content_length: 139
         uncompressed: false
-        body: '{"asset_folder":{"id":304158,"name":"asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        body: '{"asset_folder":{"id":576397,"name":"asset-folder-name","parent_id":null,"uuid":"fa69a52f-3dd1-420b-8e2c-1b30bdef162c","parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 53.687495ms
+        duration: 262.893583ms
     - id: 3
       request:
         proto: HTTP/1.1
@@ -108,7 +108,7 @@ interactions:
         body: '{"asset_folder":{"name":"new-asset-folder-name"}}'
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: PUT
       response:
         proto: HTTP/2.0
@@ -122,7 +122,7 @@ interactions:
         headers: {}
         status: 204 No Content
         code: 204
-        duration: 61.682219ms
+        duration: 146.615459ms
     - id: 4
       request:
         proto: HTTP/1.1
@@ -137,7 +137,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: GET
       response:
         proto: HTTP/2.0
@@ -147,13 +147,13 @@ interactions:
         trailer: {}
         content_length: 143
         uncompressed: false
-        body: '{"asset_folder":{"id":304158,"name":"new-asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        body: '{"asset_folder":{"id":576397,"name":"new-asset-folder-name","parent_id":null,"uuid":"fa69a52f-3dd1-420b-8e2c-1b30bdef162c","parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 55.908121ms
+        duration: 40.777416ms
     - id: 5
       request:
         proto: HTTP/1.1
@@ -168,7 +168,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: GET
       response:
         proto: HTTP/2.0
@@ -178,13 +178,13 @@ interactions:
         trailer: {}
         content_length: 143
         uncompressed: false
-        body: '{"asset_folder":{"id":304158,"name":"new-asset-folder-name","parent_id":null,"uuid":"fd4e5a06-b168-4789-910f-95e053229e87","parent_uuid":null}}'
+        body: '{"asset_folder":{"id":576397,"name":"new-asset-folder-name","parent_id":null,"uuid":"fa69a52f-3dd1-420b-8e2c-1b30bdef162c","parent_uuid":null}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 53.375039ms
+        duration: 40.8615ms
     - id: 6
       request:
         proto: HTTP/1.1
@@ -199,7 +199,7 @@ interactions:
         body: ""
         form: {}
         headers: {}
-        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/304158
+        url: https://mapi.storyblok.com/v1/spaces/233252/asset_folders/576397
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -213,4 +213,4 @@ interactions:
         headers: {}
         status: 204 No Content
         code: 204
-        duration: 98.791678ms
+        duration: 174.791209ms
