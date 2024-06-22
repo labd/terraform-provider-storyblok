@@ -32,47 +32,65 @@ type fieldModel struct {
 	Type     types.String `tfsdk:"type"`
 	Position types.Int64  `tfsdk:"position"`
 
-	AddHttps             types.Bool     `tfsdk:"add_https"`
-	AllowTargetBlank     types.Bool     `tfsdk:"allow_target_blank"`
-	AssetFolderId        types.Int64    `tfsdk:"asset_folder_id"`
-	CanSync              types.Bool     `tfsdk:"can_sync"`
-	ComponentWhitelist   []types.String `tfsdk:"component_whitelist"`
-	CustomizeToolbar     types.Bool     `tfsdk:"customize_toolbar"`
-	DatasourceSlug       types.String   `tfsdk:"datasource_slug"`
-	DefaultValue         types.String   `tfsdk:"default_value"`
-	Description          types.String   `tfsdk:"description"`
-	DisableTime          types.Bool     `tfsdk:"disable_time"`
-	DisplayName          types.String   `tfsdk:"display_name"`
-	ExternalDatasource   types.String   `tfsdk:"external_datasource"`
-	FieldType            types.String   `tfsdk:"field_type"`
-	Filetypes            []types.String `tfsdk:"filetypes"`
-	FilterContentType    []types.String `tfsdk:"filter_content_type"`
-	FolderSlug           types.String   `tfsdk:"folder_slug"`
-	ForceLinkScope       types.Bool     `tfsdk:"force_link_scope"`
-	ImageCrop            types.Bool     `tfsdk:"image_crop"`
-	ImageHeight          types.String   `tfsdk:"image_height"`
-	ImageWidth           types.String   `tfsdk:"image_width"`
-	KeepImageSize        types.Bool     `tfsdk:"keep_image_size"`
-	Keys                 []types.String `tfsdk:"keys"`
-	LinkScope            types.String   `tfsdk:"link_scope"`
-	Maximum              types.Int64    `tfsdk:"maximum"`
-	MaxLength            types.Int64    `tfsdk:"max_length"`
-	MaxOptions           types.Int64    `tfsdk:"max_options"`
-	Minimum              types.Int64    `tfsdk:"minimum"`
-	MinOptions           types.Int64    `tfsdk:"min_options"`
-	NoTranslate          types.Bool     `tfsdk:"no_translate"`
-	Options              []optionModel  `tfsdk:"options"`
-	Regex                types.String   `tfsdk:"regex"`
-	Required             types.Bool     `tfsdk:"required"`
-	RestrictComponents   types.Bool     `tfsdk:"restrict_components"`
-	RestrictContentTypes types.Bool     `tfsdk:"restrict_content_types"`
-	RichMarkdown         types.Bool     `tfsdk:"rich_markdown"`
-	Rtl                  types.Bool     `tfsdk:"rtl"`
-	Source               types.String   `tfsdk:"source"`
-	Toolbar              []types.String `tfsdk:"toolbar"`
-	Tooltip              types.Bool     `tfsdk:"tooltip"`
-	Translatable         types.Bool     `tfsdk:"translatable"`
-	UseUuid              types.Bool     `tfsdk:"use_uuid"`
+	AddHttps             types.Bool                 `tfsdk:"add_https"`
+	AllowTargetBlank     types.Bool                 `tfsdk:"allow_target_blank"`
+	AssetFolderId        types.Int64                `tfsdk:"asset_folder_id"`
+	CanSync              types.Bool                 `tfsdk:"can_sync"`
+	ComponentWhitelist   []types.String             `tfsdk:"component_whitelist"`
+	ConditionalSettings  []conditionalSettingsModel `tfsdk:"conditional_settings"`
+	CustomizeToolbar     types.Bool                 `tfsdk:"customize_toolbar"`
+	DatasourceSlug       types.String               `tfsdk:"datasource_slug"`
+	DefaultValue         types.String               `tfsdk:"default_value"`
+	Description          types.String               `tfsdk:"description"`
+	DisableTime          types.Bool                 `tfsdk:"disable_time"`
+	DisplayName          types.String               `tfsdk:"display_name"`
+	ExternalDatasource   types.String               `tfsdk:"external_datasource"`
+	FieldType            types.String               `tfsdk:"field_type"`
+	Filetypes            []types.String             `tfsdk:"filetypes"`
+	FilterContentType    []types.String             `tfsdk:"filter_content_type"`
+	FolderSlug           types.String               `tfsdk:"folder_slug"`
+	ForceLinkScope       types.Bool                 `tfsdk:"force_link_scope"`
+	ImageCrop            types.Bool                 `tfsdk:"image_crop"`
+	ImageHeight          types.String               `tfsdk:"image_height"`
+	ImageWidth           types.String               `tfsdk:"image_width"`
+	KeepImageSize        types.Bool                 `tfsdk:"keep_image_size"`
+	Keys                 []types.String             `tfsdk:"keys"`
+	LinkScope            types.String               `tfsdk:"link_scope"`
+	Maximum              types.Int64                `tfsdk:"maximum"`
+	MaxLength            types.Int64                `tfsdk:"max_length"`
+	MaxOptions           types.Int64                `tfsdk:"max_options"`
+	Minimum              types.Int64                `tfsdk:"minimum"`
+	MinOptions           types.Int64                `tfsdk:"min_options"`
+	NoTranslate          types.Bool                 `tfsdk:"no_translate"`
+	Options              []optionModel              `tfsdk:"options"`
+	Regex                types.String               `tfsdk:"regex"`
+	Required             types.Bool                 `tfsdk:"required"`
+	RestrictComponents   types.Bool                 `tfsdk:"restrict_components"`
+	RestrictContentTypes types.Bool                 `tfsdk:"restrict_content_types"`
+	RichMarkdown         types.Bool                 `tfsdk:"rich_markdown"`
+	Rtl                  types.Bool                 `tfsdk:"rtl"`
+	Source               types.String               `tfsdk:"source"`
+	Toolbar              []types.String             `tfsdk:"toolbar"`
+	Tooltip              types.Bool                 `tfsdk:"tooltip"`
+	Translatable         types.Bool                 `tfsdk:"translatable"`
+	UseUuid              types.Bool                 `tfsdk:"use_uuid"`
+}
+
+type conditionalSettingsModel struct {
+	Modifications  []modificationModel  `tfsdk:"modifications"`
+	RuleMatch      types.String         `tfsdk:"rule_match"`
+	RuleConditions []ruleConditionModel `tfsdk:"rule_conditions"`
+}
+
+type ruleConditionModel struct {
+	Validation types.String `tfsdk:"validation"`
+	Value      types.String `tfsdk:"value"`
+	FieldKey   types.String `tfsdk:"field_key"`
+}
+
+type modificationModel struct {
+	Display  types.String `tfsdk:"display"`
+	Required types.Bool   `tfsdk:"required"`
 }
 
 type optionModel struct {
@@ -151,6 +169,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
 		CanSync:              item.CanSync.ValueBoolPointer(),
 		ComponentWhitelist:   utils.ConvertToPointerStringSlice(item.ComponentWhitelist),
+		ConditionalSettings:  deserializeConditionalSettingsModel(item.ConditionalSettings),
 		CustomizeToolbar:     item.CustomizeToolbar.ValueBoolPointer(),
 		DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
 		DefaultValue:         item.DefaultValue.ValueStringPointer(),
@@ -367,4 +386,62 @@ func deserializeOptionsModel(options []optionModel) *[]sbmgmt.FieldOption {
 	}
 
 	return &optionModels
+}
+
+func deserializeConditionalSettingsModel(conditionalSettings []conditionalSettingsModel) *[]sbmgmt.ConditionalSettings {
+	if conditionalSettings == nil {
+		return nil
+	}
+
+	deserializedConditionalSettings := make([]sbmgmt.ConditionalSettings, len(conditionalSettings))
+
+	for i, setting := range conditionalSettings {
+
+		deserializedConditionalSettings[i] = sbmgmt.ConditionalSettings{
+			RuleMatch:      (*sbmgmt.ConditionalSettingsRuleMatch)(setting.RuleMatch.ValueStringPointer()),
+			Modifications:  deserializeConditionalSettingsModificationsModel(setting.Modifications),
+			RuleConditions: deserializeRuleConditions(setting.RuleConditions),
+		}
+	}
+
+	return &deserializedConditionalSettings
+}
+
+func deserializeConditionalSettingsModificationsModel(conditionalSettingsModifications []modificationModel) *[]sbmgmt.Modification {
+	deserializedModifications := make([]sbmgmt.Modification, len(conditionalSettingsModifications))
+
+	for i, modification := range conditionalSettingsModifications {
+		if !modification.Display.IsNull() {
+			deserializedModifications[i] = sbmgmt.Modification{
+				Display: (*sbmgmt.ModificationDisplay)(modification.Display.ValueStringPointer()),
+			}
+		} else {
+			deserializedModifications[i] = sbmgmt.Modification{
+				Required: modification.Required.ValueBoolPointer(),
+			}
+		}
+	}
+
+	return &deserializedModifications
+}
+
+func deserializeRuleConditions(ruleConditions []ruleConditionModel) *[]sbmgmt.RuleCondition {
+	deserializedRuleConditions := make([]sbmgmt.RuleCondition, len(ruleConditions))
+
+	validatedObjectFieldAttrValue := sbmgmt.ValidatedObjectFieldAttr("value")
+	validatedValidatedObjectType := sbmgmt.ValidatedObjectType("field")
+
+	for i, ruleCondition := range ruleConditions {
+		deserializedRuleConditions[i] = sbmgmt.RuleCondition{
+			Validation: (*sbmgmt.RuleConditionValidation)(ruleCondition.Validation.ValueStringPointer()),
+			Value:      ruleCondition.Validation.ValueStringPointer(),
+			ValidatedObject: &sbmgmt.ValidatedObject{
+				FieldKey:  ruleCondition.FieldKey.ValueStringPointer(),
+				FieldAttr: &validatedObjectFieldAttrValue,
+				Type:      &validatedValidatedObjectType,
+			},
+		}
+	}
+
+	return &deserializedRuleConditions
 }

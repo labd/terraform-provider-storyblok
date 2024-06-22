@@ -168,6 +168,55 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 							ElementType: types.StringType,
 						},
+						"conditional_settings": schema.ListNestedAttribute{
+							Description: "Array containing the object with information about conditions set on the field",
+							Optional:    true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"modifications": schema.ListNestedAttribute{
+										Optional:    false,
+										Description: "List of modifications to be applied to the field. Only 1 modification can be applied at a time (display OR required)",
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"display": schema.StringAttribute{
+													Optional:    true,
+													Description: "Hide the target field if the rule conditions are met",
+													Validators:  []validator.String{stringvalidator.OneOf("hide")},
+												},
+												"required": schema.BoolAttribute{
+													Optional:    true,
+													Description: "Make the target field required / optional if the rule conditions are met",
+												},
+											},
+										},
+									},
+									"rule_match": schema.StringAttribute{
+										Description: "Define if all or any of the conditions should be met to apply the modifications",
+										Optional:    false,
+										Validators:  []validator.String{stringvalidator.OneOf("any", "all")},
+									},
+									"rule_conditions": schema.ListNestedAttribute{
+										Description: "Conditional rules to be applied to the target field",
+										Optional:    false,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"validation": schema.StringAttribute{
+													Optional:   false,
+													Validators: []validator.String{stringvalidator.OneOf("empty", "not_empty", "equals", "not_equals")},
+												},
+												"value": schema.StringAttribute{
+													Optional: true,
+													Default:  nil,
+												},
+												"field_key": schema.StringAttribute{
+													Optional: false,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
 						"datasource_slug": schema.StringAttribute{
 							Description: "Define selectable datasources string; Effects editor only if source=internal",
 							Optional:    true,
