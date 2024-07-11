@@ -85,7 +85,7 @@ resource "storyblok_component" "advanced_component" {
 }
 
 // conditional content
-resource "storyblok_component" "conditional_settings_new" {
+resource "storyblok_component" "conditional_settings" {
   name        = "conditional settings component"
   space_id    = "<your space id>"
   is_root     = false
