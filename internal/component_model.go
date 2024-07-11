@@ -83,9 +83,13 @@ type conditionalSettingsModel struct {
 }
 
 type ruleConditionModel struct {
-	Validation types.String `tfsdk:"validation"`
-	Value      types.String `tfsdk:"value"`
-	FieldKey   types.String `tfsdk:"field_key"`
+	Validation      types.String         `tfsdk:"validation"`
+	Value           types.String         `tfsdk:"value"`
+	ValidatedObject validatedObjectModel `tfsdk:"validated_object"`
+}
+
+type validatedObjectModel struct {
+	FieldKey types.String `tfsdk:"field_key"`
 }
 
 type modificationModel struct {
@@ -169,7 +173,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		AssetFolderId:        item.AssetFolderId.ValueInt64Pointer(),
 		CanSync:              item.CanSync.ValueBoolPointer(),
 		ComponentWhitelist:   utils.ConvertToPointerStringSlice(item.ComponentWhitelist),
-		ConditionalSettings:  deserializeConditionalSettingsModel(item.ConditionalSettings),
+		ConditionalSettings:  deserializeConditionalSettings(item.ConditionalSettings),
 		CustomizeToolbar:     item.CustomizeToolbar.ValueBoolPointer(),
 		DatasourceSlug:       item.DatasourceSlug.ValueStringPointer(),
 		DefaultValue:         item.DefaultValue.ValueStringPointer(),
@@ -285,6 +289,7 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		Tooltip:              types.BoolPointerValue(field.Tooltip),
 		Translatable:         types.BoolPointerValue(field.Translatable),
 		UseUuid:              types.BoolPointerValue(field.UseUuid),
+		ConditionalSettings:  serializeConditionalSettings(field.ConditionalSettings),
 	}
 }
 
@@ -388,7 +393,62 @@ func deserializeOptionsModel(options []optionModel) *[]sbmgmt.FieldOption {
 	return &optionModels
 }
 
-func deserializeConditionalSettingsModel(conditionalSettings []conditionalSettingsModel) *[]sbmgmt.ConditionalSettings {
+func serializeConditionalSettings(conditionalSettings *[]sbmgmt.ConditionalSettings) []conditionalSettingsModel {
+	if conditionalSettings == nil {
+		return nil
+	}
+
+	serializedConditionalSettings := make([]conditionalSettingsModel, len(*conditionalSettings))
+
+	for i, conditionalSetting := range *conditionalSettings {
+		serializedConditionalSettings[i] = conditionalSettingsModel{
+			RuleMatch:      types.StringPointerValue((*string)(conditionalSetting.RuleMatch)),
+			Modifications:  serializeModifications(conditionalSetting.Modifications),
+			RuleConditions: serializeRuleConditions(conditionalSetting.RuleConditions),
+		}
+	}
+
+	return serializedConditionalSettings
+}
+
+func serializeModifications(modifications *[]sbmgmt.Modification) []modificationModel {
+	if modifications == nil {
+		return nil
+	}
+
+	serializedModifications := make([]modificationModel, len(*modifications))
+
+	for i, modification := range *modifications {
+		serializedModifications[i] = modificationModel{
+			Required: types.BoolPointerValue(modification.Required),
+			Display:  types.StringPointerValue((*string)(modification.Display)),
+		}
+	}
+
+	return serializedModifications
+}
+func serializeRuleConditions(ruleConditions *[]sbmgmt.RuleCondition) []ruleConditionModel {
+
+	if ruleConditions == nil {
+		return nil
+	}
+
+	serializedRuleConditions := make([]ruleConditionModel, len(*ruleConditions))
+
+	for i, ruleCondition := range *ruleConditions {
+		serializedRuleConditions[i] = ruleConditionModel{
+			Value:      types.StringPointerValue(ruleCondition.Value),
+			Validation: types.StringPointerValue((*string)(ruleCondition.Validation)),
+			ValidatedObject: validatedObjectModel{
+				FieldKey: types.StringPointerValue(ruleCondition.ValidatedObject.FieldKey),
+			},
+		}
+	}
+
+	return serializedRuleConditions
+}
+
+func deserializeConditionalSettings(conditionalSettings []conditionalSettingsModel) *[]sbmgmt.ConditionalSettings {
 	if conditionalSettings == nil {
 		return nil
 	}
@@ -411,14 +471,9 @@ func deserializeConditionalSettingsModificationsModel(conditionalSettingsModific
 	deserializedModifications := make([]sbmgmt.Modification, len(conditionalSettingsModifications))
 
 	for i, modification := range conditionalSettingsModifications {
-		if !modification.Display.IsNull() {
-			deserializedModifications[i] = sbmgmt.Modification{
-				Display: (*sbmgmt.ModificationDisplay)(modification.Display.ValueStringPointer()),
-			}
-		} else {
-			deserializedModifications[i] = sbmgmt.Modification{
-				Required: modification.Required.ValueBoolPointer(),
-			}
+		deserializedModifications[i] = sbmgmt.Modification{
+			Required: modification.Required.ValueBoolPointer(),
+			Display:  (*sbmgmt.ModificationDisplay)(modification.Display.ValueStringPointer()),
 		}
 	}
 
@@ -434,9 +489,9 @@ func deserializeRuleConditions(ruleConditions []ruleConditionModel) *[]sbmgmt.Ru
 	for i, ruleCondition := range ruleConditions {
 		deserializedRuleConditions[i] = sbmgmt.RuleCondition{
 			Validation: (*sbmgmt.RuleConditionValidation)(ruleCondition.Validation.ValueStringPointer()),
-			Value:      ruleCondition.Validation.ValueStringPointer(),
+			Value:      ruleCondition.Value.ValueStringPointer(),
 			ValidatedObject: &sbmgmt.ValidatedObject{
-				FieldKey:  ruleCondition.FieldKey.ValueStringPointer(),
+				FieldKey:  ruleCondition.ValidatedObject.FieldKey.ValueStringPointer(),
 				FieldAttr: &validatedObjectFieldAttrValue,
 				Type:      &validatedValidatedObjectType,
 			},

@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -174,7 +175,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							NestedObject: schema.NestedAttributeObject{
 								Attributes: map[string]schema.Attribute{
 									"modifications": schema.ListNestedAttribute{
-										Optional:    false,
+										Required:    true,
 										Description: "List of modifications to be applied to the field. Only 1 modification can be applied at a time (display OR required)",
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
@@ -192,24 +193,30 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 									},
 									"rule_match": schema.StringAttribute{
 										Description: "Define if all or any of the conditions should be met to apply the modifications",
-										Optional:    false,
+										Required:    true,
 										Validators:  []validator.String{stringvalidator.OneOf("any", "all")},
 									},
 									"rule_conditions": schema.ListNestedAttribute{
 										Description: "Conditional rules to be applied to the target field",
-										Optional:    false,
+										Required:    true,
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"validation": schema.StringAttribute{
-													Optional:   false,
+													Required:   true,
 													Validators: []validator.String{stringvalidator.OneOf("empty", "not_empty", "equals", "not_equals")},
 												},
 												"value": schema.StringAttribute{
 													Optional: true,
-													Default:  nil,
+													Computed: true,
+													Default:  stringdefault.StaticString("empty"),
 												},
-												"field_key": schema.StringAttribute{
-													Optional: false,
+												"validated_object": schema.SingleNestedAttribute{
+													Required: true,
+													Attributes: map[string]schema.Attribute{
+														"field_key": schema.StringAttribute{
+															Required: true,
+														},
+													},
 												},
 											},
 										},
