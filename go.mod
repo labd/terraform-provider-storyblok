@@ -10,7 +10,7 @@ require (
 	github.com/hashicorp/terraform-plugin-docs v0.19.2
 	github.com/hashicorp/terraform-plugin-framework v1.8.0
 	github.com/hashicorp/terraform-plugin-log v0.9.0
-	github.com/labd/storyblok-go-sdk v0.5.0
+	github.com/labd/storyblok-go-sdk v0.6.0
 	github.com/wk8/go-ordered-map/v2 v2.1.8
 )
 
