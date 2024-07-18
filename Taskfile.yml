@@ -16,6 +16,7 @@ tasks:
   format:
     cmds:
       - go fmt ./...
+      - terraform fmt -recursive -write=true ./examples/
 
   test:
     cmds:

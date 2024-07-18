@@ -158,6 +158,8 @@ github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/labd/storyblok-go-sdk v0.5.0 h1:Nv+sq6jJm1UfP3BArnNd/XbHRQl2AVyXiJ0fwoBI33Q=
 github.com/labd/storyblok-go-sdk v0.5.0/go.mod h1:79Zb12MZIzs2qF0FLZKLLGC8ijubZLn3/VaK76XdvWs=
+github.com/labd/storyblok-go-sdk v0.6.0 h1:yM6wVTn2/OqyjlnaVUJKVnnI+vSu5isjap9zIP/eWKM=
+github.com/labd/storyblok-go-sdk v0.6.0/go.mod h1:79Zb12MZIzs2qF0FLZKLLGC8ijubZLn3/VaK76XdvWs=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
 github.com/mailru/easyjson v0.7.7/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
 github.com/mattn/go-colorable v0.1.9/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=

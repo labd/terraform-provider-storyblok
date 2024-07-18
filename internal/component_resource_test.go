@@ -29,6 +29,10 @@ func TestComponentResourceBasic(t *testing.T) {
 					resource.TestCheckResourceAttr(rn, "schema.intro.type", "text"),
 					resource.TestCheckResourceAttr(rn, "schema.image.position", "3"),
 					resource.TestCheckResourceAttr(rn, "schema.image.type", "image"),
+					resource.TestCheckResourceAttr(rn, "schema.image.conditional_settings.0.modifications.0.required", "true"),
+					resource.TestCheckResourceAttr(rn, "schema.image.conditional_settings.0.rule_match", "all"),
+					resource.TestCheckResourceAttr(rn, "schema.image.conditional_settings.0.rule_conditions.0.validation", "empty"),
+					resource.TestCheckResourceAttr(rn, "schema.image.conditional_settings.0.rule_conditions.0.validated_object.field_key", "intro"),
 				),
 			},
 			{
@@ -51,25 +55,45 @@ func TestComponentResourceBasic(t *testing.T) {
 func testComponentConfig(identifier string, spaceId int) string {
 	return HCLTemplate(`
 		resource "storyblok_component" "{{ .identifier }}" {
-		  name     = "test-banner"
-		  space_id = "{{ .spaceId }}"
-		  schema = {
-			title = {
-			  type     = "text"
-			  position = 1
+		name     = "test-banner"
+		space_id = "{{ .spaceId }}"
+		schema = {
+				title = {
+					type     = "text"
+					position = 1
+				}
+			
+				intro = {
+					type     = "text"
+					position = 2
+				}
+			
+				image = {
+					type     = "image"
+					position = 3
+
+					conditional_settings = [
+						{
+							modifications = [
+								{
+									required = true
+								}
+							]
+
+							rule_match = "all"
+							rule_conditions = [
+								{
+									validation = "empty"
+									validated_object = {
+										field_key = "intro"
+									}
+								}
+							]
+						}
+					]
 			}
-		
-			intro = {
-			  type     = "text"
-			  position = 2
-			}
-		
-			image = {
-			  type     = "image"
-			  position = 3
-			}
-		  }
-	      preview_tmpl = "<div></div>"
+		}
+			preview_tmpl = "<div></div>"
 		}
 	`, map[string]any{
 		"identifier": identifier,

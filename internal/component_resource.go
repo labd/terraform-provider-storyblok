@@ -13,6 +13,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -167,6 +168,61 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Array of component/content type names: [\"post\",\"page\",\"product\"]. Only for type: bloks, multilink, and richtext (for nestable bloks inside that)",
 							Optional:    true,
 							ElementType: types.StringType,
+						},
+						"conditional_settings": schema.ListNestedAttribute{
+							Description: "Array containing the object with information about conditions set on the field",
+							Optional:    true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"modifications": schema.ListNestedAttribute{
+										Required:    true,
+										Description: "List of modifications to be applied to the field. Only 1 modification can be applied at a time (display OR required)",
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"display": schema.StringAttribute{
+													Optional:    true,
+													Description: "Hide the target field if the rule conditions are met",
+													Validators:  []validator.String{stringvalidator.OneOf("hide")},
+												},
+												"required": schema.BoolAttribute{
+													Optional:    true,
+													Description: "Make the target field required / optional if the rule conditions are met",
+												},
+											},
+										},
+									},
+									"rule_match": schema.StringAttribute{
+										Description: "Define if all or any of the conditions should be met to apply the modifications",
+										Required:    true,
+										Validators:  []validator.String{stringvalidator.OneOf("any", "all")},
+									},
+									"rule_conditions": schema.ListNestedAttribute{
+										Description: "Conditional rules to be applied to the target field",
+										Required:    true,
+										NestedObject: schema.NestedAttributeObject{
+											Attributes: map[string]schema.Attribute{
+												"validation": schema.StringAttribute{
+													Required:   true,
+													Validators: []validator.String{stringvalidator.OneOf("empty", "not_empty", "equals", "not_equals")},
+												},
+												"value": schema.StringAttribute{
+													Optional: true,
+													Computed: true,
+													Default:  stringdefault.StaticString("empty"),
+												},
+												"validated_object": schema.SingleNestedAttribute{
+													Required: true,
+													Attributes: map[string]schema.Attribute{
+														"field_key": schema.StringAttribute{
+															Required: true,
+														},
+													},
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 						"datasource_slug": schema.StringAttribute{
 							Description: "Define selectable datasources string; Effects editor only if source=internal",
