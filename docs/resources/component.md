@@ -39,62 +39,126 @@ resource "storyblok_component" "banner" {
 
 // advanced example
 resource "storyblok_component" "advanced_component" {
-  name     = "advanced-component"
-  space_id = "<my-space-id>"
-  is_root = true
+  name        = "advanced-component"
+  space_id    = "<my-space-id>"
+  is_root     = true
   is_nestable = false
 
   schema = {
     title = {
-      type     = "text"
-      position = 1
-      required = true // The field is required. Default is false.
-      max_length = 200 // Set the max length of the input string
+      type        = "text"
+      position    = 1
+      required    = true                     // The field is required. Default is false.
+      max_length  = 200                      // Set the max length of the input string
       description = "Title of the component" // Description shown in the editor interface
     }
 
     introduction = {
-      type     = "rich_text"
-      position = 2
+      type          = "rich_text"
+      position      = 2
       rich_markdown = true // Enable rich markdown view by default
-      description = "Introduction text with rich text editor"
+      description   = "Introduction text with rich text editor"
     }
 
     image = {
-      type     = "image"
-      position = 3
-      asset_folder_id = 1 // Default asset folder numeric id to store uploaded image of that field
-      add_https = true // Prepends https: to stop usage of relative protocol
-      image_crop = true // Activate force crop for images
+      type            = "image"
+      position        = 3
+      asset_folder_id = 1    // Default asset folder numeric id to store uploaded image of that field
+      add_https       = true // Prepends https: to stop usage of relative protocol
+      image_crop      = true // Activate force crop for images
     }
 
     release_date = {
-      type     = "date"
-      position = 4
+      type         = "date"
+      position     = 4
       disable_time = true // Disables time selection from date picker
-      description = "Release date of the content"
+      description  = "Release date of the content"
     }
 
     tags = {
-      type     = "multi_option"
-      position = 5
+      type            = "multi_option"
+      position        = 5
       datasource_slug = "tags" // Define selectable datasources string
-      description = "Tags for the component"
+      description     = "Tags for the component"
     }
 
     rating = {
-      type     = "number"
-      position = 6
-      description = "Rating of the content"
+      type          = "number"
+      position      = 6
+      description   = "Rating of the content"
       default_value = "3" // Default value for the field
     }
 
     content = {
-      type     = "bloks"
-      position = 7
+      type                = "bloks"
+      position            = 7
       component_whitelist = ["text", "image", "video"] // Array of component/content type names
-      maximum = 10 // Maximum amount of added bloks in this blok field
-      description = "Content blocks"
+      maximum             = 10                         // Maximum amount of added bloks in this blok field
+      description         = "Content blocks"
+    }
+  }
+}
+
+// conditional content
+resource "storyblok_component" "conditional_settings" {
+  name        = "conditional settings component"
+  space_id    = "<your space id>"
+  is_root     = false
+  is_nestable = true
+
+
+  schema = {
+    content = {
+      position     = 0
+      translatable = true
+      display_name = "Content"
+      required     = true
+      type         = "text"
+    }
+
+    more_content = {
+      position     = 1
+      translatable = true
+      display_name = "more content"
+      required     = true
+      type         = "text"
+    }
+
+    conditionalContent = {
+      position     = 2
+      display_name = "conditinal content"
+      required     = true
+      type         = "text"
+
+      conditional_settings = [
+        {
+          modifications = [
+            {
+              required = false
+            }
+          ]
+
+          // make "conditional content" optional of either:
+          // 1. content is empty
+          // 2. more content equals "test"
+          rule_match = "any"
+          rule_conditions = [
+            {
+              validation = "empty"
+              validated_object = {
+                field_key = "content"
+              }
+            },
+            {
+              value      = "test"
+              validation = "equals"
+              validated_object = {
+                field_key = "more_content"
+              }
+            }
+          ]
+        }
+      ]
     }
   }
 }
@@ -142,6 +206,7 @@ Optional:
 - `asset_folder_id` (Number) Default asset folder numeric id to store uploaded image of that field
 - `can_sync` (Boolean) Advanced usage to sync with field in preview; Default: false
 - `component_whitelist` (List of String) Array of component/content type names: ["post","page","product"]. Only for type: bloks, multilink, and richtext (for nestable bloks inside that)
+- `conditional_settings` (Attributes List) Array containing the object with information about conditions set on the field (see [below for nested schema](#nestedatt--schema--conditional_settings))
 - `customize_toolbar` (Boolean) Allow to customize the Markdown or Richtext toolbar; Default: false
 - `datasource_slug` (String) Define selectable datasources string; Effects editor only if source=internal
 - `default_value` (String) Default value for the field; Can be an escaped JSON object
@@ -178,6 +243,46 @@ Optional:
 - `tooltip` (Boolean) Show the description as a tooltip
 - `translatable` (Boolean) Can field be translated; Default: false
 - `use_uuid` (Boolean) Default: true; available in option and source=internal_stories
+
+<a id="nestedatt--schema--conditional_settings"></a>
+### Nested Schema for `schema.conditional_settings`
+
+Required:
+
+- `modifications` (Attributes List) List of modifications to be applied to the field. Only 1 modification can be applied at a time (display OR required) (see [below for nested schema](#nestedatt--schema--conditional_settings--modifications))
+- `rule_conditions` (Attributes List) Conditional rules to be applied to the target field (see [below for nested schema](#nestedatt--schema--conditional_settings--rule_conditions))
+- `rule_match` (String) Define if all or any of the conditions should be met to apply the modifications
+
+<a id="nestedatt--schema--conditional_settings--modifications"></a>
+### Nested Schema for `schema.conditional_settings.modifications`
+
+Optional:
+
+- `display` (String) Hide the target field if the rule conditions are met
+- `required` (Boolean) Make the target field required / optional if the rule conditions are met
+
+
+<a id="nestedatt--schema--conditional_settings--rule_conditions"></a>
+### Nested Schema for `schema.conditional_settings.rule_conditions`
+
+Required:
+
+- `validated_object` (Attributes) (see [below for nested schema](#nestedatt--schema--conditional_settings--rule_conditions--validated_object))
+- `validation` (String)
+
+Optional:
+
+- `value` (String)
+
+<a id="nestedatt--schema--conditional_settings--rule_conditions--validated_object"></a>
+### Nested Schema for `schema.conditional_settings.rule_conditions.validated_object`
+
+Required:
+
+- `field_key` (String)
+
+
+
 
 <a id="nestedatt--schema--options"></a>
 ### Nested Schema for `schema.options`
