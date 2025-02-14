@@ -380,6 +380,92 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Description: "Default: true; available in option and source=internal_stories",
 							Optional:    true,
 						},
+						"steps": schema.Int64Attribute{
+							Description: "Step interval for number fields",
+							Optional:    true,
+						},
+						"show_anchor": schema.BoolAttribute{
+							Description: "Enables anchor field for internal links in multilink fields",
+							Optional:    true,
+						},
+						"restrict_type": schema.StringAttribute{
+							Description: "Restricts the type of components used in bloks fields (e.g., tags, groups).",
+							Optional:    true,
+						},
+						"component_group_whitelist": schema.ListAttribute{
+							Description: "Array of group UUIDs for restricting components in bloks fields",
+							Optional:    true,
+							ElementType: types.StringType,
+						},
+						"component_tag_whitelist": schema.ListAttribute{
+							Description: "Array of tag IDs for restricting components in bloks fields",
+							Optional:    true,
+							ElementType: types.Int64Type,
+						},
+						"asset_link_type": schema.BoolAttribute{
+							Description: "Allows assets in multilink fields",
+							Optional:    true,
+						},
+						"allow_advanced_search": schema.BoolAttribute{
+							Description: "Allows advanced search in option fields",
+							Optional:    true,
+						},
+						"allow_custom_attributes": schema.BoolAttribute{
+							Description: "Enables custom attributes in links for richtext or multilink fields",
+							Optional:    true,
+						},
+						"allow_external_url": schema.BoolAttribute{
+							Description: "Allows external URLs in asset or multiasset fields",
+							Optional:    true,
+						},
+						"allow_multiline": schema.BoolAttribute{
+							Description: "Enables empty paragraphs in markdown fields",
+							Optional:    true,
+						},
+						"decimals": schema.Int64Attribute{
+							Description: "Number of decimal places for number fields",
+							Optional:    true,
+						},
+						"email_link_type": schema.BoolAttribute{
+							Description: "Allows email links in multilink fields",
+							Optional:    true,
+						},
+						"entry_appearance": schema.StringAttribute{
+							Description: "Appearance of an option (link or card) in an option field",
+							Optional:    true,
+						},
+						"exclude_empty_option": schema.BoolAttribute{
+							Description: "Hides empty options in option fields",
+							Optional:    true,
+						},
+						"exclude_from_merge": schema.BoolAttribute{
+							Description: "Excludes a blok from merge actions (Dimensions App).",
+							Optional:    true,
+						},
+						"exclude_from_overwrite": schema.BoolAttribute{
+							Description: "Excludes a blok from overwrite actions (Dimensions App).",
+							Optional:    true,
+						},
+						"force_merge": schema.BoolAttribute{
+							Description: "Forces overwriting a blok during a merge action (Dimensions App).",
+							Optional:    true,
+						},
+						"inline_label": schema.BoolAttribute{
+							Description: "Makes the label of a boolean field inline",
+							Optional:    true,
+						},
+						"is_reference_type": schema.BoolAttribute{
+							Description: "True if the options field is of type reference",
+							Optional:    true,
+						},
+						"max_value": schema.Int64Attribute{
+							Description: "Maximum value for number fields",
+							Optional:    true,
+						},
+						"min_value": schema.Int64Attribute{
+							Description: "Minimum value for number fields",
+							Optional:    true,
+						},
 					},
 				},
 			},
