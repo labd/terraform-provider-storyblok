@@ -18,6 +18,19 @@ func ConvertToStringSlice(strSlicePtr *[]string) []types.String {
 	return strSlice
 }
 
+func ConvertToInt64Slice(intSlicePtr *[]int) []types.Int64 {
+	if intSlicePtr == nil {
+		return nil
+	}
+
+	intSlice := make([]types.Int64, len(*intSlicePtr))
+	for i, str := range *intSlicePtr {
+		intSlice[i] = types.Int64Value(int64(str))
+	}
+
+	return intSlice
+}
+
 func ConvertToPointerStringSlice(slice []types.String) *[]string {
 	if slice == nil {
 		return nil
