@@ -9,7 +9,9 @@ import (
 
 func TestAssetFolderResourceBasic(t *testing.T) {
 	f, stop := ProviderFactories("./assets/asset_folder")
-	defer stop()
+	defer func() {
+		_ = stop()
+	}()
 
 	id := "test"
 	rn := fmt.Sprintf("storyblok_asset_folder.%s", id)

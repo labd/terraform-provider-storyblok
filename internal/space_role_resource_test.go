@@ -9,7 +9,9 @@ import (
 
 func TestSpaceRoleResourceBasic(t *testing.T) {
 	f, stop := ProviderFactories("./assets/space_role")
-	defer stop()
+	defer func() {
+		_ = stop()
+	}()
 
 	id := "test"
 	rn := fmt.Sprintf("storyblok_space_role.%s", id)

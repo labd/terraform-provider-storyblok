@@ -259,7 +259,6 @@ func (r *assetFolderResource) Delete(ctx context.Context, req resource.DeleteReq
 		)
 		return
 	}
-
 }
 
 func (r *assetFolderResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

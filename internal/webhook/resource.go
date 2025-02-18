@@ -281,7 +281,6 @@ func (r *webhookResource) Delete(ctx context.Context, req resource.DeleteRequest
 		)
 		return
 	}
-
 }
 
 func (r *webhookResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

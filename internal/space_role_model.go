@@ -48,7 +48,6 @@ func (m *spaceRoleResourceModel) toCreateInput() sbmgmt.SpaceRoleCreateInput {
 	}
 }
 func (m *spaceRoleResourceModel) toUpdateInput() sbmgmt.SpaceRoleUpdateInput {
-
 	return sbmgmt.SpaceRoleUpdateInput{
 		SpaceRole: &sbmgmt.SpaceRoleBase{
 			AllowedLanguages:         utils.ConvertToPointerStringSlice(m.AllowedLanguages),
