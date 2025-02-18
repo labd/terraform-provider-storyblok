@@ -10,5 +10,4 @@ func TestProvider(t *testing.T) {
 	p := New()
 
 	assert.NotNil(t, p)
-
 }

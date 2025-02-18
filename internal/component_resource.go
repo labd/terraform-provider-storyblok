@@ -651,7 +651,6 @@ func (r *componentResource) Delete(ctx context.Context, req resource.DeleteReque
 		)
 		return
 	}
-
 }
 
 func (r *componentResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

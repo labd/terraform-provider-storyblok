@@ -19,7 +19,6 @@ type componentGroupResourceModel struct {
 }
 
 func (m *componentGroupResourceModel) toCreateInput() sbmgmt.ComponentGroupCreateInput {
-
 	return sbmgmt.ComponentGroupCreateInput{
 		ComponentGroup: sbmgmt.ComponentGroupBase{
 			Name: m.Name.ValueString(),
@@ -27,7 +26,6 @@ func (m *componentGroupResourceModel) toCreateInput() sbmgmt.ComponentGroupCreat
 	}
 }
 func (m *componentGroupResourceModel) toUpdateInput() sbmgmt.ComponentGroupUpdateInput {
-
 	return sbmgmt.ComponentGroupUpdateInput{
 		ComponentGroup: sbmgmt.ComponentGroupBase{
 			Name: m.Name.ValueString(),

@@ -9,7 +9,9 @@ import (
 
 func TestComponentGroupResourceBasic(t *testing.T) {
 	f, stop := ProviderFactories("./assets/component_group")
-	defer stop()
+	defer func() {
+		_ = stop()
+	}()
 
 	id := "test"
 	rn := fmt.Sprintf("storyblok_component_group.%s", id)

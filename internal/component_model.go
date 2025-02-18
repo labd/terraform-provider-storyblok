@@ -124,7 +124,6 @@ type optionModel struct {
 }
 
 func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
-
 	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
 	for name := range m.Schema {
 		item := m.Schema[name]
@@ -154,7 +153,6 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 	}
 }
 func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
-
 	raw := make(map[string]sbmgmt.FieldInput, len(m.Schema))
 	for name := range m.Schema {
 		item := m.Schema[name]
@@ -491,7 +489,6 @@ func serializeModifications(modifications *[]sbmgmt.Modification) []modification
 	return serializedModifications
 }
 func serializeRuleConditions(ruleConditions *[]sbmgmt.RuleCondition) []ruleConditionModel {
-
 	if ruleConditions == nil {
 		return nil
 	}
@@ -519,7 +516,6 @@ func deserializeConditionalSettings(conditionalSettings []conditionalSettingsMod
 	deserializedConditionalSettings := make([]sbmgmt.ConditionalSettings, len(conditionalSettings))
 
 	for i, setting := range conditionalSettings {
-
 		deserializedConditionalSettings[i] = sbmgmt.ConditionalSettings{
 			RuleMatch:      (*sbmgmt.ConditionalSettingsRuleMatch)(setting.RuleMatch.ValueStringPointer()),
 			Modifications:  deserializeConditionalSettingsModificationsModel(setting.Modifications),

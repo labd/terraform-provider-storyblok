@@ -202,33 +202,51 @@ Required:
 Optional:
 
 - `add_https` (Boolean) Prepends https: to stop usage of relative protocol
+- `allow_advanced_search` (Boolean) Allows advanced search in option fields
+- `allow_custom_attributes` (Boolean) Enables custom attributes in links for richtext or multilink fields
+- `allow_external_url` (Boolean) Allows external URLs in asset or multiasset fields
+- `allow_multiline` (Boolean) Enables empty paragraphs in markdown fields
 - `allow_target_blank` (Boolean) Allows to open links in a new tab for Richtext; Default: false
 - `asset_folder_id` (Number) Default asset folder numeric id to store uploaded image of that field
+- `asset_link_type` (Boolean) Allows assets in multilink fields
 - `can_sync` (Boolean) Advanced usage to sync with field in preview; Default: false
+- `component_group_whitelist` (List of String) Array of group UUIDs for restricting components in bloks fields
+- `component_tag_whitelist` (List of Number) Array of tag IDs for restricting components in bloks fields
 - `component_whitelist` (List of String) Array of component/content type names: ["post","page","product"]. Only for type: bloks, multilink, and richtext (for nestable bloks inside that)
 - `conditional_settings` (Attributes List) Array containing the object with information about conditions set on the field (see [below for nested schema](#nestedatt--schema--conditional_settings))
 - `customize_toolbar` (Boolean) Allow to customize the Markdown or Richtext toolbar; Default: false
 - `datasource_slug` (String) Define selectable datasources string; Effects editor only if source=internal
+- `decimals` (Number) Number of decimal places for number fields
 - `default_value` (String) Default value for the field; Can be an escaped JSON object
 - `description` (String) Description shown in the editor interface
 - `disable_time` (Boolean) Disables time selection from date picker; Default: false
 - `display_name` (String) Display name shown in the editor interface
+- `email_link_type` (Boolean) Allows email links in multilink fields
+- `entry_appearance` (String) Appearance of an option (link or card) in an option field
+- `exclude_empty_option` (Boolean) Hides empty options in option fields
+- `exclude_from_merge` (Boolean) Excludes a blok from merge actions (Dimensions App).
+- `exclude_from_overwrite` (Boolean) Excludes a blok from overwrite actions (Dimensions App).
 - `external_datasource` (String) Define external datasource JSON Url; Effects editor only if source=external
 - `field_type` (String) Name of the custom field type plugin
 - `filetypes` (List of String) Array of file type names: ["images", "videos", "audios", "texts"]
 - `filter_content_type` (List of String) An array of content types that can be selected in a option or options field where source is internal_stories: ["post", "faq_item"]
 - `folder_slug` (String) Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have a multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: "{0}/categories/", {0}/{1}/categories/
 - `force_link_scope` (Boolean) Force link scope to be internal_stories; Default: false
+- `force_merge` (Boolean) Forces overwriting a blok during a merge action (Dimensions App).
 - `image_crop` (Boolean) Activate force crop for images: (true/false)
 - `image_height` (String) Define height in px or height ratio if keep_image_size is enabled
 - `image_width` (String) Define width in px or width ratio if keep_image_size is enabled
+- `inline_label` (Boolean) Makes the label of a boolean field inline
+- `is_reference_type` (Boolean) True if the options field is of type reference
 - `keep_image_size` (Boolean) Keep original size: (true/false)
 - `keys` (List of String) Array of field keys to include in this section
 - `link_scope` (String) A path to a folder to restrict the link scope
 - `max_length` (Number) Set the max length of the input string
 - `max_options` (Number) Maximum amount of options for this options field
+- `max_value` (Number) Maximum value for number fields
 - `maximum` (Number) Maximum amount of added bloks in this blok field
 - `min_options` (Number) Minimum amount of options for this options field
+- `min_value` (Number) Minimum value for number fields
 - `minimum` (Number) Minimum amount of added bloks in this blok field
 - `no_translate` (Boolean) Should be excluded in translation export
 - `options` (Attributes List) Array of datasource entries [{name:"", value:""}]; Effects editor only if source=undefined (see [below for nested schema](#nestedatt--schema--options))
@@ -236,9 +254,12 @@ Optional:
 - `required` (Boolean) Is field required; Default: false
 - `restrict_components` (Boolean) Activate restriction nestable component option; Default: false
 - `restrict_content_types` (Boolean) Activate restriction content type option
+- `restrict_type` (String) Restricts the type of components used in bloks fields (e.g., tags, groups).
 - `rich_markdown` (Boolean) Enable rich markdown view by default (true/false)
 - `rtl` (Boolean) Enable global RTL for this field
+- `show_anchor` (Boolean) Enables anchor field for internal links in multilink fields
 - `source` (String) Possible values: undefined: Self; internal_stories: Stories; internal: Datasource; external: API Endpoint in Datasource Entries Array Format
+- `steps` (Number) Step interval for number fields
 - `toolbar` (List of String) Array of toolbar keys to include in the Richtext or Markdown toolbar
 - `tooltip` (Boolean) Show the description as a tooltip
 - `translatable` (Boolean) Can field be translated; Default: false
