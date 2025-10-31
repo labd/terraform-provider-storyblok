@@ -45,8 +45,9 @@ func (r *webhookResource) Metadata(_ context.Context, req resource.MetadataReque
 // Schema defines the schema for the data source.
 func (r *webhookResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "Asset folder allow you to group your assets. Besides the overall root folder you can define nested " +
-			"folder structures.",
+		Description: "Webhooks are used to send Storyblok events to other applications. There are some default " +
+			"Storyblok events that you can listen to when they are triggered. Read about " +
+			"[Available Triggers](https://www.storyblok.com/docs/concepts/webhooks#setup) to learn more.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description: "The terraform ID of the space role. This is a composite ID, " +
@@ -64,11 +65,11 @@ func (r *webhookResource) Schema(_ context.Context, _ resource.SchemaRequest, re
 				},
 			},
 			"name": schema.StringAttribute{
-				Description: "The technical name of the asset folder.",
+				Description: "The technical name of the webhook.",
 				Required:    true,
 			},
 			"space_id": schema.Int64Attribute{
-				Description: "The ID of the space.",
+				Description: "Numeric ID of a space.",
 				Required:    true,
 			},
 			"endpoint": schema.StringAttribute{

@@ -3,12 +3,12 @@
 page_title: "storyblok_webhook Resource - storyblok"
 subcategory: ""
 description: |-
-  Asset folder allow you to group your assets. Besides the overall root folder you can define nested folder structures.
+  Webhooks are used to send Storyblok events to other applications. There are some default Storyblok events that you can listen to when they are triggered. Read about Available Triggers https://www.storyblok.com/docs/concepts/webhooks#setup to learn more.
 ---
 
 # storyblok_webhook (Resource)
 
-Asset folder allow you to group your assets. Besides the overall root folder you can define nested folder structures.
+Webhooks are used to send Storyblok events to other applications. There are some default Storyblok events that you can listen to when they are triggered. Read about [Available Triggers](https://www.storyblok.com/docs/concepts/webhooks#setup) to learn more.
 
 
 
@@ -19,8 +19,8 @@ Asset folder allow you to group your assets. Besides the overall root folder you
 
 - `actions` (List of String) The actions that should trigger the webhook.
 - `endpoint` (String) The endpoint URL to send the webhook to.
-- `name` (String) The technical name of the asset folder.
-- `space_id` (Number) The ID of the space.
+- `name` (String) The technical name of the webhook.
+- `space_id` (Number) Numeric ID of a space.
 
 ### Optional
 
