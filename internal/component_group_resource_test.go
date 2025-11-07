@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 func TestComponentGroupResourceBasic(t *testing.T) {
@@ -38,7 +39,7 @@ func TestComponentGroupResourceBasic(t *testing.T) {
 }
 
 func testComponentGroupConfig(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_component_group" "{{ .identifier }}" {
 		  space_id = "{{ .spaceId }}"
 		  name     = "test-component-group"
@@ -50,7 +51,7 @@ func testComponentGroupConfig(identifier string, spaceId int) string {
 }
 
 func testComponentGroupConfigUpdate(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_component_group" "{{ .identifier }}" {
 		  space_id = "{{ .spaceId }}"
 		  name     = "new-test-component-group"

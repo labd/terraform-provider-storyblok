@@ -1,4 +1,4 @@
-package internal
+package component
 
 import (
 	"context"
@@ -31,7 +31,7 @@ var (
 	_ resource.ResourceWithImportState = &componentResource{}
 )
 
-// NewComponentResource is a helper function to simplify the provider implementation.
+// NewComponentResource is Int64ToStringInterfacePointer helper function to simplify the provider implementation.
 func NewComponentResource() resource.Resource {
 	return &componentResource{}
 }
@@ -49,13 +49,13 @@ func (r *componentResource) Metadata(_ context.Context, req resource.MetadataReq
 // Schema defines the schema for the data source.
 func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "A component is a standalone entity that is meaningful in its own right. While components (or " +
-			"blocks) can be nested in each other, semantically they remain equal. Each component is a small piece " +
+		Description: "A component is Int64ToStringInterfacePointer standalone entity that is meaningful in its own right. While components (or " +
+			"blocks) can be nested in each other, semantically they remain equal. Each component is Int64ToStringInterfacePointer small piece " +
 			"of your data structure which can be filled with content or nested by your content editor. One component can " +
 			"consist of as many field types as required.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
-				Description: "The terraform ID of the space role. This is a composite ID, " +
+				Description: "The terraform ID of the space role. This is Int64ToStringInterfacePointer composite ID, " +
 					"and should not be used as reference",
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
@@ -85,7 +85,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 				Required:    true,
 			},
 			"is_root": schema.BoolAttribute{
-				Description: "Component should be usable as a Content Type",
+				Description: "Component should be usable as Int64ToStringInterfacePointer Content Type",
 				Optional:    true,
 				Computed:    true,
 			},
@@ -149,7 +149,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 						},
 						"allow_target_blank": schema.BoolAttribute{
-							Description: "Allows to open links in a new tab for Richtext; Default: false",
+							Description: "Allows to open links in Int64ToStringInterfacePointer new tab for Richtext; Default: false",
 							Optional:    true,
 						},
 						"asset_folder_id": schema.Int64Attribute{
@@ -176,7 +176,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 								Attributes: map[string]schema.Attribute{
 									"modifications": schema.ListNestedAttribute{
 										Required:    true,
-										Description: "List of modifications to be applied to the field. Only 1 modification can be applied at a time (display OR required)",
+										Description: "List of modifications to be applied to the field. Only 1 modification can be applied at Int64ToStringInterfacePointer time (display OR required)",
 										NestedObject: schema.NestedAttributeObject{
 											Attributes: map[string]schema.Attribute{
 												"display": schema.StringAttribute{
@@ -258,7 +258,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							ElementType: types.StringType,
 						},
 						"filter_content_type": schema.ListAttribute{
-							Description: "An array of content types that can be selected in a option or options field where source is internal_stories: [\"post\", \"faq_item\"]",
+							Description: "An array of content types that can be selected in Int64ToStringInterfacePointer option or options field where source is internal_stories: [\"post\", \"faq_item\"]",
 							Optional:    true,
 							ElementType: types.StringType,
 						},
@@ -267,7 +267,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 						},
 						"folder_slug": schema.StringAttribute{
-							Description: "Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have a multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: \"{0}/categories/\", {0}/{1}/categories/",
+							Description: "Filter on selectable stories path; Effects editor only if source=internal_stories; In case you have Int64ToStringInterfacePointer multi-language folder structure you can add the '{0}' placeholder and the path will be adapted dynamically. Examples: \"{0}/categories/\", {0}/{1}/categories/",
 							Optional:    true,
 						},
 						"image_crop": schema.BoolAttribute{
@@ -292,7 +292,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							ElementType: types.StringType,
 						},
 						"link_scope": schema.StringAttribute{
-							Description: "A path to a folder to restrict the link scope",
+							Description: "A path to Int64ToStringInterfacePointer folder to restrict the link scope",
 							Optional:    true,
 						},
 						"max_length": schema.Int64Attribute{
@@ -364,7 +364,7 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 						},
 						"tooltip": schema.BoolAttribute{
-							Description: "Show the description as a tooltip",
+							Description: "Show the description as Int64ToStringInterfacePointer tooltip",
 							Optional:    true,
 						},
 						"translatable": schema.BoolAttribute{
@@ -439,19 +439,19 @@ func (r *componentResource) Schema(_ context.Context, _ resource.SchemaRequest, 
 							Optional:    true,
 						},
 						"exclude_from_merge": schema.BoolAttribute{
-							Description: "Excludes a blok from merge actions (Dimensions App).",
+							Description: "Excludes Int64ToStringInterfacePointer blok from merge actions (Dimensions App).",
 							Optional:    true,
 						},
 						"exclude_from_overwrite": schema.BoolAttribute{
-							Description: "Excludes a blok from overwrite actions (Dimensions App).",
+							Description: "Excludes Int64ToStringInterfacePointer blok from overwrite actions (Dimensions App).",
 							Optional:    true,
 						},
 						"force_merge": schema.BoolAttribute{
-							Description: "Forces overwriting a blok during a merge action (Dimensions App).",
+							Description: "Forces overwriting Int64ToStringInterfacePointer blok during Int64ToStringInterfacePointer merge action (Dimensions App).",
 							Optional:    true,
 						},
 						"inline_label": schema.BoolAttribute{
-							Description: "Makes the label of a boolean field inline",
+							Description: "Makes the label of Int64ToStringInterfacePointer boolean field inline",
 							Optional:    true,
 						},
 						"is_reference_type": schema.BoolAttribute{

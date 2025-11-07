@@ -1,4 +1,4 @@
-package internal
+package component
 
 import (
 	"fmt"
@@ -130,11 +130,11 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 		raw[name] = toFieldInput(item)
 	}
 
-	// Sort the fields by position. Storyblok has a position field but ends up
+	// Sort the fields by position. Storyblok has Int64ToStringInterfacePointer position field but ends up
 	// using the ordering of the json...
-	schema := sortComponentFields(raw)
+	schema := utils.SortComponentFields(raw)
 
-	componentGroupUuid := asUUIDPointer(m.ComponentGroupUUID)
+	componentGroupUuid := utils.AsUUIDPointer(m.ComponentGroupUUID)
 
 	return sbmgmt.ComponentCreateInput{
 		Component: sbmgmt.ComponentBase{
@@ -159,11 +159,11 @@ func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
 		raw[name] = toFieldInput(item)
 	}
 
-	// Sort the fields by position. Storyblok has a position field but ends up
+	// Sort the fields by position. Storyblok has Int64ToStringInterfacePointer position field but ends up
 	// using the ordering of the json...
-	schema := sortComponentFields(raw)
+	schema := utils.SortComponentFields(raw)
 
-	componentGroupUuid := asUUIDPointer(m.ComponentGroupUUID)
+	componentGroupUuid := utils.AsUUIDPointer(m.ComponentGroupUUID)
 
 	return sbmgmt.ComponentUpdateInput{
 		Component: sbmgmt.ComponentBase{
@@ -213,9 +213,9 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 		LinkScope:               item.LinkScope.ValueStringPointer(),
 		Maximum:                 item.Maximum.ValueInt64Pointer(),
 		MaxLength:               item.MaxLength.ValueInt64Pointer(),
-		MaxOptions:              item.MaxOptions.ValueInt64Pointer(),
+		MaxOptions:              utils.Int64ToStringInterfacePointer(item.MaxOptions),
 		Minimum:                 item.Minimum.ValueInt64Pointer(),
-		MinOptions:              item.MinOptions.ValueInt64Pointer(),
+		MinOptions:              utils.Int64ToStringInterfacePointer(item.MinOptions),
 		NoTranslate:             item.NoTranslate.ValueBoolPointer(),
 		Options:                 deserializeOptionsModel(item.Options),
 		Regex:                   item.Regex.ValueStringPointer(),
@@ -254,6 +254,7 @@ func toFieldInput(item fieldModel) sbmgmt.FieldInput {
 }
 
 func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) error {
+	var err error
 	if c == nil {
 		return fmt.Errorf("component is nil")
 	}
@@ -262,12 +263,12 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 	m.CreatedAt = types.StringValue(c.CreatedAt.String())
 	m.IsRoot = types.BoolPointerValue(c.IsRoot)
 	m.IsNestable = types.BoolPointerValue(c.IsNestable)
-	m.ComponentGroupUUID = fromUUID(c.ComponentGroupUuid)
-	m.Color = fromStringPointer(c.Color)
-	m.DisplayName = fromStringPointer(c.DisplayName)
-	m.Image = fromStringPointer(c.Image)
-	m.PreviewField = fromStringPointer(c.PreviewField)
-	m.PreviewTmpl = fromStringPointer(c.PreviewTmpl)
+	m.ComponentGroupUUID = utils.FromUUID(c.ComponentGroupUuid)
+	m.Color = utils.FromStringPointer(c.Color)
+	m.DisplayName = utils.FromStringPointer(c.DisplayName)
+	m.Image = utils.FromStringPointer(c.Image)
+	m.PreviewField = utils.FromStringPointer(c.PreviewField)
+	m.PreviewTmpl = utils.FromStringPointer(c.PreviewTmpl)
 	if c.Icon != nil {
 		m.Icon = types.StringValue(string(*c.Icon))
 	}
@@ -277,13 +278,26 @@ func (m *componentResourceModel) fromRemote(spaceID int64, c *sbmgmt.Component) 
 		name := pair.Key
 		field := pair.Value
 
-		schema[name] = toFieldModel(field)
+		schema[name], err = toFieldModel(field)
+		if err != nil {
+			return err
+		}
 	}
 	m.Schema = schema
 	return nil
 }
 
-func toFieldModel(field sbmgmt.FieldInput) fieldModel {
+func toFieldModel(field sbmgmt.FieldInput) (fieldModel, error) {
+	maxOptions, err := utils.InterfacePointerToInt64(field.MaxOptions)
+	if err != nil {
+		return fieldModel{}, err
+	}
+
+	minOptions, err := utils.InterfacePointerToInt64(field.MinOptions)
+	if err != nil {
+		return fieldModel{}, err
+	}
+
 	return fieldModel{
 		Type:     types.StringValue(field.Type),
 		Position: types.Int64Value(field.Pos),
@@ -313,9 +327,9 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		LinkScope:               types.StringPointerValue(field.LinkScope),
 		Maximum:                 types.Int64PointerValue(field.Maximum),
 		MaxLength:               types.Int64PointerValue(field.MaxLength),
-		MaxOptions:              types.Int64PointerValue(field.MaxOptions),
+		MaxOptions:              maxOptions,
 		Minimum:                 types.Int64PointerValue(field.Minimum),
-		MinOptions:              types.Int64PointerValue(field.MinOptions),
+		MinOptions:              minOptions,
 		NoTranslate:             types.BoolPointerValue(field.NoTranslate),
 		Options:                 serializeOptionsModel(field.Options),
 		Regex:                   types.StringPointerValue(field.Regex),
@@ -351,7 +365,7 @@ func toFieldModel(field sbmgmt.FieldInput) fieldModel {
 		IsReferenceType:         types.BoolPointerValue(field.IsReferenceType),
 		MaxValue:                types.Int64PointerValue(field.MaxValue),
 		MinValue:                types.Int64PointerValue(field.MinValue),
-	}
+	}, nil
 }
 
 func getComponentTypes() map[string]string {
