@@ -35,7 +35,7 @@ func TestComponentGroupResourceModel_FromRemote(t *testing.T) {
 	componentGroup := &sbmgmt.ComponentGroup{
 		Id:   groupID,
 		Name: name,
-		Uuid: must(uuid.FromString("ebd1af2e-875f-47e5-8886-4d3baea94d99")),
+		Uuid: utils.Must(uuid.FromString("ebd1af2e-875f-47e5-8886-4d3baea94d99")),
 	}
 
 	model := &componentGroupResourceModel{}

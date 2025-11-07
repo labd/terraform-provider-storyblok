@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 func TestAssetFolderResourceBasic(t *testing.T) {
@@ -38,7 +39,7 @@ func TestAssetFolderResourceBasic(t *testing.T) {
 }
 
 func testAssetFolderConfig(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_asset_folder" "{{ .identifier }}" {
 		  space_id = {{ .spaceId }}
 		  name = "asset-folder-name"
@@ -50,7 +51,7 @@ func testAssetFolderConfig(identifier string, spaceId int) string {
 }
 
 func testAssetFolderConfigUpdate(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_asset_folder" "{{ .identifier }}" {
 		  space_id = {{ .spaceId }}
 		  name = "new-asset-folder-name"

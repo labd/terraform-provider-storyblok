@@ -1,9 +1,11 @@
-package internal
+package utils
 
 import (
 	"bytes"
+	"fmt"
+	"html/template"
 	"net/http"
-	"text/template"
+	"strconv"
 
 	"github.com/elliotchance/pie/v2"
 	"github.com/gofrs/uuid"
@@ -13,7 +15,7 @@ import (
 	orderedmap "github.com/wk8/go-ordered-map/v2"
 )
 
-func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.OrderedMap[string, sbmgmt.FieldInput] {
+func SortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.OrderedMap[string, sbmgmt.FieldInput] {
 	type Pair struct {
 		Key   string
 		Value *sbmgmt.FieldInput
@@ -40,7 +42,7 @@ func sortComponentFields(input map[string]sbmgmt.FieldInput) *orderedmap.Ordered
 	return result
 }
 
-func asUUIDPointer(s basetypes.StringValue) *uuid.UUID {
+func AsUUIDPointer(s basetypes.StringValue) *uuid.UUID {
 	var componentGroupUuid *uuid.UUID
 	if !s.IsNull() {
 		value := uuid.Must(uuid.FromString(s.ValueString()))
@@ -50,21 +52,21 @@ func asUUIDPointer(s basetypes.StringValue) *uuid.UUID {
 	return componentGroupUuid
 }
 
-func fromUUID(v *uuid.UUID) types.String {
+func FromUUID(v *uuid.UUID) types.String {
 	if v == nil || v.IsNil() {
 		return types.StringPointerValue(nil)
 	}
 	return types.StringValue(v.String())
 }
 
-func fromStringPointer(v *string) types.String {
+func FromStringPointer(v *string) types.String {
 	if v == nil {
 		return types.StringPointerValue(nil)
 	}
 	return types.StringValue(*v)
 }
 
-func must[T any](v T, err error) T {
+func Must[T any](v T, err error) T {
 	if err != nil {
 		panic(err)
 	}
@@ -81,13 +83,44 @@ func HCLTemplate(data string, params map[string]any) string {
 	return out.String()
 }
 
-func cleanHeaders(headers http.Header, keep ...string) http.Header {
+func CleanHeaders(headers http.Header, keep ...string) http.Header {
 	for key := range headers {
 		if !contains(keep, key) {
 			headers.Del(key)
 		}
 	}
 	return headers
+}
+
+func Int64ToStringInterfacePointer(options types.Int64) *interface{} {
+	if options.IsNull() || options.IsUnknown() {
+		return nil
+	}
+	str := strconv.FormatInt(options.ValueInt64(), 10)
+	var v interface{} = str
+	return &v
+}
+
+func InterfacePointerToInt64(options *interface{}) (types.Int64, error) {
+	if options == nil {
+		return types.Int64PointerValue(nil), nil
+	}
+	switch v := (*options).(type) {
+	case int64:
+		return types.Int64Value(v), nil
+	case int:
+		return types.Int64Value(int64(v)), nil
+	case float64:
+		return types.Int64Value(int64(v)), nil
+	case string:
+		parsed, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return types.Int64PointerValue(nil), fmt.Errorf("cannot convert string to int64: %v", err)
+		}
+		return types.Int64Value(parsed), nil
+	default:
+		return types.Int64PointerValue(nil), fmt.Errorf("unsupported type: %T", v)
+	}
 }
 
 func contains(keep []string, key string) bool {

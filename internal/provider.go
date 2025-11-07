@@ -15,6 +15,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 	"github.com/labd/storyblok-go-sdk/sbmgmt"
+	"github.com/labd/terraform-provider-storyblok/internal/component"
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 	"gopkg.in/dnaeon/go-vcr.v3/cassette"
 	"gopkg.in/dnaeon/go-vcr.v3/recorder"
 
@@ -55,8 +57,8 @@ func WithRecorderClient(file string, mode recorder.Mode) (OptionFunc, func() err
 
 	//Strip all fields we are not interested in
 	hook := func(i *cassette.Interaction) error {
-		i.Response.Headers = cleanHeaders(i.Response.Headers, "Content-Type")
-		i.Request.Headers = cleanHeaders(i.Request.Headers)
+		i.Response.Headers = utils.CleanHeaders(i.Response.Headers, "Content-Type")
+		i.Request.Headers = utils.CleanHeaders(i.Request.Headers)
 		return nil
 	}
 	r.AddHook(hook, recorder.AfterCaptureHook)
@@ -198,7 +200,7 @@ func (p *storyblokProvider) DataSources(_ context.Context) []func() datasource.D
 // Resources defines the resources implemented in the provider.
 func (p *storyblokProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewComponentResource,
+		component.NewComponentResource,
 		NewComponentGroupResource,
 		NewSpaceRoleResource,
 		NewAssetFolderResource,

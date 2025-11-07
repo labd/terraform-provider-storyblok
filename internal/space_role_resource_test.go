@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/labd/terraform-provider-storyblok/internal/utils"
 )
 
 func TestSpaceRoleResourceBasic(t *testing.T) {
@@ -50,7 +51,7 @@ func TestSpaceRoleResourceBasic(t *testing.T) {
 }
 
 func testSpaceRoleConfig(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_space_role" "{{ .identifier }}" {
 		  space_id          = "{{ .spaceId }}"
 		  role              = "tester"
@@ -68,7 +69,7 @@ func testSpaceRoleConfig(identifier string, spaceId int) string {
 }
 
 func testSpaceRoleConfigUpdate(identifier string, spaceId int) string {
-	return HCLTemplate(`
+	return utils.HCLTemplate(`
 		resource "storyblok_space_role" "{{ .identifier }}" {
 		  space_id          = "{{ .spaceId }}"
 		  role              = "new-tester"
