@@ -1,0 +1,3 @@
+kind: Dependency
+body: 'chore(deps): bump github.com/hashicorp/terraform-plugin-log from 0.9.0 to 0.10.0 in the go group'
+time: 2025-12-01T20:59:37.351062395Z
