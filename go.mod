@@ -10,8 +10,8 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/deepmap/oapi-codegen v1.16.3
 	github.com/hashicorp/terraform-plugin-docs v0.24.0
-	github.com/hashicorp/terraform-plugin-framework v1.16.1
-	github.com/hashicorp/terraform-plugin-log v0.9.0
+	github.com/hashicorp/terraform-plugin-framework v1.17.0
+	github.com/hashicorp/terraform-plugin-log v0.10.0
 	github.com/labd/storyblok-go-sdk v0.8.0
 	github.com/wk8/go-ordered-map/v2 v2.1.8
 )
