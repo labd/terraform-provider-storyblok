@@ -1,0 +1,127 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 218
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: '{"space_role":{"allowed_languages":["en-au","en-nz"],"allowed_paths":["325468791","343319186"],"field_permissions":[],"permissions":["read_stories","save_stories"],"role":"bug-test-role","subtitle":""}}'
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"space_role":{"id":99001,"resolved_allowed_paths":[],"allowed_paths":[325468791,343319186],"resolved_blocked_paths":null,"blocked_paths":[],"field_permissions":[],"allowed_field_permissions":[],"readonly_field_permissions":[],"permissions":["read_stories","save_stories"],"role":"bug-test-role","subtitle":"","datasource_ids":[],"blocked_datasource_ids":[],"component_ids":[],"allowed_component_ids":[],"branch_ids":[],"blocked_branch_ids":[],"allowed_languages":["en-au","en-nz"],"blocked_languages":[],"asset_folder_ids":[],"blocked_asset_folder_ids":[],"ext_id":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 80ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/99001
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"space_role":{"id":99001,"resolved_allowed_paths":[],"allowed_paths":[325468791,343319186],"resolved_blocked_paths":null,"blocked_paths":[],"field_permissions":[],"allowed_field_permissions":[],"readonly_field_permissions":[],"permissions":["read_stories","save_stories"],"role":"bug-test-role","subtitle":"","datasource_ids":[],"blocked_datasource_ids":[],"component_ids":[],"allowed_component_ids":[],"branch_ids":[],"blocked_branch_ids":[],"allowed_languages":["en-au","en-nz"],"blocked_languages":[],"asset_folder_ids":[],"blocked_asset_folder_ids":[],"ext_id":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 53ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/99001
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"space_role":{"id":99001,"resolved_allowed_paths":[],"allowed_paths":[325468791,343319186],"resolved_blocked_paths":null,"blocked_paths":[],"field_permissions":[],"allowed_field_permissions":[],"readonly_field_permissions":[],"permissions":["read_stories","save_stories"],"role":"bug-test-role","subtitle":"","datasource_ids":[],"blocked_datasource_ids":[],"component_ids":[],"allowed_component_ids":[],"branch_ids":[],"blocked_branch_ids":[],"allowed_languages":["en-au","en-nz"],"blocked_languages":[],"asset_folder_ids":[],"blocked_asset_folder_ids":[],"ext_id":null}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 56ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: mapi.storyblok.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers: {}
+        url: https://mapi.storyblok.com/v1/spaces/233252/space_roles/99001
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 78ms

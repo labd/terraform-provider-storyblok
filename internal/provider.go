@@ -168,6 +168,10 @@ func (p *storyblokProvider) Configure(ctx context.Context, req provider.Configur
 		resp.Diagnostics.AddError("Unable to Create Storyblok API Client", err.Error())
 	}
 
+	// Wrap the transport to normalise API responses (e.g. convert numeric
+	// values to strings in fields like allowed_paths).
+	p.httpClient.Transport = utils.NewNormalizeTransport(p.httpClient.Transport)
+
 	// Create a new Storyblok client using the configuration values
 	client, err := sbmgmt.NewClientWithResponses(
 		url,

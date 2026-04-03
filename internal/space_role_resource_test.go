@@ -68,6 +68,52 @@ func testSpaceRoleConfig(identifier string, spaceId int) string {
 	})
 }
 
+// TestSpaceRoleResourceNumericPaths verifies that the provider handles API
+// responses where allowed_paths contains integers instead of strings.
+func TestSpaceRoleResourceNumericPaths(t *testing.T) {
+	f, stop := ProviderFactories("./assets/space_role_numeric_paths")
+	defer func() {
+		_ = stop()
+	}()
+
+	id := "numeric"
+	rn := fmt.Sprintf("storyblok_space_role.%s", id)
+	spaceId := 233252
+
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 TestAccPreCheck(t),
+		ProtoV6ProviderFactories: f,
+		Steps: []resource.TestStep{
+			{
+				Config: testSpaceRoleConfigNumericPaths(id, spaceId),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr(rn, "role", "bug-test-role"),
+					resource.TestCheckResourceAttr(rn, "allowed_paths.#", "2"),
+					resource.TestCheckResourceAttr(rn, "allowed_paths.0", "325468791"),
+					resource.TestCheckResourceAttr(rn, "allowed_paths.1", "343319186"),
+				),
+			},
+		},
+	})
+}
+
+func testSpaceRoleConfigNumericPaths(identifier string, spaceId int) string {
+	return utils.HCLTemplate(`
+		resource "storyblok_space_role" "{{ .identifier }}" {
+		  space_id          = "{{ .spaceId }}"
+		  role              = "bug-test-role"
+		  subtitle          = ""
+		  permissions       = ["read_stories","save_stories"]
+		  field_permissions = []
+		  allowed_languages = ["en-au","en-nz"]
+		  allowed_paths     = ["325468791","343319186"]
+		}
+	`, map[string]any{
+		"identifier": identifier,
+		"spaceId":    spaceId,
+	})
+}
+
 func testSpaceRoleConfigUpdate(identifier string, spaceId int) string {
 	return utils.HCLTemplate(`
 		resource "storyblok_space_role" "{{ .identifier }}" {
