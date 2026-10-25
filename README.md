@@ -1,7 +1,6 @@
 # Storyblok Terraform Provider
 
 [![Test status](https://github.com/labd/terraform-provider-storyblok/workflows/Run%20Tests/badge.svg)](https://github.com/labd/terraform-provider-storyblok/actions?query=workflow%3A%22Run+Tests%22)
-[![codecov](https://codecov.io/gh/LabD/terraform-provider-storyblok/branch/master/graph/badge.svg)](https://codecov.io/gh/LabD/terraform-provider-storyblok)
 [![Go Report Card](https://goreportcard.com/badge/github.com/labd/terraform-provider-storyblok)](https://goreportcard.com/report/github.com/labd/terraform-provider-storyblok)
 
 The Terraform Storyblok provider allows you to configure your
