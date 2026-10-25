@@ -91,7 +91,7 @@ func CheckDeleteError(name string, response ApiResponse, err error) *diag.ErrorD
 func readResponseBody(input ApiResponse) string {
 	// Use reflection to get the field value
 	ref := reflect.ValueOf(input)
-	if ref.Kind() == reflect.Ptr {
+	if ref.Kind() == reflect.Pointer {
 		ref = ref.Elem()
 	}
 
