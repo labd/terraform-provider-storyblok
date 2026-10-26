@@ -130,7 +130,7 @@ func (m *componentResourceModel) toRemoteInput() sbmgmt.ComponentCreateInput {
 		raw[name] = toFieldInput(item)
 	}
 
-	// Sort the fields by position. Storyblok has Int64ToStringInterfacePointer position field but ends up
+	// Sort the fields by position. Storyblok has a position field but ends up
 	// using the ordering of the json...
 	schema := utils.SortComponentFields(raw)
 
@@ -159,7 +159,7 @@ func (m *componentResourceModel) toUpdateInput() sbmgmt.ComponentUpdateInput {
 		raw[name] = toFieldInput(item)
 	}
 
-	// Sort the fields by position. Storyblok has Int64ToStringInterfacePointer position field but ends up
+	// Sort the fields by position. Storyblok has a position field but ends up
 	// using the ordering of the json...
 	schema := utils.SortComponentFields(raw)
 
