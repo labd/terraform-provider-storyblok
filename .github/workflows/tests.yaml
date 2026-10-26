@@ -99,13 +99,13 @@ jobs:
       # Creates or updates the release PR, or tags the release once it is merged
       - name: Prepare release
         id: changie
-        uses: labd/changie-release-action@ab0b669cbb31292dcdbf813dff52326e3209a85e # v2.0.0-rc.2
+        uses: labd/changie-release-action@375bdbee9d667b04534efa91d599191bd295e91d # v2.0.0-rc.3
         with:
           github-token: ${{ steps.app-token.outputs.token }}
 
       - name: Publish release
         if: steps.changie.outputs.released == 'true'
-        uses: labd/changie-release-action/goreleaser@ab0b669cbb31292dcdbf813dff52326e3209a85e # v2.0.0-rc.2
+        uses: labd/changie-release-action/goreleaser@375bdbee9d667b04534efa91d599191bd295e91d # v2.0.0-rc.3
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           version: ${{ steps.changie.outputs.version }}
