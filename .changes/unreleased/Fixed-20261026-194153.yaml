@@ -1,0 +1,3 @@
+kind: Fixed
+body: Include terraform-registry-manifest.json in releases so the Terraform Registry knows the provider uses protocol 6.0
+time: 2026-10-26T19:41:53.841184+01:00
